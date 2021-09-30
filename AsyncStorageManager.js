@@ -8,13 +8,13 @@ export const _storeData = async (key, value) => {
   }
 };
 
-export const _removeData = async (key) => {
+/*export const _removeData = async key => {
   try {
     await AsyncStorage.remove(key);
   } catch (error) {
     console.log(error);
   }
-};
+};*/
 
 export const _retrieveData = async key => {
   try {

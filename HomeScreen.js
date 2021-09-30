@@ -2,6 +2,7 @@ import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {View, SafeAreaView, Text} from 'react-native';
 import {getWelcome} from './Networking';
+import styles from './styles/Styles';
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -13,19 +14,19 @@ class HomeScreen extends Component {
   }
 
   async componentDidMount() {
-    await getWelcome().then(async r => {
-      if (r.status === 200) {
-        alert(r.data);
-        this.setState({welcome: r.data});
+    await getWelcome().then(response => {
+      if (response.status === 200) {
+        this.setState({welcome: response.data});
       }
     });
   }
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <SafeAreaView>
           <Text>{this.state.welcome}</Text>
+
         </SafeAreaView>
       </View>
     );

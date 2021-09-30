@@ -14,7 +14,9 @@ import NetInfo from '@react-native-community/netinfo';
 import LoginScreen from './LoginScreen';
 import RegisterScreen from './RegisterScreen';
 import HomeScreen from './HomeScreen';
+import ResetPasswordScreen from './ResetPasswordScreen';
 import CustomDrawerContent from './CustomDrawerContent';
+import {Provider as PaperProvider} from 'react-native-paper';
 
 const Drawer = createDrawerNavigator();
 class App extends Component {
@@ -35,27 +37,34 @@ class App extends Component {
 
   render() {
     return (
-      <NavigationContainer>
-        <Drawer.Navigator
-          initialRouteName="Login"
-          drawerContent={props => <CustomDrawerContent {...props} />}>
-          <Drawer.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{headerShown: false}}
-          />
-          <Drawer.Screen
-            name="Register"
-            component={RegisterScreen}
-            options={{headerShown: false}}
-          />
-          <Drawer.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{headerShown: false}}
-          />
-        </Drawer.Navigator>
-      </NavigationContainer>
+      <PaperProvider>
+        <NavigationContainer>
+          <Drawer.Navigator
+            initialRouteName="Login"
+            drawerContent={props => <CustomDrawerContent {...props} />}>
+            <Drawer.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{headerShown: false}}
+            />
+            <Drawer.Screen
+              name="Register"
+              component={RegisterScreen}
+              options={{headerShown: false}}
+            />
+            <Drawer.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{headerShown: false}}
+            />
+            <Drawer.Screen
+              name="Reset"
+              component={ResetPasswordScreen}
+              options={{headerShown: false}}
+            />
+          </Drawer.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
     );
   }
 }

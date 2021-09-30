@@ -1,64 +1,72 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {
-  View,
-  SafeAreaView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-import styles from './styles/LoginStyles';
-import {requestAuth, requestRegister} from './Networking';
-import {_storeData} from './AsyncStorageManager';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import styles from './styles/Styles';
+import {requestRegister} from './Networking';
+import {Snackbar} from 'react-native-paper';
 
 class RegisterScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       navigation: this.props.navigation,
-      firstName: null,
-      lastName: null,
       username: null,
       email: null,
+      name: null,
+      lastName: null,
       password: null,
       confirmPassword: null,
+      visible: false,
+      message: '',
+      timePassed: false,
     };
   }
+
+  toggleSnackbar = message => {
+    this.setState({message: message});
+    this.setState({visible: true});
+  };
+
+  onDismissSnackBar = () => {
+    this.setState({visible: false});
+  };
+
   register = async () => {
     let request = {
-      firstName: this.state.firstName,
+      name: this.state.name,
       lastName: this.state.lastName,
       username: this.state.username,
       email: this.state.email,
       password: this.state.password,
+      roles: ['USER'],
     };
 
-    if (request.firstName == null) {
-      alert('First name is empty!');
-    } else if (request.lastName == null) {
-      alert('Last name is empty!');
-    } else if (request.username == null) {
-      alert('Username is empty!');
-    } else if (request.email == null) {
-      alert('Email is empty!');
-    } else if (request.password == null) {
-      alert('Password is empty!');
-    } else {
-      await requestRegister(request).then(async r => {
-        if (r != null) {
+    await requestRegister(request).then(response => {
+      if (response.status === 200) {
+        this.toggleSnackbar('Registered successfully!').then(() => {
           this.state.navigation.navigate('Login');
-        } else {
-          alert('Failed to register!');
-        }
-      });
-    }
+        });
+      } else {
+        this.toggleSnackbar(response.data);
+      }
+    });
   };
 
-  confirmPassword = () => {
-    if (this.state.password !== null) {
-      return this.state.password === this.state.confirmPassword;
-    } else {
+  validate = () => {
+    if (this.state.username == null) {
+      this.toggleSnackbar('Username is empty!');
       return false;
+    } else if (this.state.email == null) {
+      this.toggleSnackbar('Email is empty!');
+      return false;
+    } else if (this.state.password == null) {
+      this.toggleSnackbar('Password is empty!');
+      return false;
+    } else if (this.state.password !== this.state.confirmPassword) {
+      this.toggleSnackbar('Passwords are different!');
+      return false;
+    } else {
+      return true;
     }
   };
 
@@ -67,52 +75,54 @@ class RegisterScreen extends Component {
       <View style={styles.container}>
         <View style={styles.inputView}>
           <TextInput
-            style={styles.TextInput}
-            placeholder="First name."
-            placeholderTextColor="#003f5c"
-            onChangeText={firstName => this.setState({firstName: firstName})}
-          />
-        </View>
-
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Last name."
-            placeholderTextColor="#003f5c"
-            onChangeText={lastName => this.setState({lastName: lastName})}
-          />
-        </View>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
+            style={styles.textInput}
             placeholder="Username."
-            placeholderTextColor="#003f5c"
+            placeholderTextColor="#8c8c8c"
             onChangeText={username => this.setState({username: username})}
           />
         </View>
 
         <View style={styles.inputView}>
           <TextInput
-            style={styles.TextInput}
+            style={styles.textInput}
             placeholder="Email."
-            placeholderTextColor="#003f5c"
+            placeholderTextColor="#8c8c8c"
             onChangeText={email => this.setState({email: email})}
           />
         </View>
+
         <View style={styles.inputView}>
           <TextInput
-            style={styles.TextInput}
+            style={styles.textInput}
+            placeholder="Name."
+            placeholderTextColor="#8c8c8c"
+            onChangeText={name => this.setState({name: name})}
+          />
+        </View>
+
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Last name."
+            placeholderTextColor="#8c8c8c"
+            onChangeText={lastName => this.setState({lastName: lastName})}
+          />
+        </View>
+
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.textInput}
             placeholder="Password."
-            placeholderTextColor="#003f5c"
+            placeholderTextColor="#8c8c8c"
             secureTextEntry={true}
             onChangeText={password => this.setState({password: password})}
           />
         </View>
         <View style={styles.inputView}>
           <TextInput
-            style={styles.TextInput}
+            style={styles.textInput}
             placeholder="Confirm password."
-            placeholderTextColor="#003f5c"
+            placeholderTextColor="#8c8c8c"
             secureTextEntry={true}
             onChangeText={confirmPassword =>
               this.setState({confirmPassword: confirmPassword})
@@ -120,14 +130,23 @@ class RegisterScreen extends Component {
           />
         </View>
         <TouchableOpacity
-          style={styles.loginBtn}
-          onPress={() =>
-            this.confirmPassword()
-              ? this.register()
-              : alert('Passwords are different!')
-          }>
-          <Text style={styles.loginText}>Register</Text>
+          style={styles.btn}
+          onPress={() => (this.validate() ? this.register() : null)}>
+          <Text style={styles.btnText}>Register</Text>
         </TouchableOpacity>
+        {
+          <Snackbar
+            visible={this.state.visible}
+            onDismiss={this.onDismissSnackBar}
+            action={{
+              label: 'Close',
+              onPress: () => {
+                this.setState({visible: false});
+              },
+            }}>
+            {this.state.message}
+          </Snackbar>
+        }
       </View>
     );
   }

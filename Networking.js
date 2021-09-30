@@ -7,18 +7,20 @@ export const JWToken = 'JWT';
 let instance = axios.create();
 
 // Add a request interceptor
-instance.interceptors.request.use(
-  async config => {
-    let token = await _retrieveData(JWToken);
-    config.headers.Authorization = 'Bearer ' + token;
-
-    return config;
-  },
-  function (error) {
-    console.log(error);
-    return Promise.reject(error);
-  },
-);
+export const createAuthorizationHeader = async () => {
+  await instance.interceptors.request.use(
+    async config => {
+      let token = await _retrieveData(JWToken);
+      config.headers.Authorization = 'Bearer ' + token;
+      console.log(token);
+      return config;
+    },
+    function (error) {
+      console.log(error);
+      return Promise.reject(error);
+    },
+  );
+};
 
 export const requestAuth = async (username, password) => {
   return await axios
@@ -28,6 +30,13 @@ export const requestAuth = async (username, password) => {
     })
     .catch(error => {
       console.log(error);
+      console.log(error.response.status);
+      console.log(error.response.data);
+
+      return {
+        status: error.response.status,
+        data: error.response.data,
+      };
     });
 };
 
@@ -42,6 +51,13 @@ export const requestRegister = async request => {
     })
     .catch(error => {
       console.log(error);
+      console.log(error.response.status);
+      console.log(error.response.data);
+
+      return {
+        status: error.response.status,
+        data: error.response.data,
+      };
     });
 };
 
@@ -53,5 +69,9 @@ export const getWelcome = async () => {
     })
     .catch(error => {
       console.log(error);
+      return {
+        status: error.response.status,
+        data: error.response.data,
+      };
     });
 };
