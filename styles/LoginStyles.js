@@ -39,10 +39,6 @@ const loginStyles = StyleSheet.create({
   signupText: {
     color: '#0eb05f',
   },
-  loginImage: {
-    width: '100%',
-    height: '100%',
-  },
 });
 
 export default loginStyles;

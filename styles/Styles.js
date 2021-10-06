@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
   inputView: {
     backgroundColor: '#222326',
     borderBottomWidth: 2,
