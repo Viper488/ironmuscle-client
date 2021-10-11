@@ -38,15 +38,15 @@ class ProfileScreen extends Component {
     };
   }
   async componentDidMount() {
-    await getMyself().then(response => {
-      if (response.status === 200) {
+    await getMyself()
+      .then(response => {
+        console.log(response.status);
         this.setState({user: response.data});
-        console.log(response.data);
-        console.log(this.state.user.email);
-      } else {
-        this.toggleSnackbar('Error occurred!');
-      }
-    });
+      })
+      .catch(error => {
+        console.log(error.status);
+        console.log(error);
+      });
   }
 
   changePasswordRequest = async () => {
@@ -66,19 +66,23 @@ class ProfileScreen extends Component {
       this.toggleSnackbar('Confirm password is different than new password');
     } else {
       let request = {oldPassword: password, newPassword: newPassword};
-      console.log(request);
-      await changePassword(request).then(response => {
-        if (response.status === 200) {
-          console.log(response.data);
+      await changePassword(request)
+        .then(response => {
           this.setState({
             passwordModalVisible: !this.state.passwordModalVisible,
           });
+          console.log(response.status);
+          console.log('Password changed');
           this.toggleSnackbar('Password changed');
-        } else {
-          console.log(response.data);
-          this.toggleSnackbar(response.data.message);
-        }
-      });
+        })
+        .catch(error => {
+          console.log(error.status);
+          console.log(error.response.data.message);
+          this.toggleSnackbar(error.response.data.message);
+          if (error.response.status === 401) {
+            this.props.navigation.navigate('Login');
+          }
+        });
     }
   };
 
@@ -219,7 +223,7 @@ class ProfileScreen extends Component {
             <TouchableOpacity
               style={styles.btn}
               onPress={() => {
-                this.changePasswordRequest();
+                this.changePasswordRequest().then(undefined);
               }}>
               <Text style={styles.btnText}>Save</Text>
             </TouchableOpacity>
@@ -233,6 +237,19 @@ class ProfileScreen extends Component {
               <Text style={styles.btnText}>Abort changes</Text>
             </TouchableOpacity>
           </View>
+          {
+            <Snackbar
+              visible={this.state.visible}
+              onDismiss={() => this.onDismissSnackBar}
+              action={{
+                label: 'Close',
+                onPress: () => {
+                  this.setState({visible: false});
+                },
+              }}>
+              {this.state.message}
+            </Snackbar>
+          }
         </Modal>
         <View style={profileStyles.body}>
           <TouchableOpacity
@@ -254,20 +271,6 @@ class ProfileScreen extends Component {
           }}>
           <FontAwesome5 name={'cog'} size={25} color={'white'} />
         </TouchableOpacity>
-
-        {
-          <Snackbar
-            visible={this.state.visible}
-            onDismiss={() => this.onDismissSnackBar}
-            action={{
-              label: 'Close',
-              onPress: () => {
-                this.setState({visible: false});
-              },
-            }}>
-            {this.state.message}
-          </Snackbar>
-        }
       </SafeAreaView>
     );
   }

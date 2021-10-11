@@ -3,13 +3,7 @@ import React, {Component} from 'react';
 import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import styles from '../styles/Styles';
 import loginStyles from '../styles/LoginStyles';
-import {
-  createAuthorizationHeader,
-  getMyself,
-  JWToken,
-  requestAuth,
-  USER,
-} from '../Networking';
+import {JWToken, RefreshToken, requestAuth} from '../Networking';
 import {_storeData} from '../AsyncStorageManager';
 import {Snackbar} from 'react-native-paper';
 
@@ -37,29 +31,34 @@ class LoginScreen extends Component {
     let username = this.state.username;
     let password = this.state.password;
     if (username != null && password != null) {
-      await requestAuth(username, password).then(response => {
-        if (response.status === 200) {
-          let token = response.data.jwt;
-          if (token != null) {
-            _storeData(JWToken, token).then(async () => {
-              await getMyself().then(myselfRes => {
-                if (myselfRes.status === 200) {
-                  _storeData(USER, myselfRes.data).then(() => {
+      await requestAuth(username, password)
+        .then(response => {
+          let jwtToken = response.data.access_token;
+          let rftToken = response.data.refresh_token;
+          if (jwtToken != null && rftToken != null) {
+            _storeData(RefreshToken, rftToken).then(() => {
+              _storeData(JWToken, jwtToken).then(
+                () => {
+                  this.props.navigation.navigate('Home');
+                } /*async () => {
+                await getMyself()
+                  .then(myselfRes => {
                     this.props.navigation.navigate('Home', {
-                      user: myselfRes.data,
+                      userId: myselfRes.data.id,
                     });
+                  })
+                  .catch(error => {
+                    this.toggleSnackbar(error.response.data.message);
                   });
-                } else {
-                  this.toggleSnackbar('Error occurred');
-                }
-              });
+              }),*/,
+              );
             });
           }
-        } else {
-          this.toggleSnackbar(response.data.message);
-          console.log(response.status + ' ' + response.data.message);
-        }
-      });
+        })
+        .catch(error => {
+          console.log(error);
+          this.toggleSnackbar(error.response.data.message);
+        });
     }
   };
 
