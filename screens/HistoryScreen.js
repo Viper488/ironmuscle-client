@@ -15,7 +15,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Snackbar} from 'react-native-paper';
 import {changePassword, getMyself} from '../Networking';
 
-class ProfileScreen extends Component {
+class HistoryScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -276,4 +276,4 @@ class ProfileScreen extends Component {
   }
 }
 
-export default ProfileScreen;
+export default HistoryScreen;

@@ -26,6 +26,8 @@ instance.interceptors.request.use(
   async config => {
     let token = await _retrieveData(JWToken);
     config.headers.Authorization = 'Bearer ' + token;
+    config.headers.Accept = '*/*';
+    config.headers.HTTP2_HEADER_CONTENT_TYPE = 'application/json';
     return config;
   },
   error => {
@@ -76,10 +78,7 @@ export const requestAuth = async (username, password) => {
 
 export const requestRegister = async request => {
   return await axios
-    .post(baseUrl + '/registration', request, {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    })
+    .post(baseUrl + '/registration', request)
     .then(response => {
       return response;
     })
@@ -142,10 +141,7 @@ export const getWelcome = async () => {
 
 export const changePassword = async request => {
   return await instance
-    .post(baseUrl + '/password/change', request, {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    })
+    .post(baseUrl + '/password/change', request)
     .then(response => {
       return response;
     })
@@ -160,6 +156,39 @@ export const refreshToken = () => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     })
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const getTrainingsByUser = async () => {
+  return await instance
+    .get(baseUrl + '/user/trainings')
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const getTrainingsByType = async type => {
+  return await instance
+    .get(baseUrl + '/training/type/' + type)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const getTrainingDetails = async id => {
+  return await instance
+    .get(baseUrl + '/training/' + id)
     .then(response => {
       return response;
     })

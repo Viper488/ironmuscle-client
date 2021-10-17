@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {black, blue, green, grey2, white, yellow} from './Colors';
 
 const profileStyles = StyleSheet.create({
   body: {
@@ -8,12 +9,12 @@ const profileStyles = StyleSheet.create({
   },
   modalBody: {
     alignSelf: 'center',
-    borderColor: '#0eb05f',
+    borderColor: green,
     borderWidth: 2,
     borderRadius: 10,
     marginTop: '10%',
     marginBottom: '20%',
-    backgroundColor: '#222326',
+    backgroundColor: black,
     flex: 1,
     width: '80%',
     alignItems: 'center',
@@ -21,7 +22,7 @@ const profileStyles = StyleSheet.create({
   header: {
     flex: 2,
     width: '100%',
-    backgroundColor: '#0eb05f',
+    backgroundColor: green,
   },
   headerContent: {
     padding: 30,
@@ -32,25 +33,25 @@ const profileStyles = StyleSheet.create({
     height: 130,
     borderRadius: 63,
     borderWidth: 4,
-    borderColor: '#222326',
+    borderColor: black,
     marginBottom: 2,
   },
   name: {
     fontSize: 22,
-    color: '#FFFFFF',
+    color: white,
     fontWeight: '600',
   },
   profileBadges: {
     flex: 0.5,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff000',
+    backgroundColor: yellow,
   },
   profileDetail: {
     width: '100%',
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: white,
   },
   detailContent: {
     margin: 10,
@@ -58,7 +59,7 @@ const profileStyles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: '#00CED1',
+    color: blue,
   },
   count: {
     fontSize: 18,
@@ -66,7 +67,7 @@ const profileStyles = StyleSheet.create({
   textInfo: {
     fontSize: 18,
     marginTop: 20,
-    color: '#696969',
+    color: grey2,
   },
   buttonContainer: {
     position: 'absolute',
@@ -77,7 +78,7 @@ const profileStyles = StyleSheet.create({
   },
   description: {
     fontSize: 20,
-    color: '#00CED1',
+    color: blue,
     marginTop: 10,
     textAlign: 'center',
   },
@@ -87,13 +88,13 @@ const profileStyles = StyleSheet.create({
     right: '30%',
     width: '13%',
     borderRadius: 30,
-    borderColor: '#0eb05f',
+    borderColor: green,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
     marginTop: 40,
-    backgroundColor: '#222326',
+    backgroundColor: black,
   },
 });
 
