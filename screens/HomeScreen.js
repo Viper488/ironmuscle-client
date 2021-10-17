@@ -1,16 +1,61 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Alert,
+  BackHandler,
+} from 'react-native';
 import styles from '../styles/Styles';
 import homeStyles from '../styles/HomeStyles';
+import {getTrainingsByType, JWToken, RefreshToken} from '../Networking';
+import {_removeData, _storeData} from '../AsyncStorageManager';
 
 class HomeScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      welcome: '',
-    };
+    this.state = {};
   }
+
+  backAction = () => {
+    Alert.alert('Hold on!', 'Are you sure you want to log out?', [
+      {
+        text: 'No',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {
+        text: 'YES',
+        onPress: async () => {
+          await _removeData(JWToken);
+          await _removeData(RefreshToken);
+
+          this.props.navigation.navigate('Login');
+          return true;
+        },
+      },
+    ]);
+    return true;
+  };
+
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      this.backAction,
+    );
+  }
+
+  componentWillUnmount() {
+    this.backHandler.remove();
+  }
+
+  showTrainings = type => {
+    this.props.navigation.navigate('TrainingsList', {
+      type: type.toLowerCase(),
+    });
+  };
 
   render() {
     return (
@@ -21,6 +66,9 @@ class HomeScreen extends Component {
             flex: 1,
             backgroundColor: 'orange',
             width: '100%',
+          }}
+          onPress={() => {
+            this.showTrainings('CUSTOM');
           }}>
           <Image
             style={homeStyles.image}
@@ -38,7 +86,13 @@ class HomeScreen extends Component {
             width: '100%',
             paddingTop: '2.5%',
           }}>
-          <View style={{flexDirection: 'column', flex: 1, width: '50%', marginRight: '2%'}}>
+          <View
+            style={{
+              flexDirection: 'column',
+              flex: 1,
+              width: '50%',
+              marginRight: '2%',
+            }}>
             <TouchableOpacity
               style={{
                 marginBottom: '2.5%',
@@ -47,6 +101,9 @@ class HomeScreen extends Component {
                 backgroundColor: 'blue',
                 flex: 1,
                 width: '100%',
+              }}
+              onPress={() => {
+                this.showTrainings('GYM');
               }}>
               <Image
                 style={homeStyles.image}
@@ -63,6 +120,9 @@ class HomeScreen extends Component {
                 backgroundColor: 'yellow',
                 flex: 1,
                 width: '100%',
+              }}
+              onPress={() => {
+                this.showTrainings('RUNNING');
               }}>
               <Image
                 style={homeStyles.image}
@@ -81,6 +141,9 @@ class HomeScreen extends Component {
                 backgroundColor: 'green',
                 flex: 1,
                 width: '100%',
+              }}
+              onPress={() => {
+                this.showTrainings('YOGA');
               }}>
               <Image
                 style={homeStyles.image}
@@ -97,6 +160,9 @@ class HomeScreen extends Component {
                 backgroundColor: 'red',
                 flex: 1,
                 width: '100%',
+              }}
+              onPress={() => {
+                this.showTrainings('CROSSFIT');
               }}>
               <Image
                 style={homeStyles.image}

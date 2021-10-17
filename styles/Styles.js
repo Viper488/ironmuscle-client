@@ -1,9 +1,10 @@
 import {StyleSheet} from 'react-native';
+import {black, green, grey, white} from './Colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#222326',
+    backgroundColor: black,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -12,9 +13,9 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   inputView: {
-    backgroundColor: '#222326',
+    backgroundColor: black,
     borderBottomWidth: 2,
-    borderBottomColor: '#8c8c8c',
+    borderBottomColor: grey,
     width: '80%',
     height: 45,
     marginBottom: 20,
@@ -27,22 +28,22 @@ const styles = StyleSheet.create({
     padding: 10,
     marginLeft: 20,
     fontSize: 16,
-    color: '#8c8c8c',
+    color: grey,
   },
 
   btn: {
     width: '60%',
     borderRadius: 5,
     borderWidth: 3,
-    borderColor: '#0eb05f',
+    borderColor: green,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 40,
-    backgroundColor: '#222326',
+    backgroundColor: black,
   },
   btnText: {
-    color: '#fff',
+    color: white,
     fontSize: 18,
   },
 });

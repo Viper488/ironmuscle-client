@@ -11,16 +11,25 @@ import React, {Component} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import NetInfo from '@react-native-community/netinfo';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import HomeScreen from './screens/HomeScreen';
+import TrainingsScreen from './screens/TrainingsScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
 import {Provider as PaperProvider} from 'react-native-paper';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import HistoryScreen from './screens/HistoryScreen';
+import CustomDrawer from './screens/CustomDrawer';
+import HomeScreen from './screens/HomeScreen';
+import RankingScreen from './screens/RankingScreen';
+import RequestsScreen from './screens/RequestsScreen';
+import TrainingDetailsScreen from './screens/TrainingDetailsScreen';
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import ProfileScreen from './screens/ProfileScreen';
+const Drawer = createDrawerNavigator();
+
 const Home = () => {
   return (
     <Tab.Navigator
@@ -37,7 +46,7 @@ const Home = () => {
             iconName = 'align-justify';
             size = focused ? 25 : 20;
             color = focused ? '#0eb05f' : '#555';
-          } else if (route.name === 'Profile') {
+          } else if (route.name === 'History') {
             iconName = 'user';
             size = focused ? 25 : 20;
             color = focused ? '#0eb05f' : '#555';
@@ -61,20 +70,42 @@ const Home = () => {
       />
       <Tab.Screen
         name="Requests"
-        component={HomeScreen}
+        component={RequestsScreen}
         options={{headerShown: false}}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="History"
+        component={HistoryScreen}
         options={{headerShown: false}}
       />
       <Tab.Screen
         name="Ranking"
-        component={ProfileScreen}
+        component={RankingScreen}
         options={{headerShown: false}}
       />
     </Tab.Navigator>
+  );
+};
+
+const DrawerHome = () => {
+  return (
+    <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />}>
+      <Drawer.Screen
+        name="Home"
+        component={Home}
+        options={{headerShown: false}}
+      />
+      <Drawer.Screen
+        name="TrainingsList"
+        component={TrainingsScreen}
+        options={{headerShown: false}}
+      />
+      <Drawer.Screen
+        name="TrainingDetails"
+        component={TrainingDetailsScreen}
+        options={{headerShown: false}}
+      />
+    </Drawer.Navigator>
   );
 };
 
@@ -116,8 +147,8 @@ class App extends Component {
               options={{headerShown: false}}
             />
             <Stack.Screen
-              name="Home"
-              component={Home}
+              name="DrawerHome"
+              component={DrawerHome}
               options={{headerShown: false}}
             />
           </Stack.Navigator>
