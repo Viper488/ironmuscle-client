@@ -32,21 +32,9 @@ const LoginScreen = ({navigation, route}) => {
         let rftToken = response.data.refresh_token;
         if (jwtToken != null && rftToken != null) {
           _storeData(RefreshToken, rftToken).then(() => {
-            _storeData(JWToken, jwtToken).then(
-              () => {
-                navigation.navigate('DrawerHome');
-              } /*async () => {
-                await getMyself()
-                  .then(myselfRes => {
-                    this.props.navigation.navigate('Home', {
-                      userId: myselfRes.data.id,
-                    });
-                  })
-                  .catch(error => {
-                    this.toggleSnackbar(error.response.data.message);
-                  });
-              }),*/,
-            );
+            _storeData(JWToken, jwtToken).then(() => {
+              navigation.navigate('DrawerHome');
+            });
           });
         }
       })
@@ -56,7 +44,6 @@ const LoginScreen = ({navigation, route}) => {
       });
   };
 
-  //console.log(this.props.navigation.getParam('message', 'MESSAGE'));
   return (
     <View style={styles.container}>
       <View style={loginStyles.imageContainer}>
@@ -92,7 +79,11 @@ const LoginScreen = ({navigation, route}) => {
           }}>
           <Text style={loginStyles.forgotText}>Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={() => auth()}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => {
+            auth().then(r => console.log('LOGIN'));
+          }}>
           <Text style={styles.btnText}>Login</Text>
         </TouchableOpacity>
       </View>

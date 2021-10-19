@@ -13,18 +13,19 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import NetInfo from '@react-native-community/netinfo';
-import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import TrainingsScreen from './screens/TrainingsScreen';
-import ResetPasswordScreen from './screens/ResetPasswordScreen';
 import {Provider as PaperProvider} from 'react-native-paper';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import HistoryScreen from './screens/HistoryScreen';
 import CustomDrawer from './screens/CustomDrawer';
-import HomeScreen from './screens/HomeScreen';
-import RankingScreen from './screens/RankingScreen';
-import RequestsScreen from './screens/RequestsScreen';
-import TrainingDetailsScreen from './screens/TrainingDetailsScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import ResetPasswordScreen from './screens/ResetPasswordScreen';
+import HomeScreen from './screens/tabscreens/HomeScreen';
+import LoginScreen from './screens/LoginScreen';
+import TrainingsScreen from './screens/training/TrainingsScreen';
+import TrainingDetailsScreen from './screens/training/TrainingDetailsScreen';
+import ExerciseScreen from './screens/exercise/ExerciseScreen';
+import HistoryScreen from './screens/tabscreens/HistoryScreen';
+import RankingScreen from './screens/tabscreens/RankingScreen';
+import RequestsScreen from './screens/tabscreens/RequestsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -105,23 +106,26 @@ const DrawerHome = () => {
         component={TrainingDetailsScreen}
         options={{headerShown: false}}
       />
+      <Drawer.Screen
+        name="Exercise"
+        component={ExerciseScreen}
+        options={{headerShown: false}}
+      />
     </Drawer.Navigator>
   );
 };
 
 class App extends Component {
-  componentDidMount() {
+  /*  componentDidMount() {
     NetInfo.fetch().then(networkState => {
       console.log('Connection type - ', networkState.type);
       console.log('Is connected? - ', networkState.isConnected);
     });
-  }
+  }*/
 
   constructor(props) {
     super(props);
-    this.state = {
-      trainings: [],
-    };
+    this.state = {};
   }
 
   render() {

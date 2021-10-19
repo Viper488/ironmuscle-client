@@ -9,11 +9,11 @@ import {
   SafeAreaView,
   Modal,
 } from 'react-native';
-import styles from '../styles/Styles';
-import profileStyles from '../styles/ProfileStyles';
+import styles from '../../styles/Styles';
+import profileStyles from '../../styles/ProfileStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Snackbar} from 'react-native-paper';
-import {changePassword, getMyself} from '../Networking';
+import {changePassword, getMyself} from '../../Networking';
 
 class HistoryScreen extends Component {
   constructor(props) {

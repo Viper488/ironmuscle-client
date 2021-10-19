@@ -1,9 +1,9 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {View} from 'react-native';
-import styles from '../styles/Styles';
+import styles from '../../styles/Styles';
 
-class MyClass extends Component {
+class RequestsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -13,4 +13,4 @@ class MyClass extends Component {
   }
 }
 
-export default MyClass;
+export default RequestsScreen;

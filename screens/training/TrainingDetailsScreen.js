@@ -10,15 +10,15 @@ import {
   TextInput,
   BackHandler,
 } from 'react-native';
-import styles from '../styles/Styles';
-import trainingsStyles from '../styles/TrainingsStyles';
+import styles from '../../styles/Styles';
+import trainingsStyles from '../../styles/TrainingsStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useFocusEffect} from '@react-navigation/native';
-import {getTrainingDetails} from '../Networking';
-import tdStyles from '../styles/TrainingDetailsStyles';
-import Bolts from './components/Bolts';
+import {getTrainingDetails} from '../../Networking';
+import tdStyles from '../../styles/TrainingDetailsStyles';
+import Bolts from '../components/Bolts';
 import DraggableFlatList from 'react-native-draggable-flatlist';
-import {grey, white} from '../styles/Colors';
+import {grey, white} from '../../styles/Colors';
 
 const TrainingDetailsScreen = ({navigation, route}) => {
   const [training, setTraining] = useState({});
@@ -82,7 +82,16 @@ const TrainingDetailsScreen = ({navigation, route}) => {
       <View style={tdStyles.bolts}>
         <Bolts difficulty={training.difficulty} />
       </View>
-      <TouchableOpacity style={tdStyles.btn}>
+      <TouchableOpacity
+        style={tdStyles.btn}
+        onPress={() => {
+          navigation.navigate('Exercise', {
+            index: 0,
+            training: training,
+            exercises: exercises,
+            length: exercises.length,
+          });
+        }}>
         <Text style={tdStyles.btnText}>START</Text>
       </TouchableOpacity>
       <View style={tdStyles.contentList}>

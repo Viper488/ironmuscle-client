@@ -8,10 +8,10 @@ import {
   Alert,
   BackHandler,
 } from 'react-native';
-import styles from '../styles/Styles';
-import homeStyles from '../styles/HomeStyles';
-import {getTrainingsByType, JWToken, RefreshToken} from '../Networking';
-import {_removeData, _storeData} from '../AsyncStorageManager';
+import styles from '../../styles/Styles';
+import homeStyles from '../../styles/HomeStyles';
+import {getTrainingsByType, JWToken, RefreshToken} from '../../Networking';
+import {_removeData, _storeData} from '../../AsyncStorageManager';
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -72,7 +72,7 @@ class HomeScreen extends Component {
           }}>
           <Image
             style={homeStyles.image}
-            source={require('../images/custom.jpg')}
+            source={require('../../images/custom.jpg')}
             resizeMode={'cover'}
           />
           <Text style={[homeStyles.title, {left: '5%', bottom: '5%'}]}>
@@ -107,7 +107,7 @@ class HomeScreen extends Component {
               }}>
               <Image
                 style={homeStyles.image}
-                source={require('../images/gym.jpg')}
+                source={require('../../images/gym.jpg')}
                 resizeMode={'cover'}
               />
               <Text style={homeStyles.title}>GYM</Text>
@@ -126,7 +126,7 @@ class HomeScreen extends Component {
               }}>
               <Image
                 style={homeStyles.image}
-                source={require('../images/running.jpg')}
+                source={require('../../images/running.jpg')}
                 resizeMode={'cover'}
               />
               <Text style={homeStyles.title}>RUNNING</Text>
@@ -147,7 +147,7 @@ class HomeScreen extends Component {
               }}>
               <Image
                 style={homeStyles.image}
-                source={require('../images/yoga.jpg')}
+                source={require('../../images/yoga.jpg')}
                 resizeMode={'cover'}
               />
               <Text style={homeStyles.title}>YOGA</Text>
@@ -166,7 +166,7 @@ class HomeScreen extends Component {
               }}>
               <Image
                 style={homeStyles.image}
-                source={require('../images/crossfit.jpg')}
+                source={require('../../images/crossfit.jpg')}
                 resizeMode={'cover'}
               />
               <Text style={homeStyles.title}>CROSSFIT</Text>

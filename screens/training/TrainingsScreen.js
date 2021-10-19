@@ -11,12 +11,12 @@ import {
   TextInput,
   BackHandler,
 } from 'react-native';
-import styles from '../styles/Styles';
-import trainingsStyles from '../styles/TrainingsStyles';
+import styles from '../../styles/Styles';
+import trainingsStyles from '../../styles/TrainingsStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {getTrainingsByType, getTrainingsByUser} from '../Networking';
+import {getTrainingsByType, getTrainingsByUser} from '../../Networking';
 import {useFocusEffect} from '@react-navigation/native';
-import Bolts from './components/Bolts';
+import Bolts from '../components/Bolts';
 
 const TrainingsScreen = ({navigation, route}) => {
   const [data, setData] = useState({});
