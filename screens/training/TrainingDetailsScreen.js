@@ -1,12 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  BackHandler,
-} from 'react-native';
+import {Text, View, TouchableOpacity, Image, BackHandler} from 'react-native';
 import styles from '../../styles/Styles';
 import trainingsStyles from '../../styles/TrainingsStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
