@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {_retrieveData, _storeData} from './AsyncStorageManager';
 
-const baseUrl = 'http://192.168.0.20:8080/api/v1';
+const baseUrl = 'http://192.168.43.27:8080/api/v1';
 export const JWToken = 'JWT';
 export const RefreshToken = 'Refresh';
 export const USER = 'USER';

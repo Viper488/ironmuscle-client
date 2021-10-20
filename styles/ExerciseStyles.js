@@ -28,11 +28,15 @@ const exerciseStyles = StyleSheet.create({
     flex: 2,
     width: '100%',
     backgroundColor: grey,
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   content: {
     flex: 4,
     width: '100%',
     backgroundColor: black,
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   controlBtnContent: {
     flex: 1,
@@ -53,6 +57,25 @@ const exerciseStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: black,
+  },
+  imageContent: {
+    width: '100%',
+    flex: 3,
+  },
+  image: {
+    width: 200,
+    height: 180,
+    alignSelf: 'center',
+  },
+  repetitions: {
+    alignSelf: 'center',
+    fontSize: 24,
+    color: black,
+  },
+  youtubeBtn: {
+    flex: 1,
+    backgroundColor: black,
+    alignSelf: 'flex-end',
   },
 });
 

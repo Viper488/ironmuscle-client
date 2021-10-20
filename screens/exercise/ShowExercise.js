@@ -1,10 +1,11 @@
 import 'react-native-gesture-handler';
 import React, {useState} from 'react';
-import {Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import styles from '../../styles/Styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import exerciseStyles from '../../styles/ExerciseStyles';
 import CountDown from 'react-native-countdown-component';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const ShowExercise = ({navigation}, index, training, exercises, length) => {
   const [key, setKey] = useState(0);
@@ -13,12 +14,12 @@ const ShowExercise = ({navigation}, index, training, exercises, length) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textInput}>{exercises[index].name}</Text>
+      <Text style={exerciseStyles.title}>{exercises[index].name}</Text>
       <View style={exerciseStyles.timerContent}>
         {exercises[index].time === 0 ? (
-          <View>
-            <Text>{exercises[index].repetitions}</Text>
-          </View>
+          <Text style={exerciseStyles.repetitions}>
+            {exercises[index].repetitions + ' repetitions'}
+          </Text>
         ) : (
           <CountDown
             id={key.toString()}
@@ -44,7 +45,18 @@ const ShowExercise = ({navigation}, index, training, exercises, length) => {
         )}
       </View>
       <View style={exerciseStyles.content}>
-        <Text style={exerciseStyles.title}>{exercises[index].name}</Text>
+        <View style={exerciseStyles.youtubeBtn}>
+          <TouchableOpacity>
+            <FontAwesome5 name={'youtube'} size={50} color={'red'} />
+          </TouchableOpacity>
+        </View>
+        <View style={exerciseStyles.imageContent}>
+          <Image
+            style={exerciseStyles.image}
+            source={{uri: exercises[index].image}}
+            resizeMode={'stretch'}
+          />
+        </View>
       </View>
       <View style={exerciseStyles.controlBtnContent}>
         <TouchableOpacity style={exerciseStyles.btn}>

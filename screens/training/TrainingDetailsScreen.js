@@ -1,13 +1,10 @@
 import 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
 import {
-  Alert,
   Text,
   View,
   TouchableOpacity,
   Image,
-  FlatList,
-  TextInput,
   BackHandler,
 } from 'react-native';
 import styles from '../../styles/Styles';
