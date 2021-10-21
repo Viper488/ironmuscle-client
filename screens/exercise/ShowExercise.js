@@ -1,47 +1,43 @@
 import 'react-native-gesture-handler';
 import React, {useCallback, useState} from 'react';
-import {Alert, Button, Image, Modal, Text, View} from 'react-native';
+import {Image, Text, View, TouchableOpacity, Modal} from 'react-native';
 import styles from '../../styles/Styles';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import exerciseStyles from '../../styles/ExerciseStyles';
 import CountDown from 'react-native-countdown-component';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {black, blue, white, yellow} from '../../styles/Colors';
+import {black, white} from '../../styles/Colors';
 import YoutubePlayer from 'react-native-youtube-iframe';
 
 const ShowExercise = ({navigation}, index, training, exercises, length) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [key, setKey] = useState(0);
   const [run, setRun] = useState(false);
-  const [prevRun, setPrevRun] = useState(false);
   const [start, setStart] = useState('START');
-  const [modalVisible, setModalVisible] = useState(false);
+  const [prevRun, setPrevRun] = useState(false);
   const [playing, setPlaying] = useState(false);
 
   const onStateChange = useCallback(state => {
     if (state === 'ended') {
       setPlaying(false);
-      Alert.alert('video has finished playing!');
     }
   }, []);
 
-  const handleYoutubePress = () => {
+  const handlePressMore = () => {
     if (run) {
-      setPrevRun(run);
       setRun(false);
-    }
-    if (start === 'STOP') {
       setStart('START');
+      setPrevRun(true);
     }
-    setModalVisible(!modalVisible);
+    setModalVisible(true);
   };
 
   const handleExitModal = () => {
     if (prevRun) {
-      setRun(prevRun);
+      setRun(true);
       setStart('STOP');
       setPrevRun(false);
     }
-    setModalVisible(!modalVisible);
+    setModalVisible(false);
   };
 
   return (
@@ -52,6 +48,14 @@ const ShowExercise = ({navigation}, index, training, exercises, length) => {
         visible={modalVisible}
         onRequestClose={() => handleExitModal()}>
         <View style={exerciseStyles.modalContent}>
+          <TouchableOpacity
+            style={exerciseStyles.exitModalBtn}
+            onPress={() => handleExitModal()}>
+            <View>
+              <FontAwesome5 name={'arrow-left'} size={50} color={white} />
+            </View>
+          </TouchableOpacity>
+          <Text style={exerciseStyles.btnText}>{exercises[index].name}</Text>
           <YoutubePlayer
             height={300}
             play={playing}
@@ -61,14 +65,6 @@ const ShowExercise = ({navigation}, index, training, exercises, length) => {
         </View>
       </Modal>
       <View style={exerciseStyles.content}>
-        <View style={exerciseStyles.youtubeBtn}>
-          <TouchableOpacity
-            onPress={() => {
-              handleYoutubePress();
-            }}>
-            <FontAwesome5 name={'youtube'} size={50} color={'red'} />
-          </TouchableOpacity>
-        </View>
         <View style={exerciseStyles.imageContent}>
           <Image
             style={exerciseStyles.image}
@@ -81,6 +77,14 @@ const ShowExercise = ({navigation}, index, training, exercises, length) => {
         <Text style={exerciseStyles.exerciseTitle}>
           {exercises[index].name}
         </Text>
+        <View style={exerciseStyles.youtubeBtn}>
+          <TouchableOpacity
+            onPress={() => {
+              handlePressMore();
+            }}>
+            <FontAwesome5 name={'question-circle'} size={40} color={'grey'} />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={exerciseStyles.timerContent}>
         {exercises[index].time === 0 ? (
@@ -138,30 +142,38 @@ const ShowExercise = ({navigation}, index, training, exercises, length) => {
           </TouchableOpacity>
         </View>
         <View style={exerciseStyles.btn}>
-          <TouchableOpacity>
-            <View style={exerciseStyles.btnContent}>
-              {exercises[index].time === 0 ? (
+          {exercises[index].time === 0 ? (
+            <TouchableOpacity>
+              <View style={exerciseStyles.btnContent}>
                 <FontAwesome5 name={'check'} size={30} color={'#FFF'} />
-              ) : undefined}
-              <Text
-                style={exerciseStyles.btnText}
-                onPress={() => {
-                  if (exercises[index].time === 0) {
+                <Text
+                  style={exerciseStyles.btnText}
+                  onPress={() => {
                     navigation.navigate('Exercise', {
                       index: index + 1,
                       training: training,
                       exercises: exercises,
                       length: length,
                     });
-                  } else {
+                  }}>
+                  DONE
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity>
+              <View style={exerciseStyles.btnContent}>
+                <Text
+                  style={exerciseStyles.btnText}
+                  onPress={() => {
                     run ? setRun(false) : setRun(true);
                     start === 'START' ? setStart('STOP') : setStart('START');
-                  }
-                }}>
-                {exercises[index].time === 0 ? 'DONE' : start}
-              </Text>
-            </View>
-          </TouchableOpacity>
+                  }}>
+                  {start}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
         </View>
         <View style={exerciseStyles.skipBtn}>
           <TouchableOpacity>

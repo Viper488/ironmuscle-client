@@ -18,14 +18,20 @@ const exerciseStyles = StyleSheet.create({
     flex: 1,
     width: '100%',
     backgroundColor: white,
-    alignContent: 'center',
     justifyContent: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
   },
   exerciseTitle: {
     alignSelf: 'center',
     fontSize: 24,
     color: black,
     fontWeight: 'bold',
+  },
+  youtubeBtn: {
+    marginLeft: '2%',
+    alignSelf: 'center',
+    backgroundColor: white,
   },
   exerciseContent: {
     flex: 6,
@@ -64,7 +70,7 @@ const exerciseStyles = StyleSheet.create({
     width: '200%',
     paddingHorizontal: 20,
     borderRadius: 30,
-    alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'center',
     backgroundColor: black,
     height: '90%',
@@ -94,7 +100,6 @@ const exerciseStyles = StyleSheet.create({
     color: '#FFF',
     fontSize: 26,
     alignSelf: 'center',
-    margin: '5%',
     fontWeight: 'bold',
   },
   skipBtnText: {
@@ -118,20 +123,16 @@ const exerciseStyles = StyleSheet.create({
     color: black,
     fontWeight: 'bold',
   },
-  youtubeBtn: {
-    flex: 1,
-    marginTop: '5%',
-    marginRight: '5%',
-    backgroundColor: white,
-    alignSelf: 'flex-end',
-  },
   modalContent: {
-    opacity: 0.9,
     height: '100%',
     width: '100%',
     backgroundColor: black,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignContent: 'center',
+  },
+  exitModalBtn: {
+    marginLeft: '5%',
+    marginTop: '5%',
   },
 });
 
