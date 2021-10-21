@@ -1,11 +1,12 @@
 import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
-import {Text, View} from 'react-native';
+import {Alert, BackHandler, Text, View} from 'react-native';
 import styles from '../../styles/Styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {saveUserActivity} from '../../Networking';
 
-const StopTraining = ({navigation}, training) => {
+const StopTraining = ({navigation, training}) => {
+
   return (
     <View style={styles.container}>
       <Text>

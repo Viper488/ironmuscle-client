@@ -1,6 +1,14 @@
 import 'react-native-gesture-handler';
 import React, {useCallback, useState} from 'react';
-import {Image, Text, View, TouchableOpacity, Modal} from 'react-native';
+import {
+  Image,
+  Text,
+  View,
+  TouchableOpacity,
+  Modal,
+  Alert,
+  BackHandler,
+} from 'react-native';
 import styles from '../../styles/Styles';
 import exerciseStyles from '../../styles/ExerciseStyles';
 import CountDown from 'react-native-countdown-component';
@@ -8,7 +16,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {black, white} from '../../styles/Colors';
 import YoutubePlayer from 'react-native-youtube-iframe';
 
-const ShowExercise = ({navigation}, index, training, exercises, length) => {
+const ShowExercise = ({navigation, index, training, exercises, length}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [key, setKey] = useState(0);
   const [run, setRun] = useState(false);

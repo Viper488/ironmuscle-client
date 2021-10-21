@@ -63,6 +63,7 @@ const tdStyles = StyleSheet.create({
   },
   exerciseDuration: {
     flex: 1,
+    marginLeft: '10%',
   },
   exerciseDurationText: {
     fontSize: 16,
