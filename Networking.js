@@ -196,3 +196,14 @@ export const getTrainingDetails = async id => {
       throw error;
     });
 };
+
+export const saveUserActivity = async trainingId => {
+  return await instance
+    .post(baseUrl + '/user/history?training=' + trainingId)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
