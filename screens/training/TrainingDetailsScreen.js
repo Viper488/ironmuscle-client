@@ -12,7 +12,6 @@ import styles from '../../styles/Styles';
 import trainingsStyles from '../../styles/TrainingsStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useFocusEffect} from '@react-navigation/native';
-import {getTrainingDetails} from '../../Networking';
 import tdStyles from '../../styles/TrainingDetailsStyles';
 import Bolts from '../components/Bolts';
 import DraggableFlatList from 'react-native-draggable-flatlist';
@@ -30,24 +29,10 @@ const TrainingDetailsScreen = ({navigation, route}) => {
   const [modalVideo, setModalVideo] = useState('');
 
   useEffect(() => {
-    getTrainingDetails(route.params.id)
-      .then(response => {
-        setTraining(response.data.training);
-        let i = 1;
-        response.data.exercises.forEach(exercise => {
-          exercise.key = i;
-          i++;
-        });
-        setExercises(response.data.exercises);
-        setOriginalExercises(response.data.exercises);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    return () => {
-      setExercises(originalExercises);
-    };
-  }, [originalExercises, route.params.id]);
+    setTraining(route.params.training);
+    setExercises(route.params.exercises);
+    setOriginalExercises(route.params.exercises);
+  }, [route.params.exercises, route.params.training]);
 
   useFocusEffect(
     React.useCallback(() => {

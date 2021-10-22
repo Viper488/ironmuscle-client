@@ -14,7 +14,11 @@ import {
 import styles from '../../styles/Styles';
 import trainingsStyles from '../../styles/TrainingsStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {getTrainingsByType, getTrainingsByUser} from '../../Networking';
+import {
+  getTrainingDetails,
+  getTrainingsByType,
+  getTrainingsByUser,
+} from '../../Networking';
 import {useFocusEffect} from '@react-navigation/native';
 import Bolts from '../components/Bolts';
 
@@ -57,10 +61,22 @@ const TrainingsScreen = ({navigation, route}) => {
   );
 
   const cardClickEventListener = item => {
-    navigation.navigate('TrainingDetails', {
-      id: item.id,
-      type: item.type,
-    });
+    getTrainingDetails(item.id)
+      .then(response => {
+        let i = 1;
+        response.data.exercises.forEach(exercise => {
+          exercise.key = i;
+          i++;
+        });
+        navigation.navigate('TrainingDetails', {
+          type: item.type,
+          training: response.data.training,
+          exercises: response.data.exercises,
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   const handleSearch = text => {

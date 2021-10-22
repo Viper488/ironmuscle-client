@@ -24,8 +24,9 @@ const ExerciseScreen = ({navigation, route}) => {
               text: 'YES',
               onPress: () => {
                 navigation.navigate('TrainingDetails', {
-                  id: route.params.id,
                   type: route.params.type,
+                  training: route.params.training,
+                  exercises: route.params.exercises,
                 });
                 return true;
               },
