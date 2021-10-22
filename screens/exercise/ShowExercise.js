@@ -16,7 +16,14 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {black, white} from '../../styles/Colors';
 import YoutubePlayer from 'react-native-youtube-iframe';
 
-const ShowExercise = ({navigation, index, training, exercises, length}) => {
+const ShowExercise = ({
+  navigation,
+  index,
+  training,
+  exercises,
+  length,
+  startTime,
+}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [key, setKey] = useState(0);
   const [run, setRun] = useState(false);
@@ -113,6 +120,7 @@ const ShowExercise = ({navigation, index, training, exercises, length}) => {
                 training: training,
                 exercises: exercises,
                 length: length,
+                startTime: startTime,
               });
             }}
             digitStyle={{backgroundColor: black}}
@@ -141,6 +149,7 @@ const ShowExercise = ({navigation, index, training, exercises, length}) => {
                       training: training,
                       exercises: exercises,
                       length: length,
+                      startTime: startTime,
                     });
                   }
                 }}>
@@ -162,6 +171,7 @@ const ShowExercise = ({navigation, index, training, exercises, length}) => {
                       training: training,
                       exercises: exercises,
                       length: length,
+                      startTime: startTime,
                     });
                   }}>
                   DONE
@@ -197,6 +207,7 @@ const ShowExercise = ({navigation, index, training, exercises, length}) => {
                       training: training,
                       exercises: exercises,
                       length: length,
+                      startTime: startTime,
                     });
                   } else {
                     navigation.navigate('Exercise', {
@@ -204,6 +215,7 @@ const ShowExercise = ({navigation, index, training, exercises, length}) => {
                       training: training,
                       exercises: exercises,
                       length: length,
+                      startTime: startTime,
                     });
                   }
                 }}>

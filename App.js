@@ -26,6 +26,7 @@ import ExerciseScreen from './screens/exercise/ExerciseScreen';
 import HistoryScreen from './screens/tabscreens/HistoryScreen';
 import RankingScreen from './screens/tabscreens/RankingScreen';
 import RequestsScreen from './screens/tabscreens/RequestsScreen';
+import {black, grey3, grey4, white} from './styles/Colors';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -42,26 +43,26 @@ const Home = () => {
           if (route.name === 'Trainings') {
             iconName = 'dumbbell';
             size = focused ? 25 : 20;
-            color = focused ? '#0eb05f' : '#555';
+            color = focused ? white : grey3;
           } else if (route.name === 'Requests') {
             iconName = 'align-justify';
             size = focused ? 25 : 20;
-            color = focused ? '#0eb05f' : '#555';
+            color = focused ? white : grey3;
           } else if (route.name === 'History') {
             iconName = 'user';
             size = focused ? 25 : 20;
-            color = focused ? '#0eb05f' : '#555';
-          } else if (route.name === 'Ranking') {
+            color = focused ? white : grey3;
+          } else if (route.name === 'Leaderboard') {
             iconName = 'award';
             size = focused ? 25 : 20;
-            color = focused ? '#0eb05f' : '#555';
+            color = focused ? white : grey3;
           }
           return <FontAwesome5 name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#0eb05f',
-        tabBarInactiveTintColor: '#555',
-        tabBarActiveBackgroundColor: '#333',
-        tabBarInactiveBackgroundColor: '#222326',
+        tabBarActiveTintColor: white,
+        tabBarInactiveTintColor: grey3,
+        tabBarActiveBackgroundColor: grey4,
+        tabBarInactiveBackgroundColor: black,
         tabBarLabelStyle: {fontSize: 14},
       })}>
       <Tab.Screen
@@ -75,13 +76,13 @@ const Home = () => {
         options={{headerShown: false}}
       />
       <Tab.Screen
-        name="History"
-        component={HistoryScreen}
+        name="Leaderboard"
+        component={RankingScreen}
         options={{headerShown: false}}
       />
       <Tab.Screen
-        name="Ranking"
-        component={RankingScreen}
+        name="History"
+        component={HistoryScreen}
         options={{headerShown: false}}
       />
     </Tab.Navigator>

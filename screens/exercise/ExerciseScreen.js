@@ -40,8 +40,14 @@ const ExerciseScreen = ({navigation, route}) => {
 
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation, route.params.id, route.params.type]),
+    }, [
+      navigation,
+      route.params.exercises,
+      route.params.training,
+      route.params.type,
+    ]),
   );
+
   return (
     <View style={styles.container}>
       <View style={exerciseStyles.titleContent}>
@@ -55,11 +61,15 @@ const ExerciseScreen = ({navigation, route}) => {
             training={route.params.training}
             exercises={route.params.exercises}
             length={route.params.length}
+            startTime={route.params.startTime}
           />
         ) : (
           <StopTraining
             navigation={navigation}
             training={route.params.training}
+            length={route.params.length}
+            startTime={route.params.startTime}
+            endTime={new Date().getTime()}
           />
         )}
       </View>

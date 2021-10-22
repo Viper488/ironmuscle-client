@@ -53,12 +53,16 @@ const TrainingDetailsScreen = ({navigation, route}) => {
     }, [exercises, navigation, originalExercises, route.params.type]),
   );
 
-  const displayTime = duration => {
-    let minutes = Math.floor(duration / 60);
+  const displayTime = seconds => {
+    let minutes = Math.floor(seconds / 60);
     if (minutes < 10) {
-      return '0' + minutes + ':' + (duration - 60 * minutes);
+      if (seconds < 10) {
+        return '00:0' + seconds;
+      } else {
+        return '0' + minutes + ':' + (seconds - 60 * minutes);
+      }
     }
-    return minutes + ':' + (duration - 60 * minutes);
+    return minutes + ':' + (seconds - 60 * minutes);
   };
 
   const onStateChange = useCallback(state => {
@@ -109,6 +113,7 @@ const TrainingDetailsScreen = ({navigation, route}) => {
             training: training,
             exercises: exercises,
             length: exercises.length,
+            startTime: new Date().getTime(),
           });
         }}>
         <Text style={tdStyles.btnText}>START</Text>
