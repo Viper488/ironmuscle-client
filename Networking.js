@@ -197,9 +197,20 @@ export const getTrainingDetails = async id => {
     });
 };
 
-export const saveUserActivity = async trainingId => {
+export const saveUserActivity = async (trainingId, time) => {
   return await instance
-    .post(baseUrl + '/user/history?training=' + trainingId)
+    .post(baseUrl + '/user/history?training=' + trainingId + '&time=' + time)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const getUserActivities = async (year, month) => {
+  return await instance
+    .get(baseUrl + '/user/history?y=' + year + '&m=' + month)
     .then(response => {
       return response;
     })

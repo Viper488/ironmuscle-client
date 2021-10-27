@@ -1,25 +1,25 @@
 import {View} from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import React from 'react';
+import {blue, grey2} from '../../styles/Colors';
 
-export default function Bolts(props) {
+const Bolts = ({difficulty, size}) => {
   let color1 =
-    props.difficulty === 'Beginner' ||
-    props.difficulty === 'Mediocre' ||
-    props.difficulty === 'Pro'
-      ? 'blue'
-      : 'lightgrey';
-  let color2 =
-    props.difficulty === 'Mediocre' || props.difficulty === 'Pro'
-      ? 'blue'
-      : 'lightgrey';
-  let color3 = props.difficulty === 'Pro' ? 'blue' : 'lightgrey';
+    difficulty === 'Beginner' ||
+    difficulty === 'Mediocre' ||
+    difficulty === 'Pro'
+      ? blue
+      : grey2;
+  let color2 = difficulty === 'Mediocre' || difficulty === 'Pro' ? blue : grey2;
+  let color3 = difficulty === 'Pro' ? blue : grey2;
 
   return (
     <View style={{flexDirection: 'row'}}>
-      <FontAwesome5 name={'bolt'} size={30} color={color1} />
-      <FontAwesome5 name={'bolt'} size={30} color={color2} />
-      <FontAwesome5 name={'bolt'} size={30} color={color3} />
+      <FontAwesome5 name={'bolt'} size={size} color={color1} />
+      <FontAwesome5 name={'bolt'} size={size} color={color2} />
+      <FontAwesome5 name={'bolt'} size={size} color={color3} />
     </View>
   );
-}
+};
+
+export default Bolts;

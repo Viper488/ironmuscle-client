@@ -96,14 +96,14 @@ const TrainingDetailsScreen = ({navigation, route}) => {
         </View>
       </Modal>
       <Image source={{uri: training.image}} style={tdStyles.imageBanner} />
-      <Text style={tdStyles.trainingName}>
-        {training.name + ' ' + training.difficulty}
-      </Text>
-      <Text style={tdStyles.trainingLength}>
-        {exercises.length + ' exercises'}
-      </Text>
-      <View style={tdStyles.bolts}>
-        <Bolts difficulty={training.difficulty} />
+      <View style={tdStyles.cardContent}>
+        <Text style={trainingsStyles.name}>
+          {training.name} {training.difficulty} {'\n'}
+          {exercises.length + ' exercises'}
+        </Text>
+        <View style={trainingsStyles.bolts}>
+          <Bolts difficulty={training.difficulty} size={25} />
+        </View>
       </View>
       <TouchableOpacity
         style={tdStyles.btn}

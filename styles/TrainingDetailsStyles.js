@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {black, green, white, yellow} from './Colors';
+import {black, black2, green, white, yellow} from './Colors';
 
 const tdStyles = StyleSheet.create({
   trainingName: {
@@ -29,6 +29,19 @@ const tdStyles = StyleSheet.create({
   imageBanner: {
     flex: 1,
     width: '100%',
+  },
+  cardContent: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    flexDirection: 'row',
+    backgroundColor: black2,
+    paddingVertical: '2%',
+    paddingHorizontal: '5%',
+    justifyContent: 'space-between',
+    borderBottomWidth: 2,
+    borderLeftWidth: 2,
+    borderColor: black2,
   },
   contentList: {
     flex: 3,

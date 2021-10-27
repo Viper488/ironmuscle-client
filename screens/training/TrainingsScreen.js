@@ -21,6 +21,8 @@ import {
 } from '../../Networking';
 import {useFocusEffect} from '@react-navigation/native';
 import Bolts from '../components/Bolts';
+import Tags from '../components/Tags';
+import {white} from '../../styles/Colors';
 
 const TrainingsScreen = ({navigation, route}) => {
   const [data, setData] = useState({});
@@ -102,16 +104,6 @@ const TrainingsScreen = ({navigation, route}) => {
     return item.points == lowerQuery;
   };
 
-  const renderTags = items => {
-    return items.map(tag => {
-      return (
-        <View key={tag} style={trainingsStyles.btnColor}>
-          <Text>{tag}</Text>
-        </View>
-      );
-    });
-  };
-
   return (
     <View style={styles.container}>
       <View style={trainingsStyles.formContent}>
@@ -139,40 +131,28 @@ const TrainingsScreen = ({navigation, route}) => {
         }}
         renderItem={({item}) => {
           return (
-            <View style={[trainingsStyles.card, {borderColor: item.color}]}>
-              <Image
-                style={[trainingsStyles.image, trainingsStyles.imageContent]}
-                source={{uri: item.image}}
-              />
-
-              <View style={trainingsStyles.bolts}>
-                <Bolts difficulty={item.difficulty} />
-              </View>
-              <View style={trainingsStyles.cardContent}>
-                <Text style={trainingsStyles.name}>{item.name}</Text>
-              </View>
-              <View style={trainingsStyles.content}>
-                <View
-                  style={[
-                    trainingsStyles.cardContent,
-                    trainingsStyles.tagsContent,
-                  ]}>
-                  {renderTags([item.difficulty, item.points])}
+            <View style={trainingsStyles.card}>
+              <View style={trainingsStyles.imageContent}>
+                <View style={trainingsStyles.cardContent}>
+                  <Text style={trainingsStyles.name}>
+                    {item.name} {item.difficulty}
+                  </Text>
+                  <View style={trainingsStyles.bolts}>
+                    <Bolts difficulty={item.difficulty} size={25} />
+                  </View>
                 </View>
-
-                <View style={trainingsStyles.playBtn}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      cardClickEventListener(item);
-                    }}>
-                    <FontAwesome5
-                      name={'play-circle'}
-                      size={50}
-                      color={'black'}
-                    />
-                  </TouchableOpacity>
-                </View>
+                <Image
+                  style={trainingsStyles.image}
+                  source={{uri: item.image}}
+                />
               </View>
+              <TouchableOpacity
+                style={trainingsStyles.content}
+                onPress={() => {
+                  cardClickEventListener(item);
+                }}>
+                <FontAwesome5 name={'play-circle'} size={50} color={'black'} />
+              </TouchableOpacity>
             </View>
           );
         }}

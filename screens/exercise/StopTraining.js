@@ -6,20 +6,22 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {saveUserActivity} from '../../Networking';
 import stopTrainingStyles from '../../styles/StopTrainingStyles';
 import {useFocusEffect} from '@react-navigation/native';
+import {getDate, toHHMMSS} from '../functions/Functions';
+import {Snackbar} from 'react-native-paper';
 
 const StopTraining = ({navigation, training, length, startTime, endTime}) => {
-  const [date, setDate] = useState('');
+  const [trainingDate, setTrainingDate] = useState('');
 
   useEffect(() => {
-    saveUserActivity(training.id)
+    saveUserActivity(training.id, new Date(endTime - startTime).getSeconds())
       .then(response => {
         console.log('TrainingDate: ' + response.data.trainingDate);
-        setDate(response.data.trainingDate);
+        setTrainingDate(response.data.trainingDate);
       })
       .catch(error => {
         console.log(error);
       });
-  }, [training.id]);
+  }, [endTime, startTime, training.id, training.name]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -34,23 +36,6 @@ const StopTraining = ({navigation, training, length, startTime, endTime}) => {
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
     }, [navigation]),
   );
-
-  const toHHMMSS = sec_num => {
-    let hours = Math.floor(sec_num / 3600);
-    let minutes = Math.floor((sec_num - hours * 3600) / 60);
-    let seconds = sec_num - hours * 3600 - minutes * 60;
-
-    if (hours < 10) {
-      hours = '0' + hours;
-    }
-    if (minutes < 10) {
-      minutes = '0' + minutes;
-    }
-    if (seconds < 10) {
-      seconds = '0' + seconds;
-    }
-    return hours + ':' + minutes + ':' + seconds;
-  };
 
   return (
     <View style={styles.container}>
@@ -77,6 +62,12 @@ const StopTraining = ({navigation, training, length, startTime, endTime}) => {
             <Text style={stopTrainingStyles.headerText}>Time:</Text>
             <Text style={stopTrainingStyles.statisticsText}>
               {toHHMMSS(new Date(endTime - startTime).getSeconds())}
+            </Text>
+          </View>
+          <View style={stopTrainingStyles.statisticsContent}>
+            <Text style={stopTrainingStyles.headerText}>Date:</Text>
+            <Text style={stopTrainingStyles.statisticsText}>
+              {getDate(trainingDate)}
             </Text>
           </View>
         </View>

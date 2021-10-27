@@ -38,7 +38,6 @@ const stopTrainingStyles = StyleSheet.create({
     marginBottom: '10%',
   },
   statisticsContent: {
-    width: '50%',
     backgroundColor: white,
   },
   statisticsText: {

@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {white, white2, white3} from './Colors';
+import {black, black2, green, white, white2, white3} from './Colors';
 
 const trainingsStyles = StyleSheet.create({
   formContent: {
@@ -40,25 +40,24 @@ const trainingsStyles = StyleSheet.create({
     padding: 10,
   },
   card: {
-    height: null,
     width: '100%',
-    paddingTop: 10,
-    paddingBottom: 10,
-    marginTop: 45,
+    marginTop: 15,
     backgroundColor: white,
-    flexDirection: 'column',
-    marginBottom: 20,
-  },
-  content: {
     flexDirection: 'row',
   },
   cardContent: {
-    width: '50%',
     flexDirection: 'row',
-    marginLeft: 10,
+    backgroundColor: black2,
+    width: '100%',
+    paddingVertical: '2%',
+    paddingHorizontal: '5%',
+    justifyContent: 'space-between',
+    borderBottomWidth: 2,
+    borderLeftWidth: 2,
+    borderColor: black2,
   },
   imageContent: {
-    marginTop: -40,
+    flex: 4,
   },
   tagsContent: {
     marginTop: 10,
@@ -72,6 +71,7 @@ const trainingsStyles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 10,
     alignSelf: 'center',
+    color: white,
   },
   btnColor: {
     padding: 10,
@@ -80,15 +80,16 @@ const trainingsStyles = StyleSheet.create({
     backgroundColor: white2,
     marginTop: 5,
   },
-  playBtn: {
-    width: '50%',
-    paddingRight: 20,
-    alignItems: 'flex-end',
+  content: {
+    flex: 1,
+    backgroundColor: white,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   bolts: {
-    position: 'absolute',
-    top: -20,
-    right: 10,
+/*    position: 'absolute',
+    top: 20,
+    right: 10,*/
     flexDirection: 'row',
   },
 });

@@ -25,8 +25,8 @@ const LoginScreen = ({navigation, route}) => {
     setVisible(false);
   };
 
-  const auth = async () => {
-    await requestAuth(username, password)
+  const auth = () => {
+    requestAuth(username, password)
       .then(response => {
         let jwtToken = response.data.access_token;
         let rftToken = response.data.refresh_token;
@@ -82,7 +82,7 @@ const LoginScreen = ({navigation, route}) => {
         <TouchableOpacity
           style={styles.btn}
           onPress={() => {
-            auth().then(r => console.log('LOGIN'));
+            auth();
           }}>
           <Text style={styles.btnText}>Login</Text>
         </TouchableOpacity>
