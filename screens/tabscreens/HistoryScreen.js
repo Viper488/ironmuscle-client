@@ -9,12 +9,16 @@ import Bolts from '../components/Bolts';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Calendar} from 'react-native-calendars';
 import {blue} from '../../styles/Colors';
+import {useFocusEffect} from '@react-navigation/native';
 
 const HistoryScreen = ({navigation, route}) => {
   const [history, setHistory] = useState([]);
-  useEffect(() => {
-    getUserHistory(new Date().getFullYear(), new Date().getMonth() + 1);
-  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getUserHistory(new Date().getFullYear(), new Date().getMonth() + 1);
+    }, []),
+  );
 
   const getUserHistory = (year, month) => {
     getUserActivities(year, month)
@@ -29,7 +33,10 @@ const HistoryScreen = ({navigation, route}) => {
   const markedDates = () => {
     let dateHolder = [];
     history.forEach(item => {
-      dateHolder.push([getDate(item.date), {selected: true, selectedColor: blue}]);
+      dateHolder.push([
+        getDate(item.date),
+        {selected: true, selectedColor: blue},
+      ]);
     });
     return Object.fromEntries(dateHolder);
   };

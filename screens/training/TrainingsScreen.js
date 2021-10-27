@@ -21,35 +21,35 @@ import {
 } from '../../Networking';
 import {useFocusEffect} from '@react-navigation/native';
 import Bolts from '../components/Bolts';
-import Tags from '../components/Tags';
-import {white} from '../../styles/Colors';
 
 const TrainingsScreen = ({navigation, route}) => {
   const [data, setData] = useState({});
   const [fullData, setFullData] = useState({});
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(async () => {
-    try {
-      let type = route.params.type;
-      if (type === 'custom') {
-        let response = await getTrainingsByUser();
-        console.log(response.data);
-        setData(response.data);
-        setFullData(response.data);
-      } else {
-        let response = await getTrainingsByType(type);
-        console.log(response.data);
-        setData(response.data);
-        setFullData(response.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [route.params.type]);
-
   useFocusEffect(
     React.useCallback(() => {
+      if (route.params.type === 'custom') {
+        getTrainingsByUser()
+          .then(response => {
+            console.log(response.data);
+            setData(response.data);
+            setFullData(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        getTrainingsByType(route.params.type)
+          .then(response => {
+            console.log(response.data);
+            setData(response.data);
+            setFullData(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+
       const onBackPress = () => {
         navigation.navigate('Home');
         return true;
@@ -59,7 +59,7 @@ const TrainingsScreen = ({navigation, route}) => {
 
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation]),
+    }, [navigation, route.params.type]),
   );
 
   const cardClickEventListener = item => {

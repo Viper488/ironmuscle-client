@@ -87,9 +87,6 @@ const trainingsStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   bolts: {
-/*    position: 'absolute',
-    top: 20,
-    right: 10,*/
     flexDirection: 'row',
   },
 });

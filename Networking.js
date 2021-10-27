@@ -83,14 +83,7 @@ export const requestRegister = async request => {
       return response;
     })
     .catch(error => {
-      console.log(error);
-      console.log(error.response.status);
-      console.log(error.response.data);
-
-      return {
-        status: error.response.status,
-        data: error.response.data,
-      };
+      throw error;
     });
 };
 
@@ -101,14 +94,7 @@ export const requestPasswordReset = async email => {
       return response;
     })
     .catch(error => {
-      console.log(error);
-      console.log(error.response.status);
-      console.log(error.response.data);
-
-      return {
-        status: error.response.status,
-        data: error.response.data,
-      };
+      throw error;
     });
 };
 
@@ -119,7 +105,39 @@ export const getMyself = async () => {
       return response;
     })
     .catch(error => {
-      console.log(error);
+      throw error;
+    });
+};
+
+export const getBadges = async () => {
+  return await instance
+    .get(baseUrl + '/user/badges')
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const getUserRanking = async () => {
+  return await instance
+    .get(baseUrl + '/user/ranking')
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const getRanking = async () => {
+  return await instance
+    .get(baseUrl + '/user/ranking/top')
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
       throw error;
     });
 };
@@ -131,11 +149,7 @@ export const getWelcome = async () => {
       return response;
     })
     .catch(error => {
-      console.log(error);
-      return {
-        status: error.response.status,
-        data: error.response.data,
-      };
+      throw error;
     });
 };
 

@@ -40,11 +40,9 @@ class CustomDrawer extends Component {
   async componentDidMount() {
     await getMyself()
       .then(response => {
-        console.log(response.status);
         this.setState({user: response.data});
       })
       .catch(error => {
-        console.log(error.status);
         console.log(error);
       });
   }
@@ -102,7 +100,7 @@ class CustomDrawer extends Component {
             <Image
               style={profileStyles.avatar}
               source={{
-                uri: 'https://bootdey.com/img/Content/avatar/avatar2.png',
+                uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
               }}
             />
             <Text style={profileStyles.name}>
