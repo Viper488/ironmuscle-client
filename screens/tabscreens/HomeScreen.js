@@ -79,100 +79,24 @@ class HomeScreen extends Component {
             CUSTOM
           </Text>
         </TouchableOpacity>
-        <View
+        <TouchableOpacity
           style={{
-            flexDirection: 'row',
+            marginTop: '2.5%',
+            borderRadius: 30,
+            backgroundColor: 'blue',
             flex: 1,
             width: '100%',
-            paddingTop: '2.5%',
+          }}
+          onPress={() => {
+            this.showTrainings('STANDARD');
           }}>
-          <View
-            style={{
-              flexDirection: 'column',
-              flex: 1,
-              width: '50%',
-              marginRight: '2%',
-            }}>
-            <TouchableOpacity
-              style={{
-                marginBottom: '2.5%',
-                marginRight: '1.75%',
-                borderRadius: 30,
-                backgroundColor: 'blue',
-                flex: 1,
-                width: '100%',
-              }}
-              onPress={() => {
-                this.showTrainings('GYM');
-              }}>
-              <Image
-                style={homeStyles.image}
-                source={require('../../images/gym.jpg')}
-                resizeMode={'cover'}
-              />
-              <Text style={homeStyles.title}>GYM</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                marginTop: '2.5%',
-                marginRight: '1.75%',
-                borderRadius: 30,
-                backgroundColor: 'yellow',
-                flex: 1,
-                width: '100%',
-              }}
-              onPress={() => {
-                this.showTrainings('RUNNING');
-              }}>
-              <Image
-                style={homeStyles.image}
-                source={require('../../images/running.jpg')}
-                resizeMode={'cover'}
-              />
-              <Text style={homeStyles.title}>RUNNING</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{flexDirection: 'column', flex: 1, width: '50%'}}>
-            <TouchableOpacity
-              style={{
-                marginBottom: '2.5%',
-                marginRight: '1.75%',
-                borderRadius: 30,
-                backgroundColor: 'green',
-                flex: 1,
-                width: '100%',
-              }}
-              onPress={() => {
-                this.showTrainings('YOGA');
-              }}>
-              <Image
-                style={homeStyles.image}
-                source={require('../../images/yoga.jpg')}
-                resizeMode={'cover'}
-              />
-              <Text style={homeStyles.title}>YOGA</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                marginTop: '2.5%',
-                marginRight: '1.75%',
-                borderRadius: 30,
-                backgroundColor: 'red',
-                flex: 1,
-                width: '100%',
-              }}
-              onPress={() => {
-                this.showTrainings('CROSSFIT');
-              }}>
-              <Image
-                style={homeStyles.image}
-                source={require('../../images/crossfit.jpg')}
-                resizeMode={'cover'}
-              />
-              <Text style={homeStyles.title}>CROSSFIT</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+          <Image
+            style={homeStyles.image}
+            source={require('../../images/gym.jpg')}
+            resizeMode={'cover'}
+          />
+          <Text style={homeStyles.title}>STANDARD</Text>
+        </TouchableOpacity>
       </View>
     );
   }

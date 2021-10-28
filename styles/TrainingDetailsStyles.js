@@ -27,8 +27,10 @@ const tdStyles = StyleSheet.create({
     color: yellow,
   },
   imageBanner: {
+    marginTop: '15%',
     flex: 1,
     width: '100%',
+
   },
   cardContent: {
     position: 'absolute',
@@ -92,7 +94,7 @@ const tdStyles = StyleSheet.create({
     marginTop: 40,
     backgroundColor: black,
     position: 'absolute',
-    top: '15%',
+    top: '20%',
   },
   btnText: {
     color: white,

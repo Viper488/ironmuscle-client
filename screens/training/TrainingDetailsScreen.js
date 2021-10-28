@@ -18,6 +18,7 @@ import DraggableFlatList from 'react-native-draggable-flatlist';
 import {grey, white} from '../../styles/Colors';
 import exerciseStyles from '../../styles/ExerciseStyles';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import {toHHMMSS} from '../functions/Functions';
 
 const TrainingDetailsScreen = ({navigation, route}) => {
   const [training, setTraining] = useState({});
@@ -52,18 +53,6 @@ const TrainingDetailsScreen = ({navigation, route}) => {
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
     }, [exercises, navigation, originalExercises, route.params.type]),
   );
-
-  const displayTime = seconds => {
-    let minutes = Math.floor(seconds / 60);
-    if (minutes < 10) {
-      if (seconds < 10) {
-        return '00:0' + seconds;
-      } else {
-        return '0' + minutes + ':' + (seconds - 60 * minutes);
-      }
-    }
-    return minutes + ':' + (seconds - 60 * minutes);
-  };
 
   const onStateChange = useCallback(state => {
     if (state === 'ended') {
@@ -150,7 +139,7 @@ const TrainingDetailsScreen = ({navigation, route}) => {
                   <Text style={tdStyles.exerciseDurationText}>
                     {item.time === 0
                       ? 'x' + item.repetitions
-                      : displayTime(item.time)}
+                      : toHHMMSS(item.time)}
                   </Text>
                 </View>
               </View>
