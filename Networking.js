@@ -131,9 +131,9 @@ export const getUserRanking = async () => {
     });
 };
 
-export const getRanking = async () => {
+export const getRanking = async page => {
   return await instance
-    .get(baseUrl + '/user/ranking/top')
+    .get(baseUrl + '/user/ranking/list?page=' + page + '&size=' + 30)
     .then(response => {
       return response;
     })

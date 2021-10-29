@@ -29,8 +29,6 @@ class CustomDrawer extends Component {
         id: '',
         username: '',
         email: '',
-        name: '',
-        lastName: '',
       },
       password: '',
       newPassword: '',
@@ -104,7 +102,7 @@ class CustomDrawer extends Component {
               }}
             />
             <Text style={profileStyles.name}>
-              {this.state.user.name + ' ' + this.state.user.lastName}
+              {this.state.user.username}
             </Text>
             <Text>{this.state.user.email}</Text>
           </View>

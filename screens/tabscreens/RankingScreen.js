@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, {Component, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {FlatList, Image, RefreshControl, Text, View} from 'react-native';
 import styles from '../../styles/Styles';
 import rankingStyles from '../../styles/RankingStyles';
@@ -11,7 +11,6 @@ import {
   getUserRanking,
 } from '../../Networking';
 import Badges from '../components/Badges';
-import historyStyles from '../../styles/HistoryStyles';
 import {white, yellow} from '../../styles/Colors';
 
 const RankingScreen = ({navigation, route}) => {
@@ -19,46 +18,83 @@ const RankingScreen = ({navigation, route}) => {
   const [userRanking, setUserRanking] = useState({});
   const [ranking, setRanking] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [flatListRef, setFlatListRef] = useState({});
 
   useFocusEffect(
     React.useCallback(() => {
-      updateRankings();
-    }, []),
+      getBadges()
+        .then(response => {
+          setBadges(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      getUserRanking()
+        .then(response => {
+          setUserRanking(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      getRanking(page)
+        .then(response => {
+          setPage(response.data.currentPage);
+          setTotalPages(response.data.totalPages);
+          setRanking([...ranking, ...response.data.ranking]);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }, [page]),
   );
 
   const wait = timeout => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   };
 
-  const onRefresh = React.useCallback(() => {
+  /*  const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    updateRankings();
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
 
-  const updateRankings = () => {
-    getBadges()
-      .then(response => {
-        setBadges(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    getUserRanking()
-      .then(response => {
-        setUserRanking(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    getRanking()
-      .then(response => {
-        setRanking(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    let newPage = page - 1;
+    if (newPage >= 0) {
+      setPage(newPage);
+      getRanking(page)
+        .then(response => {
+          setPage(response.data.currentPage);
+          setTotalPages(response.data.totalPages);
+          setRanking(response.data.ranking);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+    wait(2000).then(() => setRefreshing(false));
+  }, [page]);*/
+
+  const loadMoreData = () => {
+    let newPage = page + 1;
+    if (newPage < totalPages) {
+      setPage(newPage);
+      // getRanking(page)
+      //   .then(response => {
+      //     console.log('RANKING LOAD MORE DATA');
+      //     setPage(response.data.currentPage);
+      //     setTotalPages(response.data.totalPages);
+      //     setRanking([...ranking, ...response.data.ranking]);
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //   });
+      //scrollToIndex();
+    }
   };
+
+  const scrollToIndex = () => {
+    flatListRef.scrollToIndex({animated: false, index: 0});
+  };
+
   return (
     <View style={styles.container}>
       <View style={rankingStyles.header}>
@@ -89,19 +125,22 @@ const RankingScreen = ({navigation, route}) => {
           <Badges badges={badges} />
         </View>
         <View style={rankingStyles.rankingHeader}>
-          <Text style={rankingStyles.rankingHeaderText}>TOP 100</Text>
+          <Text style={rankingStyles.rankingHeaderText}>LEADERBOARD</Text>
         </View>
         <View style={rankingStyles.rankingContent}>
           <FlatList
             style={rankingStyles.rankingList}
             data={ranking}
-            keyExtractor={item => {
-              return item.id;
-            }}
-            refreshControl={
+            keyExtractor={(item, index) => index}
+            /*            refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-            renderItem={({item}) => {
+            }*/
+            ref={ref => {
+              setFlatListRef(ref);
+            }}
+            onEndReachedThreshold={0.4}
+            onEndReached={loadMoreData}
+            renderItem={({item, index}) => {
               return (
                 <View
                   style={[
