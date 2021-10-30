@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {black, green, grey3, grey4, white, yellow} from './Colors';
 
 const homeStyles = StyleSheet.create({
   filter: {
@@ -13,15 +14,33 @@ const homeStyles = StyleSheet.create({
     height: '100%',
     opacity: 0.8,
   },
-  title: {
+  typeContent: {
+    width: '100%',
+    backgroundColor: '#000',
+    borderRadius: 30,
+  },
+  type: {
     textTransform: 'uppercase',
-    position: 'absolute',
-    bottom: '10%',
-    left: '10%',
     textAlign: 'center',
-    color: 'white',
+    color: white,
     fontWeight: 'bold',
-    fontSize: 24,
+    fontSize: 18,
+  },
+  types: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: '1%',
+    width: '100%',
+  },
+  typeBtn: {
+    borderRadius: 30,
+    flex: 1,
+    marginHorizontal: '3%',
+  },
+  trainingsContent: {
+    flex: 10,
+    backgroundColor: black,
+    width: '100%',
   },
 });
 

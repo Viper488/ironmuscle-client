@@ -70,7 +70,7 @@ const ShowExercise = ({
               <FontAwesome5 name={'arrow-left'} size={50} color={white} />
             </View>
           </TouchableOpacity>
-          <Text style={exerciseStyles.btnText}>{exercises[index].name}</Text>
+          <Text style={exerciseStyles.modalTitle}>{exercises[index].name}</Text>
           <YoutubePlayer
             height={300}
             play={playing}

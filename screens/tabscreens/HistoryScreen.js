@@ -8,7 +8,7 @@ import {getDate, getTime, toHHMMSS} from '../functions/Functions';
 import Bolts from '../components/Bolts';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Calendar} from 'react-native-calendars';
-import {blue} from '../../styles/Colors';
+import {blue, grey} from '../../styles/Colors';
 import {useFocusEffect} from '@react-navigation/native';
 
 const HistoryScreen = ({navigation, route}) => {

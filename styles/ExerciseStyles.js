@@ -96,6 +96,13 @@ const exerciseStyles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
   },
+  modalTitle: {
+    color: '#FFF',
+    fontSize: 26,
+    alignSelf: 'center',
+    fontWeight: 'bold',
+    marginBottom: '5%',
+  },
   btnText: {
     color: '#FFF',
     fontSize: 26,

@@ -189,9 +189,9 @@ export const getTrainingsByUser = async () => {
     });
 };
 
-export const getTrainingsByType = async type => {
+export const getStandardTrainings = async () => {
   return await instance
-    .get(baseUrl + '/training/type/' + type)
+    .get(baseUrl + '/training/type/Standard')
     .then(response => {
       return response;
     })

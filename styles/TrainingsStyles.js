@@ -4,7 +4,6 @@ import {black, black2, green, white, white2, white3} from './Colors';
 const trainingsStyles = StyleSheet.create({
   formContent: {
     flexDirection: 'row',
-    marginTop: 30,
   },
   inputContainer: {
     borderBottomColor: white3,
@@ -24,6 +23,9 @@ const trainingsStyles = StyleSheet.create({
   iconBtnSearch: {
     alignSelf: 'center',
   },
+  searchIcon: {
+    marginLeft: '5%',
+  },
   inputs: {
     height: 45,
     marginLeft: 16,
@@ -35,15 +37,15 @@ const trainingsStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   notificationList: {
+    marginTop: '2%',
     width: '100%',
-    marginTop: 20,
     padding: 10,
   },
   card: {
     width: '100%',
-    marginTop: 15,
     backgroundColor: white,
     flexDirection: 'row',
+    borderRadius: 30,
   },
   cardContent: {
     flexDirection: 'row',

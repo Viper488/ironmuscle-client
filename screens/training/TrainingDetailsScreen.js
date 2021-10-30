@@ -41,9 +41,7 @@ const TrainingDetailsScreen = ({navigation, route}) => {
         console.log(exercises);
         console.log(originalExercises);
         setExercises(originalExercises);
-        navigation.navigate('TrainingsList', {
-          type: route.params.type,
-        });
+        navigation.navigate('Home');
         return true;
       };
 
@@ -51,7 +49,7 @@ const TrainingDetailsScreen = ({navigation, route}) => {
 
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [exercises, navigation, originalExercises, route.params.type]),
+    }, [exercises, navigation, originalExercises]),
   );
 
   const onStateChange = useCallback(state => {
@@ -75,7 +73,7 @@ const TrainingDetailsScreen = ({navigation, route}) => {
               <FontAwesome5 name={'arrow-left'} size={50} color={white} />
             </View>
           </TouchableOpacity>
-          <Text style={exerciseStyles.btnText}>{modalName}</Text>
+          <Text style={exerciseStyles.modalTitle}>{modalName}</Text>
           <YoutubePlayer
             height={300}
             play={playing}

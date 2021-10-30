@@ -20,7 +20,6 @@ import RegisterScreen from './screens/RegisterScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
 import HomeScreen from './screens/tabscreens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
-import TrainingsScreen from './screens/training/TrainingsScreen';
 import TrainingDetailsScreen from './screens/training/TrainingDetailsScreen';
 import ExerciseScreen from './screens/exercise/ExerciseScreen';
 import HistoryScreen from './screens/tabscreens/HistoryScreen';
@@ -95,11 +94,6 @@ const DrawerHome = () => {
       <Drawer.Screen
         name="Home"
         component={Home}
-        options={{headerShown: false}}
-      />
-      <Drawer.Screen
-        name="TrainingsList"
-        component={TrainingsScreen}
         options={{headerShown: false}}
       />
       <Drawer.Screen

@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {
   View,
   Text,
@@ -7,99 +7,232 @@ import {
   Image,
   Alert,
   BackHandler,
+  TextInput,
+  FlatList,
 } from 'react-native';
 import styles from '../../styles/Styles';
 import homeStyles from '../../styles/HomeStyles';
-import {getTrainingsByType, JWToken, RefreshToken} from '../../Networking';
+import {
+  getStandardTrainings,
+  getTrainingDetails,
+  getTrainingsByUser,
+  JWToken,
+  RefreshToken,
+} from '../../Networking';
 import {_removeData, _storeData} from '../../AsyncStorageManager';
+import {black, black2, grey, yellow} from '../../styles/Colors';
+import trainingsStyles from '../../styles/TrainingsStyles';
+import {useFocusEffect} from '@react-navigation/native';
+import Bolts from '../components/Bolts';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import filter from 'lodash.filter';
 
-class HomeScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+const HomeScreen = ({navigation, route}) => {
+  const [data, setData] = useState({});
+  const [fullData, setFullData] = useState({});
+  const [type, setType] = useState('STANDARD');
 
-  backAction = () => {
-    Alert.alert('Hold on!', 'Are you sure you want to log out?', [
-      {
-        text: 'No',
-        onPress: () => null,
-        style: 'cancel',
-      },
-      {
-        text: 'YES',
-        onPress: async () => {
-          await _removeData(JWToken);
-          await _removeData(RefreshToken);
+  useFocusEffect(
+    React.useCallback(() => {
+      getStandardTrainings()
+        .then(response => {
+          console.log(response.data);
+          setData(response.data);
+          setFullData(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      //}
 
-          this.props.navigation.navigate('Login');
-          return true;
-        },
-      },
-    ]);
-    return true;
+      const onBackPress = () => {
+        Alert.alert('Hold on!', 'Are you sure you want to log out?', [
+          {
+            text: 'No',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {
+            text: 'YES',
+            onPress: async () => {
+              await _removeData(JWToken);
+              await _removeData(RefreshToken);
+
+              navigation.navigate('Login');
+              return true;
+            },
+          },
+        ]);
+        return true;
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [navigation]),
+  );
+
+  const showTrainings = type => {};
+
+  const handleSearch = text => {
+    if (text === '') {
+      setData(fullData);
+    } else {
+      const filteredData = filter(data, item => {
+        return contains(item, text);
+      });
+      setData(filteredData);
+    }
   };
 
-  componentDidMount() {
-    this.backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      this.backAction,
-    );
-  }
+  const contains = (item, query) => {
+    let lowerQuery = query.toLowerCase();
+    if (item.name.toLowerCase().includes(lowerQuery)) {
+      return true;
+    }
 
-  componentWillUnmount() {
-    this.backHandler.remove();
-  }
-
-  showTrainings = type => {
-    this.props.navigation.navigate('TrainingsList', {
-      type: type.toLowerCase(),
-    });
+    if (item.difficulty.toLowerCase().includes(lowerQuery)) {
+      return true;
+    }
+    return item.points == lowerQuery;
   };
 
-  render() {
-    return (
-      <View style={[styles.container, {padding: '2.5%'}]}>
-        <TouchableOpacity
-          style={{
-            borderRadius: 30,
-            flex: 1,
-            backgroundColor: 'orange',
-            width: '100%',
-          }}
-          onPress={() => {
-            this.showTrainings('CUSTOM');
-          }}>
-          <Image
-            style={homeStyles.image}
-            source={require('../../images/custom.jpg')}
-            resizeMode={'cover'}
+  const cardClickEventListener = item => {
+    getTrainingDetails(item.id)
+      .then(response => {
+        let i = 1;
+        response.data.exercises.forEach(exercise => {
+          exercise.key = i;
+          i++;
+        });
+        navigation.navigate('TrainingDetails', {
+          type: item.type,
+          training: response.data.training,
+          exercises: response.data.exercises,
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  return (
+    <View style={[styles.container, {padding: '2.5%'}]}>
+      <View style={homeStyles.trainingsContent}>
+        <View style={trainingsStyles.formContent}>
+          <View style={trainingsStyles.inputContainer}>
+            <FontAwesome5
+              name={'search'}
+              size={20}
+              color={grey}
+              style={trainingsStyles.searchIcon}
+            />
+            <TextInput
+              style={trainingsStyles.inputs}
+              placeholder="Search"
+              underlineColorAndroid="transparent"
+              onChangeText={query => handleSearch(query)}
+            />
+          </View>
+        </View>
+        <View style={homeStyles.types}>
+          <TouchableOpacity
+            style={homeStyles.typeBtn}
+            onPress={() => {
+              getStandardTrainings()
+                .then(response => {
+                  console.log(response.data);
+                  setData(response.data);
+                  setFullData(response.data);
+                  setType('STANDARD');
+                })
+                .catch(error => {
+                  console.log(error);
+                });
+            }}>
+            <View
+              style={[
+                homeStyles.typeContent,
+                {backgroundColor: type === 'STANDARD' ? grey : black2},
+              ]}>
+              <Text style={homeStyles.type}>STANDARD</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={homeStyles.typeBtn}
+            onPress={() => {
+              getTrainingsByUser()
+                .then(response => {
+                  console.log(response.data);
+                  setData(response.data);
+                  setFullData(response.data);
+                  setType('CUSTOM');
+                })
+                .catch(error => {
+                  console.log(error);
+                });
+            }}>
+            <View
+              style={[
+                homeStyles.typeContent,
+                {backgroundColor: type === 'CUSTOM' ? grey : black2},
+              ]}>
+              <Text style={homeStyles.type}>CUSTOM</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        {type === 'CUSTOM' && fullData.length === 0 ? (
+          <View style={trainingsStyles.notificationList}>
+            <Text>No trainings to show yet</Text>
+          </View>
+        ) : (
+          <FlatList
+            style={trainingsStyles.notificationList}
+            data={data}
+            keyExtractor={item => {
+              return item.id;
+            }}
+            renderItem={({item, index}) => {
+              return (
+                <View
+                  style={[
+                    trainingsStyles.card,
+                    {marginTop: index === 0 ? 0 : '3%'},
+                  ]}>
+                  <View style={trainingsStyles.imageContent}>
+                    <View style={trainingsStyles.cardContent}>
+                      <Text style={trainingsStyles.name}>
+                        {item.name} {item.difficulty}
+                      </Text>
+                      <View style={trainingsStyles.bolts}>
+                        <Bolts difficulty={item.difficulty} size={25} />
+                      </View>
+                    </View>
+                    <Image
+                      style={trainingsStyles.image}
+                      source={{uri: item.image}}
+                    />
+                  </View>
+                  <TouchableOpacity
+                    style={trainingsStyles.content}
+                    onPress={() => {
+                      cardClickEventListener(item);
+                    }}>
+                    <FontAwesome5
+                      name={'play-circle'}
+                      size={50}
+                      color={'black'}
+                    />
+                  </TouchableOpacity>
+                </View>
+              );
+            }}
           />
-          <Text style={[homeStyles.title, {left: '5%', bottom: '5%'}]}>
-            CUSTOM
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            marginTop: '2.5%',
-            borderRadius: 30,
-            backgroundColor: 'blue',
-            flex: 1,
-            width: '100%',
-          }}
-          onPress={() => {
-            this.showTrainings('STANDARD');
-          }}>
-          <Image
-            style={homeStyles.image}
-            source={require('../../images/gym.jpg')}
-            resizeMode={'cover'}
-          />
-          <Text style={homeStyles.title}>STANDARD</Text>
-        </TouchableOpacity>
+        )}
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
 
 export default HomeScreen;

@@ -54,24 +54,20 @@ const RankingScreen = ({navigation, route}) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   };
 
-  /*  const onRefresh = React.useCallback(() => {
+  const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-
-    let newPage = page - 1;
-    if (newPage >= 0) {
-      setPage(newPage);
-      getRanking(page)
-        .then(response => {
-          setPage(response.data.currentPage);
-          setTotalPages(response.data.totalPages);
-          setRanking(response.data.ranking);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+    setRanking([]);
+    getRanking(0)
+      .then(response => {
+        setPage(response.data.currentPage);
+        setTotalPages(response.data.totalPages);
+        setRanking(response.data.ranking);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     wait(2000).then(() => setRefreshing(false));
-  }, [page]);*/
+  }, []);
 
   const loadMoreData = () => {
     let newPage = page + 1;
@@ -132,9 +128,9 @@ const RankingScreen = ({navigation, route}) => {
             style={rankingStyles.rankingList}
             data={ranking}
             keyExtractor={(item, index) => index}
-            /*            refreshControl={
+            refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }*/
+            }
             ref={ref => {
               setFlatListRef(ref);
             }}
