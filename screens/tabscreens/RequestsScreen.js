@@ -15,13 +15,10 @@ import styles from '../../styles/Styles';
 import trainingsStyles from '../../styles/TrainingsStyles';
 import {useFocusEffect} from '@react-navigation/native';
 import {
-  baseUrl,
   createRequest,
   deleteDoneRequests,
   deleteRequest,
-  getMyself,
   getUserRequests,
-  instance,
 } from '../../Networking';
 import requestStyles from '../../styles/RequestStyles';
 import {black2, blue, green, grey, white} from '../../styles/Colors';
@@ -135,11 +132,11 @@ const RequestsScreen = ({navigation, route}) => {
         .then(response => {
           console.log(response.status);
           toggleSnackbar('Deleted request');
+          setRequests(prevState => prevState.filter(r => r.id !== requestId));
         })
         .catch(error => {
           console.log(error);
         });
-      setRequests(prevState => prevState.filter(r => r.id !== requestId));
     });
   };
 

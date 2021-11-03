@@ -276,3 +276,14 @@ export const deleteRequest = async id => {
       throw error;
     });
 };
+
+export const deleteTraining = async id => {
+  return await instance
+    .delete(baseUrl + '/user/training/' + id)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};

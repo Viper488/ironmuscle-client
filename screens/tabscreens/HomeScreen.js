@@ -9,10 +9,13 @@ import {
   BackHandler,
   TextInput,
   FlatList,
+  Animated,
 } from 'react-native';
 import styles from '../../styles/Styles';
 import homeStyles from '../../styles/HomeStyles';
 import {
+  deleteRequest,
+  deleteTraining,
   getStandardTrainings,
   getTrainingDetails,
   getTrainingsByUser,
@@ -20,13 +23,14 @@ import {
   RefreshToken,
 } from '../../Networking';
 import {_removeData, _storeData} from '../../AsyncStorageManager';
-import {black, black2, grey, yellow} from '../../styles/Colors';
+import {black, black2, grey, white, yellow} from '../../styles/Colors';
 import trainingsStyles from '../../styles/TrainingsStyles';
 import {useFocusEffect} from '@react-navigation/native';
 import Bolts from '../components/Bolts';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import filter from 'lodash.filter';
 import historyStyles from '../../styles/HistoryStyles';
+import {Swipeable} from 'react-native-gesture-handler';
 
 const HomeScreen = ({navigation, route}) => {
   const [data, setData] = useState({});
@@ -117,6 +121,70 @@ const HomeScreen = ({navigation, route}) => {
       });
   };
 
+  const swipeRight = (progress, dragX) => {
+    const scale = dragX.interpolate({
+      inputRange: [-200, 0],
+      outputRange: [1, 0.5],
+      extrapolate: 'clamp',
+    });
+
+    return (
+      <Animated.View
+        style={{
+          backgroundColor: 'red',
+          width: '100%',
+          justifyContent: 'center',
+          marginTop: '3%',
+        }}>
+        <Animated.Text
+          style={{
+            marginLeft: 'auto',
+            marginRight: 50,
+            fontSize: 24,
+            color: white,
+            fontWeight: 'bold',
+            transform: [{scale}],
+          }}>
+          Delete training
+        </Animated.Text>
+      </Animated.View>
+    );
+  };
+
+  const animatedDelete = trainingId => {
+    Animated.timing(new Animated.Value(250), {
+      toValue: 0,
+      duration: 100,
+      useNativeDriver: false,
+    }).start(() => {
+      Alert.alert(
+        'Delete training',
+        'Are you sure you want to delete this training?',
+        [
+          {
+            text: 'No',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {
+            text: 'YES',
+            onPress: () => {
+              deleteTraining(trainingId)
+                .then(response => {
+                  setData(prevState =>
+                    prevState.filter(t => t.id !== trainingId),
+                  );
+                })
+                .catch(error => {
+                  console.log(error);
+                });
+            },
+          },
+        ],
+      );
+    });
+  };
+
   return (
     <View style={[styles.container, {padding: '2.5%'}]}>
       <View style={homeStyles.trainingsContent}>
@@ -184,7 +252,9 @@ const HomeScreen = ({navigation, route}) => {
         </View>
         {type === 'CUSTOM' && fullData.length === 0 ? (
           <View style={trainingsStyles.notificationList}>
-            <Text style={historyStyles.noTrainingsText}>No trainings to show yet</Text>
+            <Text style={historyStyles.noTrainingsText}>
+              No trainings to show yet
+            </Text>
           </View>
         ) : (
           <FlatList
@@ -194,7 +264,44 @@ const HomeScreen = ({navigation, route}) => {
               return item.id;
             }}
             renderItem={({item, index}) => {
-              return (
+              return type === 'CUSTOM' ? (
+                <Swipeable
+                  renderRightActions={swipeRight}
+                  rightThreshold={-200}
+                  onSwipeableOpen={() => animatedDelete(item.id)}>
+                  <Animated.View
+                    style={[
+                      trainingsStyles.card,
+                      {marginTop: index === 0 ? 0 : '3%'},
+                    ]}>
+                    <View style={trainingsStyles.imageContent}>
+                      <View style={trainingsStyles.cardContent}>
+                        <Text style={trainingsStyles.name}>
+                          {item.name} {item.difficulty}
+                        </Text>
+                        <View style={trainingsStyles.bolts}>
+                          <Bolts difficulty={item.difficulty} size={25} />
+                        </View>
+                      </View>
+                      <Image
+                        style={trainingsStyles.image}
+                        source={{uri: item.image}}
+                      />
+                    </View>
+                    <TouchableOpacity
+                      style={trainingsStyles.content}
+                      onPress={() => {
+                        cardClickEventListener(item);
+                      }}>
+                      <FontAwesome5
+                        name={'play-circle'}
+                        size={50}
+                        color={'black'}
+                      />
+                    </TouchableOpacity>
+                  </Animated.View>
+                </Swipeable>
+              ) : (
                 <View
                   style={[
                     trainingsStyles.card,

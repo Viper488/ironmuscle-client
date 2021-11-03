@@ -110,7 +110,7 @@ const DrawerHome = () => {
   );
 };
 
-class App extends Component {
+const App = () => {
   /*  componentDidMount() {
     NetInfo.fetch().then(networkState => {
       console.log('Connection type - ', networkState.type);
@@ -118,43 +118,34 @@ class App extends Component {
     });
   }*/
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <PaperProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="Login"
-            backBehavior={'initialRoute'}>
-            <Stack.Screen
-              name="Login"
-              component={LoginScreen}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Register"
-              component={RegisterScreen}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Reset"
-              component={ResetPasswordScreen}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="DrawerHome"
-              component={DrawerHome}
-              options={{headerShown: false}}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
-    );
-  }
-}
+  return (
+    <PaperProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login" backBehavior={'initialRoute'}>
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Register"
+            component={RegisterScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Reset"
+            component={ResetPasswordScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="DrawerHome"
+            component={DrawerHome}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
+  );
+};
 
 export default App;
