@@ -26,6 +26,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import Bolts from '../components/Bolts';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import filter from 'lodash.filter';
+import historyStyles from '../../styles/HistoryStyles';
 
 const HomeScreen = ({navigation, route}) => {
   const [data, setData] = useState({});
@@ -39,6 +40,7 @@ const HomeScreen = ({navigation, route}) => {
           console.log(response.data);
           setData(response.data);
           setFullData(response.data);
+          setType('STANDARD');
         })
         .catch(error => {
           console.log(error);
@@ -72,8 +74,6 @@ const HomeScreen = ({navigation, route}) => {
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
     }, [navigation]),
   );
-
-  const showTrainings = type => {};
 
   const handleSearch = text => {
     if (text === '') {
@@ -184,7 +184,7 @@ const HomeScreen = ({navigation, route}) => {
         </View>
         {type === 'CUSTOM' && fullData.length === 0 ? (
           <View style={trainingsStyles.notificationList}>
-            <Text>No trainings to show yet</Text>
+            <Text style={historyStyles.noTrainingsText}>No trainings to show yet</Text>
           </View>
         ) : (
           <FlatList

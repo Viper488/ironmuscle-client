@@ -45,7 +45,6 @@ const trainingsStyles = StyleSheet.create({
     width: '100%',
     backgroundColor: white,
     flexDirection: 'row',
-    borderRadius: 30,
   },
   cardContent: {
     flexDirection: 'row',

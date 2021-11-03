@@ -232,3 +232,25 @@ export const getUserActivities = async (year, month) => {
       throw error;
     });
 };
+
+export const getUserRequests = async () => {
+  return await instance
+    .get(baseUrl + '/request/user')
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const createRequest = async request => {
+  return await instance
+    .post(baseUrl + '/request', request)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
