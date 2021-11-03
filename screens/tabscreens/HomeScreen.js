@@ -33,8 +33,8 @@ import historyStyles from '../../styles/HistoryStyles';
 import {Swipeable} from 'react-native-gesture-handler';
 
 const HomeScreen = ({navigation, route}) => {
-  const [data, setData] = useState({});
-  const [fullData, setFullData] = useState({});
+  const [trainings, setTrainings] = useState({});
+  const [trainingsNoFilter, setTrainingsNoFilter] = useState({});
   const [type, setType] = useState('STANDARD');
 
   useFocusEffect(
@@ -42,8 +42,8 @@ const HomeScreen = ({navigation, route}) => {
       getStandardTrainings()
         .then(response => {
           console.log(response.data);
-          setData(response.data);
-          setFullData(response.data);
+          setTrainings(response.data);
+          setTrainingsNoFilter(response.data);
           setType('STANDARD');
         })
         .catch(error => {
@@ -81,12 +81,12 @@ const HomeScreen = ({navigation, route}) => {
 
   const handleSearch = text => {
     if (text === '') {
-      setData(fullData);
+      setTrainings(trainingsNoFilter);
     } else {
-      const filteredData = filter(data, item => {
+      const filteredData = filter(trainings, item => {
         return contains(item, text);
       });
-      setData(filteredData);
+      setTrainings(filteredData);
     }
   };
 
@@ -157,31 +157,13 @@ const HomeScreen = ({navigation, route}) => {
       duration: 100,
       useNativeDriver: false,
     }).start(() => {
-      Alert.alert(
-        'Delete training',
-        'Are you sure you want to delete this training?',
-        [
-          {
-            text: 'No',
-            onPress: () => null,
-            style: 'cancel',
-          },
-          {
-            text: 'YES',
-            onPress: () => {
-              deleteTraining(trainingId)
-                .then(response => {
-                  setData(prevState =>
-                    prevState.filter(t => t.id !== trainingId),
-                  );
-                })
-                .catch(error => {
-                  console.log(error);
-                });
-            },
-          },
-        ],
-      );
+      deleteTraining(trainingId)
+        .then(response => {
+          setTrainings(prevState => prevState.filter(t => t.id !== trainingId));
+        })
+        .catch(error => {
+          console.log(error);
+        });
     });
   };
 
@@ -211,8 +193,8 @@ const HomeScreen = ({navigation, route}) => {
               getStandardTrainings()
                 .then(response => {
                   console.log(response.data);
-                  setData(response.data);
-                  setFullData(response.data);
+                  setTrainings(response.data);
+                  setTrainingsNoFilter(response.data);
                   setType('STANDARD');
                 })
                 .catch(error => {
@@ -233,8 +215,8 @@ const HomeScreen = ({navigation, route}) => {
               getTrainingsByUser()
                 .then(response => {
                   console.log(response.data);
-                  setData(response.data);
-                  setFullData(response.data);
+                  setTrainings(response.data);
+                  setTrainingsNoFilter(response.data);
                   setType('CUSTOM');
                 })
                 .catch(error => {
@@ -250,7 +232,7 @@ const HomeScreen = ({navigation, route}) => {
             </View>
           </TouchableOpacity>
         </View>
-        {type === 'CUSTOM' && fullData.length === 0 ? (
+        {type === 'CUSTOM' && trainingsNoFilter.length === 0 ? (
           <View style={trainingsStyles.notificationList}>
             <Text style={historyStyles.noTrainingsText}>
               No trainings to show yet
@@ -259,7 +241,7 @@ const HomeScreen = ({navigation, route}) => {
         ) : (
           <FlatList
             style={trainingsStyles.notificationList}
-            data={data}
+            data={trainings}
             keyExtractor={item => {
               return item.id;
             }}

@@ -53,6 +53,28 @@ const requestStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  typeContent: {
+    width: '100%',
+    backgroundColor: '#000',
+    borderRadius: 30,
+  },
+  type: {
+    textAlign: 'center',
+    color: white,
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  types: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: '1%',
+    width: '100%',
+  },
+  typeBtn: {
+    borderRadius: 30,
+    flex: 1,
+    marginHorizontal: '1%',
+  },
 });
 
 export default requestStyles;

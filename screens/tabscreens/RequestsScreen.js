@@ -18,6 +18,8 @@ import {
   createRequest,
   deleteDoneRequests,
   deleteRequest,
+  getStandardTrainings,
+  getTrainingsByUser,
   getUserRequests,
 } from '../../Networking';
 import requestStyles from '../../styles/RequestStyles';
@@ -29,11 +31,14 @@ import profileStyles from '../../styles/ProfileStyles';
 import {Snackbar} from 'react-native-paper';
 import {getDate} from '../functions/Functions';
 import {Swipeable} from 'react-native-gesture-handler';
+import homeStyles from '../../styles/HomeStyles';
 
 const RequestsScreen = ({navigation, route}) => {
   const [requests, setRequests] = useState([]);
   const [fullRequests, setFullRequests] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const allStatus = ['All', 'New', 'In Progress', 'Done'];
+  const [status, setStatus] = useState('All');
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -54,6 +59,7 @@ const RequestsScreen = ({navigation, route}) => {
       .then(response => {
         setRequests(response.data);
         setFullRequests(response.data);
+        setStatus('All');
       })
       .catch(error => {
         console.log(error);
@@ -132,7 +138,7 @@ const RequestsScreen = ({navigation, route}) => {
         .then(response => {
           console.log(response.status);
           toggleSnackbar('Deleted request');
-          setRequests(prevState => prevState.filter(r => r.id !== requestId));
+          updateRequestsList();
         })
         .catch(error => {
           console.log(error);
@@ -234,6 +240,34 @@ const RequestsScreen = ({navigation, route}) => {
             onChangeText={query => handleSearch(query)}
           />
         </View>
+      </View>
+      <View style={requestStyles.types}>
+        {allStatus.map(s => {
+          return (
+            <TouchableOpacity
+              style={requestStyles.typeBtn}
+              onPress={() => {
+                if (s === 'All') {
+                  setRequests(fullRequests);
+                } else {
+                  setRequests(
+                    fullRequests.filter(
+                      r => r.status.toLowerCase() === s.toLowerCase(),
+                    ),
+                  );
+                }
+                setStatus(s);
+              }}>
+              <View
+                style={[
+                  requestStyles.typeContent,
+                  {backgroundColor: status === s ? grey : black2},
+                ]}>
+                <Text style={requestStyles.type}>{s}</Text>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
       </View>
       <FlatList
         style={requestStyles.notificationList}
