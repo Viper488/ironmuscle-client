@@ -8,6 +8,7 @@ const requestStyles = StyleSheet.create({
     padding: 10,
   },
   card: {
+    height: 250,
     width: '100%',
     backgroundColor: white,
     padding: '5%',

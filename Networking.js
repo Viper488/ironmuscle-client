@@ -254,3 +254,25 @@ export const createRequest = async request => {
       throw error;
     });
 };
+
+export const deleteDoneRequests = async () => {
+  return await instance
+    .delete(baseUrl + '/request')
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const deleteRequest = async id => {
+  return await instance
+    .delete(baseUrl + '/request/' + id)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
