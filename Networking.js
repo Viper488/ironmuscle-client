@@ -287,3 +287,14 @@ export const deleteTraining = async id => {
       throw error;
     });
 };
+
+export const getRequests = async page => {
+  return await instance
+    .get(baseUrl + '/request/all?page=' + page + '&size=' + 30)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};

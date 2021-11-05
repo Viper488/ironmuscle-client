@@ -9,11 +9,11 @@ import {
   Alert,
   BackHandler,
 } from 'react-native';
-import styles from '../../styles/Styles';
-import exerciseStyles from '../../styles/ExerciseStyles';
+import styles from '../../../styles/Styles';
+import exerciseStyles from '../../../styles/ExerciseStyles';
 import CountDown from 'react-native-countdown-component';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {black, white} from '../../styles/Colors';
+import {black, white} from '../../../styles/Colors';
 import YoutubePlayer from 'react-native-youtube-iframe';
 
 const ShowExercise = ({

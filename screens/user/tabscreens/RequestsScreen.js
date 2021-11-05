@@ -11,8 +11,8 @@ import {
   View,
   Animated,
 } from 'react-native';
-import styles from '../../styles/Styles';
-import trainingsStyles from '../../styles/TrainingsStyles';
+import styles from '../../../styles/Styles';
+import trainingsStyles from '../../../styles/TrainingsStyles';
 import {useFocusEffect} from '@react-navigation/native';
 import {
   createRequest,
@@ -21,17 +21,17 @@ import {
   getStandardTrainings,
   getTrainingsByUser,
   getUserRequests,
-} from '../../Networking';
-import requestStyles from '../../styles/RequestStyles';
-import {black2, blue, green, grey, white} from '../../styles/Colors';
+} from '../../../Networking';
+import requestStyles from '../../../styles/RequestStyles';
+import {black2, blue, green, grey, white} from '../../../styles/Colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import filter from 'lodash.filter';
-import exerciseStyles from '../../styles/ExerciseStyles';
-import profileStyles from '../../styles/ProfileStyles';
+import exerciseStyles from '../../../styles/ExerciseStyles';
+import profileStyles from '../../../styles/ProfileStyles';
 import {Snackbar} from 'react-native-paper';
-import {getDate} from '../functions/Functions';
+import {getDate} from '../../functions/Functions';
 import {Swipeable} from 'react-native-gesture-handler';
-import homeStyles from '../../styles/HomeStyles';
+import homeStyles from '../../../styles/HomeStyles';
 
 const RequestsScreen = ({navigation, route}) => {
   const [requests, setRequests] = useState([]);

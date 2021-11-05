@@ -6,6 +6,7 @@ import loginStyles from '../styles/LoginStyles';
 import {JWToken, RefreshToken, requestAuth} from '../Networking';
 import {_storeData} from '../AsyncStorageManager';
 import {Snackbar} from 'react-native-paper';
+import jwt_decode from 'jwt-decode';
 
 const LoginScreen = ({navigation, route}) => {
   const [username, setUsername] = useState('');
@@ -31,9 +32,15 @@ const LoginScreen = ({navigation, route}) => {
         let jwtToken = response.data.access_token;
         let rftToken = response.data.refresh_token;
         if (jwtToken != null && rftToken != null) {
+          let decoded = jwt_decode(jwtToken);
+          console.log(decoded);
           _storeData(RefreshToken, rftToken).then(() => {
             _storeData(JWToken, jwtToken).then(() => {
-              navigation.navigate('DrawerHome');
+              if (decoded.authorities.includes('EMPLOYEE')) {
+                navigation.navigate('EmployeeHome');
+              } else {
+                navigation.navigate('UserHome');
+              }
             });
           });
         }

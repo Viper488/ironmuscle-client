@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {Alert, BackHandler, Text, View} from 'react-native';
-import styles from '../../styles/Styles';
-import exerciseStyles from '../../styles/ExerciseStyles';
+import styles from '../../../styles/Styles';
+import exerciseStyles from '../../../styles/ExerciseStyles';
 import ShowExercise from './ShowExercise';
 import StopTraining from './StopTraining';
 import {useFocusEffect} from '@react-navigation/native';

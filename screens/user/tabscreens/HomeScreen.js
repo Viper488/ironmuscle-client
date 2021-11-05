@@ -11,8 +11,8 @@ import {
   FlatList,
   Animated,
 } from 'react-native';
-import styles from '../../styles/Styles';
-import homeStyles from '../../styles/HomeStyles';
+import styles from '../../../styles/Styles';
+import homeStyles from '../../../styles/HomeStyles';
 import {
   deleteRequest,
   deleteTraining,
@@ -21,15 +21,15 @@ import {
   getTrainingsByUser,
   JWToken,
   RefreshToken,
-} from '../../Networking';
-import {_removeData, _storeData} from '../../AsyncStorageManager';
-import {black, black2, grey, white, yellow} from '../../styles/Colors';
-import trainingsStyles from '../../styles/TrainingsStyles';
+} from '../../../Networking';
+import {_removeData, _storeData} from '../../../AsyncStorageManager';
+import {black, black2, grey, white, yellow} from '../../../styles/Colors';
+import trainingsStyles from '../../../styles/TrainingsStyles';
 import {useFocusEffect} from '@react-navigation/native';
-import Bolts from '../components/Bolts';
+import Bolts from '../../components/Bolts';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import filter from 'lodash.filter';
-import historyStyles from '../../styles/HistoryStyles';
+import historyStyles from '../../../styles/HistoryStyles';
 import {Swipeable} from 'react-native-gesture-handler';
 
 const HomeScreen = ({navigation, route}) => {
@@ -41,7 +41,6 @@ const HomeScreen = ({navigation, route}) => {
     React.useCallback(() => {
       getStandardTrainings()
         .then(response => {
-          console.log(response.data);
           setTrainings(response.data);
           setTrainingsNoFilter(response.data);
           setType('STANDARD');
@@ -192,7 +191,6 @@ const HomeScreen = ({navigation, route}) => {
             onPress={() => {
               getStandardTrainings()
                 .then(response => {
-                  console.log(response.data);
                   setTrainings(response.data);
                   setTrainingsNoFilter(response.data);
                   setType('STANDARD');
@@ -214,7 +212,6 @@ const HomeScreen = ({navigation, route}) => {
             onPress={() => {
               getTrainingsByUser()
                 .then(response => {
-                  console.log(response.data);
                   setTrainings(response.data);
                   setTrainingsNoFilter(response.data);
                   setType('CUSTOM');

@@ -18,20 +18,23 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CustomDrawer from './screens/CustomDrawer';
 import RegisterScreen from './screens/RegisterScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
-import HomeScreen from './screens/tabscreens/HomeScreen';
+import HomeScreen from './screens/user/tabscreens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
-import TrainingDetailsScreen from './screens/training/TrainingDetailsScreen';
-import ExerciseScreen from './screens/exercise/ExerciseScreen';
-import HistoryScreen from './screens/tabscreens/HistoryScreen';
-import RankingScreen from './screens/tabscreens/RankingScreen';
-import RequestsScreen from './screens/tabscreens/RequestsScreen';
+import TrainingDetailsScreen from './screens/user/training/TrainingDetailsScreen';
+import ExerciseScreen from './screens/user/exercise/ExerciseScreen';
+import HistoryScreen from './screens/user/tabscreens/HistoryScreen';
+import RankingScreen from './screens/user/tabscreens/RankingScreen';
+import RequestsScreen from './screens/user/tabscreens/RequestsScreen';
 import {black, grey3, grey4, white} from './styles/Colors';
+import ERequestsScreen from './screens/employee/tabscreens/ERequestsScreen';
+import EExercisesScreen from './screens/employee/tabscreens/EExercisesScreen';
+import ETrainingsScreen from './screens/employee/tabscreens/ETrainingsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const Home = () => {
+const UserHomeTab = () => {
   return (
     <Tab.Navigator
       initialRouteName={'Trainings'}
@@ -88,12 +91,60 @@ const Home = () => {
   );
 };
 
-const DrawerHome = () => {
+const EmployeeHomeTab = () => {
+  return (
+    <Tab.Navigator
+      initialRouteName={'RequestsE'}
+      backBehavior={'initialRoute'}
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, size, color}) => {
+          let iconName;
+          if (route.name === 'RequestsE') {
+            iconName = 'align-justify';
+            size = focused ? 25 : 20;
+            color = focused ? white : grey3;
+          } else if (route.name === 'TrainingsE') {
+            iconName = 'dumbbell';
+            size = focused ? 25 : 20;
+            color = focused ? white : grey3;
+          } else if (route.name === 'ExercisesE') {
+            iconName = 'award';
+            size = focused ? 25 : 20;
+            color = focused ? white : grey3;
+          }
+          return <FontAwesome5 name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: white,
+        tabBarInactiveTintColor: grey3,
+        tabBarActiveBackgroundColor: grey4,
+        tabBarInactiveBackgroundColor: black,
+        tabBarLabelStyle: {fontSize: 14},
+      })}>
+      <Tab.Screen
+        name="RequestsE"
+        component={ERequestsScreen}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="TrainingsE"
+        component={ETrainingsScreen}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="ExercisesE"
+        component={EExercisesScreen}
+        options={{headerShown: false}}
+      />
+    </Tab.Navigator>
+  );
+};
+
+const UserHome = () => {
   return (
     <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />}>
       <Drawer.Screen
-        name="Home"
-        component={Home}
+        name="UHome"
+        component={UserHomeTab}
         options={{headerShown: false}}
       />
       <Drawer.Screen
@@ -110,14 +161,19 @@ const DrawerHome = () => {
   );
 };
 
-const App = () => {
-  /*  componentDidMount() {
-    NetInfo.fetch().then(networkState => {
-      console.log('Connection type - ', networkState.type);
-      console.log('Is connected? - ', networkState.isConnected);
-    });
-  }*/
+const EmployeeHome = () => {
+  return (
+    <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />}>
+      <Drawer.Screen
+        name="EHome"
+        component={EmployeeHomeTab}
+        options={{headerShown: false}}
+      />
+    </Drawer.Navigator>
+  );
+};
 
+const App = () => {
   return (
     <PaperProvider>
       <NavigationContainer>
@@ -138,8 +194,13 @@ const App = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="DrawerHome"
-            component={DrawerHome}
+            name="UserHome"
+            component={UserHome}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="EmployeeHome"
+            component={EmployeeHome}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

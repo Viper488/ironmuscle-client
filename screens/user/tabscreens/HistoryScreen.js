@@ -1,14 +1,14 @@
 import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, Image} from 'react-native';
-import styles from '../../styles/Styles';
-import {getUserActivities} from '../../Networking';
-import historyStyles from '../../styles/HistoryStyles';
-import {getDate, getTime, toHHMMSS} from '../functions/Functions';
-import Bolts from '../components/Bolts';
+import styles from '../../../styles/Styles';
+import {getUserActivities} from '../../../Networking';
+import historyStyles from '../../../styles/HistoryStyles';
+import {getDate, getTime, toHHMMSS} from '../../functions/Functions';
+import Bolts from '../../components/Bolts';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Calendar} from 'react-native-calendars';
-import {blue, grey} from '../../styles/Colors';
+import {blue, grey} from '../../../styles/Colors';
 import {useFocusEffect} from '@react-navigation/native';
 
 const HistoryScreen = ({navigation, route}) => {

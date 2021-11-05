@@ -8,17 +8,17 @@ import {
   BackHandler,
   Modal,
 } from 'react-native';
-import styles from '../../styles/Styles';
-import trainingsStyles from '../../styles/TrainingsStyles';
+import styles from '../../../styles/Styles';
+import trainingsStyles from '../../../styles/TrainingsStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useFocusEffect} from '@react-navigation/native';
-import tdStyles from '../../styles/TrainingDetailsStyles';
-import Bolts from '../components/Bolts';
+import tdStyles from '../../../styles/TrainingDetailsStyles';
+import Bolts from '../../components/Bolts';
 import DraggableFlatList from 'react-native-draggable-flatlist';
-import {grey, white} from '../../styles/Colors';
-import exerciseStyles from '../../styles/ExerciseStyles';
+import {grey, white} from '../../../styles/Colors';
+import exerciseStyles from '../../../styles/ExerciseStyles';
 import YoutubePlayer from 'react-native-youtube-iframe';
-import {toHHMMSS} from '../functions/Functions';
+import {toHHMMSS} from '../../functions/Functions';
 
 const TrainingDetailsScreen = ({navigation, route}) => {
   const [training, setTraining] = useState({});

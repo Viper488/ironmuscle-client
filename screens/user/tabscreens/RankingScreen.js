@@ -1,17 +1,12 @@
 import 'react-native-gesture-handler';
 import React, {Component, useEffect, useState} from 'react';
 import {FlatList, Image, RefreshControl, Text, View} from 'react-native';
-import styles from '../../styles/Styles';
-import rankingStyles from '../../styles/RankingStyles';
+import styles from '../../../styles/Styles';
+import rankingStyles from '../../../styles/RankingStyles';
 import {useFocusEffect} from '@react-navigation/native';
-import {
-  getBadges,
-  getMyself,
-  getRanking,
-  getUserRanking,
-} from '../../Networking';
-import Badges from '../components/Badges';
-import {white, yellow} from '../../styles/Colors';
+import {getBadges, getRanking, getUserRanking} from '../../../Networking';
+import Badges from '../../components/Badges';
+import {white, yellow} from '../../../styles/Colors';
 
 const RankingScreen = ({navigation, route}) => {
   const [badges, setBadges] = useState([]);
@@ -20,7 +15,6 @@ const RankingScreen = ({navigation, route}) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const [flatListRef, setFlatListRef] = useState({});
 
   useFocusEffect(
     React.useCallback(() => {
@@ -43,6 +37,8 @@ const RankingScreen = ({navigation, route}) => {
           setPage(response.data.currentPage);
           setTotalPages(response.data.totalPages);
           setRanking([...ranking, ...response.data.ranking]);
+
+          console.log('Fetched ' + page);
         })
         .catch(error => {
           console.log(error);
@@ -61,7 +57,9 @@ const RankingScreen = ({navigation, route}) => {
       .then(response => {
         setPage(response.data.currentPage);
         setTotalPages(response.data.totalPages);
-        setRanking(response.data.ranking);
+        setRanking([...ranking, ...response.data.ranking]);
+
+        console.log('Fetched ' + page);
       })
       .catch(error => {
         console.log(error);
@@ -73,22 +71,8 @@ const RankingScreen = ({navigation, route}) => {
     let newPage = page + 1;
     if (newPage < totalPages) {
       setPage(newPage);
-      // getRanking(page)
-      //   .then(response => {
-      //     console.log('RANKING LOAD MORE DATA');
-      //     setPage(response.data.currentPage);
-      //     setTotalPages(response.data.totalPages);
-      //     setRanking([...ranking, ...response.data.ranking]);
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //   });
-      //scrollToIndex();
+      console.log('Preparing to fetch ' + newPage);
     }
-  };
-
-  const scrollToIndex = () => {
-    flatListRef.scrollToIndex({animated: false, index: 0});
   };
 
   return (
@@ -131,9 +115,6 @@ const RankingScreen = ({navigation, route}) => {
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
-            ref={ref => {
-              setFlatListRef(ref);
-            }}
             onEndReachedThreshold={0.4}
             onEndReached={loadMoreData}
             renderItem={({item, index}) => {
