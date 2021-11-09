@@ -178,6 +178,7 @@ const HomeScreen = ({navigation, route}) => {
               style={trainingsStyles.searchIcon}
             />
             <TextInput
+              maxLength={255}
               style={trainingsStyles.inputs}
               placeholder="Search"
               underlineColorAndroid="transparent"

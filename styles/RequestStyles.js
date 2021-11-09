@@ -1,7 +1,19 @@
 import {StyleSheet} from 'react-native';
-import {black, black2, green, white, white2, white3} from './Colors';
+import {black, black2, green, grey, white, white2, white3} from './Colors';
 
 const requestStyles = StyleSheet.create({
+  pickerContent: {
+    backgroundColor: white,
+    width: '80%',
+    height: 40,
+    marginBottom: 20,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  picker: {
+    width: '100%',
+    color: black,
+  },
   notificationList: {
     marginTop: '2%',
     width: '100%',
@@ -29,7 +41,8 @@ const requestStyles = StyleSheet.create({
     fontWeight: '600',
   },
   status: {
-    fontWeight: '700',
+    fontSize: 24,
+    fontWeight: '600',
   },
   floatingBtn: {
     height: 75,

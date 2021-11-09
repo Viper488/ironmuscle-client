@@ -26,9 +26,9 @@ import HistoryScreen from './screens/user/tabscreens/HistoryScreen';
 import RankingScreen from './screens/user/tabscreens/RankingScreen';
 import RequestsScreen from './screens/user/tabscreens/RequestsScreen';
 import {black, grey3, grey4, white} from './styles/Colors';
-import ERequestsScreen from './screens/employee/tabscreens/ERequestsScreen';
-import EExercisesScreen from './screens/employee/tabscreens/EExercisesScreen';
-import ETrainingsScreen from './screens/employee/tabscreens/ETrainingsScreen';
+import ERequestsScreen from './screens/trainer/tabscreens/ERequestsScreen';
+import EExercisesScreen from './screens/trainer/tabscreens/EExercisesScreen';
+import ETrainingsScreen from './screens/trainer/tabscreens/ETrainingsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -91,7 +91,7 @@ const UserHomeTab = () => {
   );
 };
 
-const EmployeeHomeTab = () => {
+const TrainerHomeTab = () => {
   return (
     <Tab.Navigator
       initialRouteName={'RequestsE'}
@@ -161,12 +161,12 @@ const UserHome = () => {
   );
 };
 
-const EmployeeHome = () => {
+const TrainerHome = () => {
   return (
     <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />}>
       <Drawer.Screen
         name="EHome"
-        component={EmployeeHomeTab}
+        component={TrainerHomeTab}
         options={{headerShown: false}}
       />
     </Drawer.Navigator>
@@ -199,8 +199,8 @@ const App = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="EmployeeHome"
-            component={EmployeeHome}
+            name="TrainerHome"
+            component={TrainerHome}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

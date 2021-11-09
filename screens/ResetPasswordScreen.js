@@ -46,6 +46,7 @@ class ResetPasswordScreen extends Component {
       <View style={styles.container}>
         <View style={styles.inputView}>
           <TextInput
+            maxLength={255}
             style={styles.textInput}
             placeholder="Email."
             placeholderTextColor="#8c8c8c"

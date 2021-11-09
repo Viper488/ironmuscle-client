@@ -118,6 +118,7 @@ const CustomDrawer = ({navigation, route}) => {
             <Text style={styles.btnText}>Edit profile</Text>
             <View style={styles.inputView}>
               <TextInput
+                maxLength={255}
                 style={styles.textInput}
                 placeholder={'Enter new email'}
                 placeholderTextColor="#8c8c8c"
@@ -158,6 +159,7 @@ const CustomDrawer = ({navigation, route}) => {
             <Text style={styles.btnText}>Change password</Text>
             <View style={styles.inputView}>
               <TextInput
+                maxLength={255}
                 style={styles.textInput}
                 secureTextEntry={true}
                 placeholder={'Current password'}
@@ -168,6 +170,7 @@ const CustomDrawer = ({navigation, route}) => {
 
             <View style={styles.inputView}>
               <TextInput
+                maxLength={255}
                 style={styles.textInput}
                 secureTextEntry={true}
                 placeholder={'New password'}
@@ -178,6 +181,7 @@ const CustomDrawer = ({navigation, route}) => {
 
             <View style={styles.inputView}>
               <TextInput
+                maxLength={255}
                 style={styles.textInput}
                 secureTextEntry={true}
                 placeholder={'Confirm password'}

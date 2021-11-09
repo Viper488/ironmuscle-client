@@ -288,9 +288,31 @@ export const deleteTraining = async id => {
     });
 };
 
-export const getRequests = async page => {
+export const getRequests = async (page, size) => {
   return await instance
-    .get(baseUrl + '/request/all?page=' + page + '&size=' + 30)
+    .get(baseUrl + '/request/all?page=' + page + '&size=' + size)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const getTrainings = async (page, size) => {
+  return await instance
+    .get(baseUrl + '/training/all?page=' + page + '&size=' + size)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const getExercises = async (page, size) => {
+  return await instance
+    .get(baseUrl + '/exercise/all?page=' + page + '&size=' + size)
     .then(response => {
       return response;
     })

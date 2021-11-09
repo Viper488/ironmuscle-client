@@ -74,6 +74,7 @@ class RegisterScreen extends Component {
       <View style={styles.container}>
         <View style={styles.inputView}>
           <TextInput
+            maxLength={255}
             style={styles.textInput}
             placeholder="Username."
             placeholderTextColor="#8c8c8c"
@@ -83,6 +84,7 @@ class RegisterScreen extends Component {
 
         <View style={styles.inputView}>
           <TextInput
+            maxLength={255}
             style={styles.textInput}
             placeholder="Email."
             placeholderTextColor="#8c8c8c"
@@ -92,6 +94,7 @@ class RegisterScreen extends Component {
 
         <View style={styles.inputView}>
           <TextInput
+            maxLength={255}
             style={styles.textInput}
             placeholder="Name."
             placeholderTextColor="#8c8c8c"
@@ -101,6 +104,7 @@ class RegisterScreen extends Component {
 
         <View style={styles.inputView}>
           <TextInput
+            maxLength={255}
             style={styles.textInput}
             placeholder="Last name."
             placeholderTextColor="#8c8c8c"
@@ -110,6 +114,7 @@ class RegisterScreen extends Component {
 
         <View style={styles.inputView}>
           <TextInput
+            maxLength={255}
             style={styles.textInput}
             placeholder="Password."
             placeholderTextColor="#8c8c8c"
@@ -119,6 +124,7 @@ class RegisterScreen extends Component {
         </View>
         <View style={styles.inputView}>
           <TextInput
+            maxLength={255}
             style={styles.textInput}
             placeholder="Confirm password."
             placeholderTextColor="#8c8c8c"

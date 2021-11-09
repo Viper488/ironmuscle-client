@@ -9,9 +9,6 @@ const profileStyles = StyleSheet.create({
   },
   modalBody: {
     alignSelf: 'center',
-    borderColor: green,
-    borderWidth: 2,
-    borderRadius: 10,
     marginTop: '10%',
     marginBottom: '20%',
     backgroundColor: black,

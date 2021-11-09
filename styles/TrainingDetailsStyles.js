@@ -30,7 +30,6 @@ const tdStyles = StyleSheet.create({
     marginTop: '15%',
     flex: 1,
     width: '100%',
-
   },
   cardContent: {
     position: 'absolute',
@@ -83,6 +82,12 @@ const tdStyles = StyleSheet.create({
   exerciseDurationText: {
     fontSize: 16,
   },
+  btnContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: black2,
+  },
   btn: {
     width: '60%',
     borderRadius: 35,
@@ -91,14 +96,13 @@ const tdStyles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40,
-    backgroundColor: black,
-    position: 'absolute',
-    top: '20%',
+    marginVertical: 5,
+    backgroundColor: green,
   },
   btnText: {
     color: white,
-    fontSize: 18,
+    fontSize: 24,
+    fontWeight: '700',
   },
 });
 

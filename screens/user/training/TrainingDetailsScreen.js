@@ -41,7 +41,7 @@ const TrainingDetailsScreen = ({navigation, route}) => {
         console.log(exercises);
         console.log(originalExercises);
         setExercises(originalExercises);
-        navigation.navigate('Home');
+        navigation.navigate('UHome');
         return true;
       };
 
@@ -92,19 +92,6 @@ const TrainingDetailsScreen = ({navigation, route}) => {
           <Bolts difficulty={training.difficulty} size={25} />
         </View>
       </View>
-      <TouchableOpacity
-        style={tdStyles.btn}
-        onPress={() => {
-          navigation.navigate('Exercise', {
-            index: 0,
-            training: training,
-            exercises: exercises,
-            length: exercises.length,
-            startTime: new Date().getTime(),
-          });
-        }}>
-        <Text style={tdStyles.btnText}>START</Text>
-      </TouchableOpacity>
       <View style={tdStyles.contentList}>
         <DraggableFlatList
           style={trainingsStyles.notificationList}
@@ -145,6 +132,21 @@ const TrainingDetailsScreen = ({navigation, route}) => {
           }}
           onDragEnd={({data}) => setExercises(data)}
         />
+        <View style={tdStyles.btnContainer}>
+          <TouchableOpacity
+            style={tdStyles.btn}
+            onPress={() => {
+              navigation.navigate('Exercise', {
+                index: 0,
+                training: training,
+                exercises: exercises,
+                length: exercises.length,
+                startTime: new Date().getTime(),
+              });
+            }}>
+            <Text style={tdStyles.btnText}>START</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

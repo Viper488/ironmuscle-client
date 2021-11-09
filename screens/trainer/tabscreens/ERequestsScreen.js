@@ -6,14 +6,16 @@ import {
   FlatList,
   RefreshControl,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import styles from '../../../styles/Styles';
-import {blue, green, grey} from '../../../styles/Colors';
+import {blue, green} from '../../../styles/Colors';
 import requestStyles from '../../../styles/RequestStyles';
 import {useFocusEffect} from '@react-navigation/native';
 import {getRequests, JWToken, RefreshToken} from '../../../Networking';
 import {_removeData} from '../../../AsyncStorageManager';
+import eRequestStyles from '../styles/ERequestStyles';
 
 const ERequestsScreen = ({navigation, route}) => {
   const [requests, setRequests] = useState([]);
@@ -23,7 +25,7 @@ const ERequestsScreen = ({navigation, route}) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      getRequests(page)
+      getRequests(page, 30)
         .then(response => {
           setPage(response.data.currentPage);
           setTotalPages(response.data.totalPages);
@@ -69,7 +71,7 @@ const ERequestsScreen = ({navigation, route}) => {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setRequests([]);
-    getRequests(0)
+    getRequests(0, 30)
       .then(response => {
         setPage(response.data.currentPage);
         setTotalPages(response.data.totalPages);
@@ -93,7 +95,7 @@ const ERequestsScreen = ({navigation, route}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        style={requestStyles.notificationList}
+        style={eRequestStyles.requests}
         data={requests}
         keyExtractor={(item, index) => index}
         refreshControl={
@@ -104,8 +106,11 @@ const ERequestsScreen = ({navigation, route}) => {
         renderItem={({item, index}) => {
           return (
             <View
-              style={[requestStyles.card, {marginTop: index === 0 ? 0 : '3%'}]}>
-              <View style={requestStyles.titleContent}>
+              style={[
+                eRequestStyles.card,
+                {marginTop: index === 0 ? 0 : '3%'},
+              ]}>
+              <View style={eRequestStyles.titleContent}>
                 <Text style={requestStyles.title}>
                   {item.id + ' ' + item.title + ' ' + item.difficulty}
                 </Text>
@@ -124,9 +129,16 @@ const ERequestsScreen = ({navigation, route}) => {
                   {item.status}
                 </Text>
               </View>
-              <View style={requestStyles.descriptionContent}>
-                <Text>{item.bodyPart}</Text>
+              <View style={eRequestStyles.bodyPart}>
+                <Text style={eRequestStyles.bodyPartText}>{item.bodyPart}</Text>
+              </View>
+              <View style={eRequestStyles.description}>
                 <Text>{item.description}</Text>
+              </View>
+              <View style={eRequestStyles.cardFooter}>
+                <TouchableOpacity style={eRequestStyles.btn} onPress={() => {}}>
+                  <Text style={eRequestStyles.btnText}>Create training</Text>
+                </TouchableOpacity>
               </View>
             </View>
           );

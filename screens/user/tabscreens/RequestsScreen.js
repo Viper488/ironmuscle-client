@@ -31,7 +31,7 @@ import profileStyles from '../../../styles/ProfileStyles';
 import {Snackbar} from 'react-native-paper';
 import {getDate} from '../../functions/Functions';
 import {Swipeable} from 'react-native-gesture-handler';
-import homeStyles from '../../../styles/HomeStyles';
+import {Picker} from '@react-native-picker/picker';
 
 const RequestsScreen = ({navigation, route}) => {
   const [requests, setRequests] = useState([]);
@@ -42,8 +42,8 @@ const RequestsScreen = ({navigation, route}) => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [bodyPart, setBodyPart] = useState('');
-  const [difficulty, setDifficulty] = useState('');
+  const [bodyPart, setBodyPart] = useState('Abdominal');
+  const [difficulty, setDifficulty] = useState('Beginner');
 
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
@@ -165,6 +165,7 @@ const RequestsScreen = ({navigation, route}) => {
             <Text style={styles.btnText}>New training request</Text>
             <View style={styles.inputView}>
               <TextInput
+                maxLength={255}
                 style={styles.textInput}
                 placeholder={'Title'}
                 placeholderTextColor="#8c8c8c"
@@ -173,37 +174,50 @@ const RequestsScreen = ({navigation, route}) => {
             </View>
             <View style={styles.inputView}>
               <TextInput
+                maxLength={255}
                 style={styles.textInput}
                 placeholder={'Description'}
                 placeholderTextColor="#8c8c8c"
                 onChangeText={description => setDescription(description)}
               />
             </View>
-            <View style={styles.inputView}>
-              <TextInput
-                style={styles.textInput}
-                placeholder={'Body part'}
-                placeholderTextColor="#8c8c8c"
-                onChangeText={bodyPart => setBodyPart(bodyPart)}
-              />
+            <View style={requestStyles.pickerContent}>
+              <Picker
+                selectedValue={bodyPart}
+                style={requestStyles.picker}
+                onValueChange={(itemValue, itemIndex) =>
+                  setBodyPart(itemValue)
+                }>
+                <Picker.Item label="Abdominal" value="Abdominal" />
+                <Picker.Item label="Arms" value="Arms" />
+                <Picker.Item label="Back" value="Back" />
+                <Picker.Item label="Chest" value="Chest" />
+                <Picker.Item label="Legs" value="Legs" />
+              </Picker>
             </View>
-            <View style={styles.inputView}>
-              <TextInput
-                style={styles.textInput}
-                placeholder={'Difficulty'}
-                placeholderTextColor="#8c8c8c"
-                onChangeText={difficulty => setDifficulty(difficulty)}
-              />
+            <View style={requestStyles.pickerContent}>
+              <Picker
+                selectedValue={difficulty}
+                style={requestStyles.picker}
+                onValueChange={(itemValue, itemIndex) =>
+                  setDifficulty(itemValue)
+                }>
+                <Picker.Item label="Beginner" value="Mediocre" />
+                <Picker.Item label="Mediocre" value="Mediocre" />
+                <Picker.Item label="Pro" value="Pro" />
+              </Picker>
             </View>
             <TouchableOpacity
               style={styles.btn}
               onPress={() => {
-                createRequest({
+                let request = {
                   title: title,
                   description: description,
                   bodyPart: bodyPart,
                   difficulty: difficulty,
-                })
+                };
+                console.log('Request: ' + request.bodyPart);
+                createRequest(request)
                   .then(response => {
                     console.log(response.data);
                     updateRequestsList();
@@ -234,6 +248,7 @@ const RequestsScreen = ({navigation, route}) => {
             style={trainingsStyles.searchIcon}
           />
           <TextInput
+            maxLength={255}
             style={trainingsStyles.inputs}
             placeholder="Search"
             underlineColorAndroid="transparent"
@@ -350,19 +365,17 @@ const RequestsScreen = ({navigation, route}) => {
         }>
         <FontAwesome5 name={'minus'} size={20} color={black2} />
       </TouchableOpacity>
-      {
-        <Snackbar
-          visible={visible}
-          onDismiss={() => onDismissSnackBar()}
-          action={{
-            label: 'Close',
-            onPress: () => {
-              setVisible(false);
-            },
-          }}>
-          {message}
-        </Snackbar>
-      }
+      <Snackbar
+        visible={visible}
+        onDismiss={() => onDismissSnackBar()}
+        action={{
+          label: 'Close',
+          onPress: () => {
+            setVisible(false);
+          },
+        }}>
+        {message}
+      </Snackbar>
     </View>
   );
 };

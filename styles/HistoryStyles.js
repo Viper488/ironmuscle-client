@@ -3,14 +3,15 @@ import {
   black,
   blue,
   green,
-  grey, grey2, grey3, grey4,
+  grey,
+  grey2,
+  grey3,
+  grey4,
   white,
   white2,
   white3,
   yellow,
 } from './Colors';
-import {calculateInputHeight} from 'react-native-paper/lib/typescript/components/TextInput/helpers';
-
 const historyStyles = StyleSheet.create({
   calendarContent: {
     flex: 5,

@@ -36,8 +36,8 @@ const LoginScreen = ({navigation, route}) => {
           console.log(decoded);
           _storeData(RefreshToken, rftToken).then(() => {
             _storeData(JWToken, jwtToken).then(() => {
-              if (decoded.authorities.includes('EMPLOYEE')) {
-                navigation.navigate('EmployeeHome');
+              if (decoded.authorities.includes('TRAINER')) {
+                navigation.navigate('TrainerHome');
               } else {
                 navigation.navigate('UserHome');
               }
@@ -63,6 +63,7 @@ const LoginScreen = ({navigation, route}) => {
       <View style={loginStyles.loginContainer}>
         <View style={styles.inputView}>
           <TextInput
+            maxLength={255}
             style={styles.textInput}
             placeholder="Username"
             placeholderTextColor="#8c8c8c"
@@ -72,6 +73,7 @@ const LoginScreen = ({navigation, route}) => {
 
         <View style={styles.inputView}>
           <TextInput
+            maxLength={255}
             style={styles.textInput}
             placeholder="Password"
             placeholderTextColor="#8c8c8c"
