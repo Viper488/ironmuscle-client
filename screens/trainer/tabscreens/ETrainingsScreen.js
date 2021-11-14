@@ -14,13 +14,7 @@ import {
 } from 'react-native';
 import styles from '../../../styles/Styles';
 import {useFocusEffect} from '@react-navigation/native';
-import {
-  createRequest,
-  getRequests,
-  getTrainings,
-  JWToken,
-  RefreshToken,
-} from '../../../Networking';
+import {getTrainings, JWToken, RefreshToken} from '../../../Networking';
 import {_removeData} from '../../../AsyncStorageManager';
 import eRequestStyles from '../styles/ERequestStyles';
 import trainingsStyles from '../../../styles/TrainingsStyles';
@@ -39,7 +33,7 @@ const ETrainingsScreen = ({navigation, route}) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      getTrainings(page, 30)
+      getTrainings(page, 100)
         .then(response => {
           setPage(response.data.currentPage);
           setTotalPages(response.data.totalPages);
@@ -87,7 +81,7 @@ const ETrainingsScreen = ({navigation, route}) => {
     setRefreshing(true);
     setTrainings([]);
     setFullTrainings([]);
-    getTrainings(0, 30)
+    getTrainings(0, 100)
       .then(response => {
         setPage(response.data.currentPage);
         setTotalPages(response.data.totalPages);
@@ -182,7 +176,16 @@ const ETrainingsScreen = ({navigation, route}) => {
           );
         }}
       />
-      <TouchableOpacity style={requestStyles.floatingBtn} onPress={() => {}}>
+      <TouchableOpacity
+        style={requestStyles.floatingBtn}
+        onPress={() => {
+          navigation.navigate('CreateTraining', {
+            user: null,
+            name: null,
+            difficulty: null,
+            training: null,
+          });
+        }}>
         <FontAwesome5 name={'plus'} size={30} color={black2} />
       </TouchableOpacity>
     </View>

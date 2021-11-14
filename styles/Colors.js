@@ -6,6 +6,7 @@ export const grey2 = '#696969';
 export const grey3 = '#555';
 export const grey4 = '#333';
 export const grey5 = '#9c9c9c';
+export const grey6 = '#c9c9c9';
 export const white = '#fff';
 export const white2 = '#eee';
 export const white3 = '#F5FCFF';

@@ -8,6 +8,7 @@ import {
   grey3,
   grey4,
   grey5,
+  grey6,
   white,
   white2,
   white3,
@@ -16,6 +17,11 @@ import {
 
 const eRequestStyles = StyleSheet.create({
   requests: {
+    marginTop: '2%',
+    width: '100%',
+    padding: 10,
+  },
+  selectedExercises: {
     marginTop: '2%',
     width: '100%',
     padding: 10,
@@ -73,6 +79,78 @@ const eRequestStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: black,
+  },
+  exercisesContent: {
+    flex: 1,
+    width: '100%',
+  },
+  exerciseNameContent: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignContent: 'flex-start',
+  },
+  exerciseDetailsContent: {
+    flex: 10,
+  },
+  position: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: '3%',
+    color: white,
+  },
+  exerciseName: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: '3%',
+  },
+  positionDrag: {
+    flex: 1,
+    backgroundColor: blue,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderRadius: 20,
+    padding: '1%',
+    marginRight: '3%',
+    height: '100%',
+  },
+  pickerExerciseContent: {
+    flex: 3,
+    backgroundColor: green,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderRadius: 20,
+    padding: '1%',
+  },
+  pickerExercise: {
+    flex: 2,
+    color: white,
+  },
+  inputExercise: {
+    borderRadius: 15,
+    flex: 1,
+    backgroundColor: grey6,
+    color: black,
+  },
+  exercisesCard: {
+    width: '100%',
+    backgroundColor: white,
+    borderRadius: 20,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  selectedExercisesCard: {
+    width: '100%',
+    backgroundColor: white,
+    borderRadius: 20,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
 });
 export default eRequestStyles;

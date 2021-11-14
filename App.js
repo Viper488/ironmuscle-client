@@ -7,12 +7,11 @@
  */
 
 import 'react-native-gesture-handler';
-import React, {Component} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import NetInfo from '@react-native-community/netinfo';
 import {Provider as PaperProvider} from 'react-native-paper';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CustomDrawer from './screens/CustomDrawer';
@@ -29,6 +28,8 @@ import {black, grey3, grey4, white} from './styles/Colors';
 import ERequestsScreen from './screens/trainer/tabscreens/ERequestsScreen';
 import EExercisesScreen from './screens/trainer/tabscreens/EExercisesScreen';
 import ETrainingsScreen from './screens/trainer/tabscreens/ETrainingsScreen';
+import CreateTrainingScreen from './screens/trainer/create/CreateTrainingScreen';
+import AddExercisesScreen from './screens/trainer/create/AddExercisesScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -167,6 +168,16 @@ const TrainerHome = () => {
       <Drawer.Screen
         name="EHome"
         component={TrainerHomeTab}
+        options={{headerShown: false}}
+      />
+      <Drawer.Screen
+        name="CreateTraining"
+        component={CreateTrainingScreen}
+        options={{headerShown: false}}
+      />
+      <Drawer.Screen
+        name="AddExercises"
+        component={AddExercisesScreen}
         options={{headerShown: false}}
       />
     </Drawer.Navigator>

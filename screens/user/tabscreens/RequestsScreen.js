@@ -146,6 +146,32 @@ const RequestsScreen = ({navigation, route}) => {
     });
   };
 
+  const saveRequest = () => {
+    let request = {
+      title: title,
+      description: description,
+      bodyPart: bodyPart,
+      difficulty: difficulty,
+    };
+    console.log('Request: ' + request.bodyPart);
+    createRequest(request)
+      .then(response => {
+        console.log(response.data);
+        updateRequestsList();
+        setTitle('');
+        setDescription('');
+        setBodyPart('');
+        setDifficulty('');
+        setModalVisible(false);
+        toggleSnackbar(
+          'Created request at ' + getDate(response.data.created_at),
+        );
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <Modal
@@ -202,38 +228,12 @@ const RequestsScreen = ({navigation, route}) => {
                 onValueChange={(itemValue, itemIndex) =>
                   setDifficulty(itemValue)
                 }>
-                <Picker.Item label="Beginner" value="Mediocre" />
+                <Picker.Item label="Beginner" value="Beginner" />
                 <Picker.Item label="Mediocre" value="Mediocre" />
                 <Picker.Item label="Pro" value="Pro" />
               </Picker>
             </View>
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => {
-                let request = {
-                  title: title,
-                  description: description,
-                  bodyPart: bodyPart,
-                  difficulty: difficulty,
-                };
-                console.log('Request: ' + request.bodyPart);
-                createRequest(request)
-                  .then(response => {
-                    console.log(response.data);
-                    updateRequestsList();
-                    setTitle('');
-                    setDescription('');
-                    setBodyPart('');
-                    setDifficulty('');
-                    setModalVisible(false);
-                    toggleSnackbar(
-                      'Created request at ' + getDate(response.data.created_at),
-                    );
-                  })
-                  .catch(error => {
-                    console.log(error);
-                  });
-              }}>
+            <TouchableOpacity style={styles.btn} onPress={() => saveRequest()}>
               <Text style={styles.btnText}>Create request</Text>
             </TouchableOpacity>
           </View>

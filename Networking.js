@@ -133,7 +133,7 @@ export const getUserRanking = async () => {
 
 export const getRanking = async page => {
   return await instance
-    .get(baseUrl + '/user/ranking/list?page=' + page + '&size=' + 30)
+    .get(baseUrl + '/user/ranking/list?page=' + page + '&size=' + 100)
     .then(response => {
       return response;
     })
@@ -313,6 +313,28 @@ export const getTrainings = async (page, size) => {
 export const getExercises = async (page, size) => {
   return await instance
     .get(baseUrl + '/exercise/all?page=' + page + '&size=' + size)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const createTraining = async training => {
+  return await instance
+    .post(baseUrl + '/training', training)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const addExercises = async (id, exercises) => {
+  return await instance
+    .post(baseUrl + '/training/' + id + '/exercises', exercises)
     .then(response => {
       return response;
     })

@@ -96,8 +96,9 @@ const TrainingDetailsScreen = ({navigation, route}) => {
         <DraggableFlatList
           style={trainingsStyles.notificationList}
           data={exercises}
-          keyExtractor={(item, index) => `draggable-item-${item.key}`}
-          renderItem={({item, index, drag, isActive}) => {
+          keyExtractor={item => `draggable-item-${item.key}`}
+          onDragEnd={({data}) => setExercises(data)}
+          renderItem={({item, drag, isActive}) => {
             return (
               <View
                 style={[
@@ -130,7 +131,6 @@ const TrainingDetailsScreen = ({navigation, route}) => {
               </View>
             );
           }}
-          onDragEnd={({data}) => setExercises(data)}
         />
         <View style={tdStyles.btnContainer}>
           <TouchableOpacity

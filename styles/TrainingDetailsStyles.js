@@ -68,7 +68,8 @@ const tdStyles = StyleSheet.create({
   dragBtn: {
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1,
+    alignSelf: 'flex-start',
+    marginRight: '3%',
   },
   exerciseName: {
     flex: 3,

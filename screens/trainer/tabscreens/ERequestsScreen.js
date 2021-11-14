@@ -25,7 +25,7 @@ const ERequestsScreen = ({navigation, route}) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      getRequests(page, 30)
+      getRequests(page, 100)
         .then(response => {
           setPage(response.data.currentPage);
           setTotalPages(response.data.totalPages);
@@ -71,7 +71,7 @@ const ERequestsScreen = ({navigation, route}) => {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setRequests([]);
-    getRequests(0, 30)
+    getRequests(0, 100)
       .then(response => {
         setPage(response.data.currentPage);
         setTotalPages(response.data.totalPages);
@@ -136,7 +136,17 @@ const ERequestsScreen = ({navigation, route}) => {
                 <Text>{item.description}</Text>
               </View>
               <View style={eRequestStyles.cardFooter}>
-                <TouchableOpacity style={eRequestStyles.btn} onPress={() => {}}>
+                <TouchableOpacity
+                  style={eRequestStyles.btn}
+                  onPress={() => {
+                      console.log(item.title);
+                    navigation.navigate('CreateTraining', {
+                      user: item.user,
+                      name: item.title,
+                      difficulty: item.difficulty,
+                      training: null,
+                    });
+                  }}>
                   <Text style={eRequestStyles.btnText}>Create training</Text>
                 </TouchableOpacity>
               </View>

@@ -32,6 +32,12 @@ const trainingsStyles = StyleSheet.create({
     borderBottomColor: white,
     flex: 1,
   },
+  inputsExercise: {
+    height: 45,
+    marginLeft: 16,
+    borderBottomColor: black,
+    flex: 1,
+  },
   inputIcon: {
     marginLeft: 15,
     justifyContent: 'center',
