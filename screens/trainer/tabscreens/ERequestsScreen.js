@@ -13,7 +13,12 @@ import styles from '../../../styles/Styles';
 import {blue, green} from '../../../styles/Colors';
 import requestStyles from '../../../styles/RequestStyles';
 import {useFocusEffect} from '@react-navigation/native';
-import {getRequests, JWToken, RefreshToken} from '../../../Networking';
+import {
+  editRequest,
+  getRequests,
+  JWToken,
+  RefreshToken,
+} from '../../../Networking';
 import {_removeData} from '../../../AsyncStorageManager';
 import eRequestStyles from '../styles/ERequestStyles';
 
@@ -139,12 +144,18 @@ const ERequestsScreen = ({navigation, route}) => {
                 <TouchableOpacity
                   style={eRequestStyles.btn}
                   onPress={() => {
-                      console.log(item.title);
+                    editRequest(item.id, {status: 'IN PROGRESS'})
+                      .then(response => {
+                        console.log(
+                          'Request ' +
+                            response.data.id +
+                            ' status: ' +
+                            response.data.status,
+                        );
+                      })
+                      .catch(error => console.log(error));
                     navigation.navigate('CreateTraining', {
-                      user: item.user,
-                      name: item.title,
-                      difficulty: item.difficulty,
-                      training: null,
+                      request: item,
                     });
                   }}>
                   <Text style={eRequestStyles.btnText}>Create training</Text>

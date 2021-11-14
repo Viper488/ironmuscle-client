@@ -9,13 +9,19 @@ import {Snackbar} from 'react-native-paper';
 
 const CreateTrainingScreen = ({navigation, route}) => {
   const [name, setName] = useState(
-    route.params.name !== null ? route.params.name : undefined,
+    route.params.request !== null && route.params.request.name !== null
+      ? route.params.request.name
+      : undefined,
   );
   const [type, setType] = useState(
-    route.params.user !== null ? 'custom' : 'standard',
+    route.params.request !== null && route.params.request.user !== null
+      ? 'custom'
+      : 'standard',
   );
   const [difficulty, setDifficulty] = useState(
-    route.params.difficulty !== null ? route.params.difficulty : 'Beginner',
+    route.params.request !== null && route.params.request.difficulty !== null
+      ? route.params.request.difficulty
+      : 'Beginner',
   );
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
@@ -65,7 +71,8 @@ const CreateTrainingScreen = ({navigation, route}) => {
           wait(2000).then(() => {
             clearState();
             navigation.navigate('AddExercises', {
-              user: route.params.user,
+              request:
+                route.params.request !== null ? route.params.request : null,
               training: response.data,
             });
           });

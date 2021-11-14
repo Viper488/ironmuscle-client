@@ -299,6 +299,17 @@ export const getRequests = async (page, size) => {
     });
 };
 
+export const editRequest = async (requestId, requestBody) => {
+  return await instance
+    .put(baseUrl + '/request/' + requestId, requestBody)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
 export const getTrainings = async (page, size) => {
   return await instance
     .get(baseUrl + '/training/all?page=' + page + '&size=' + size)
@@ -335,6 +346,23 @@ export const createTraining = async training => {
 export const addExercises = async (id, exercises) => {
   return await instance
     .post(baseUrl + '/training/' + id + '/exercises', exercises)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const addTrainingUser = async (userId, trainingId) => {
+  return await instance
+    .post(
+      baseUrl +
+        '/user/trainings/add?user=' +
+        userId +
+        '&training=' +
+        trainingId,
+    )
     .then(response => {
       return response;
     })

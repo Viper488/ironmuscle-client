@@ -180,9 +180,7 @@ const ETrainingsScreen = ({navigation, route}) => {
         style={requestStyles.floatingBtn}
         onPress={() => {
           navigation.navigate('CreateTraining', {
-            user: null,
-            name: null,
-            difficulty: null,
+            request: null,
             training: null,
           });
         }}>

@@ -16,6 +16,8 @@ import styles from '../../../styles/Styles';
 import {useFocusEffect} from '@react-navigation/native';
 import {
   addExercises,
+  addTrainingUser,
+  editRequest,
   getExercises,
   JWToken,
   RefreshToken,
@@ -303,6 +305,38 @@ const AddExercisesScreen = ({navigation, route}) => {
 
         addExercises(route.params.training.id, addExe)
           .then(response => {
+            if (route.params.request !== null) {
+              editRequest(route.params.request.id, {status: 'DONE'})
+                .then(response => {
+                  console.log(
+                    'Request ' +
+                      response.data.id +
+                      ' status: ' +
+                      response.data.status,
+                  );
+                })
+                .catch(error => console.log(error));
+              if (
+                route.params.training.type === 'custom' &&
+                route.params.request.user !== null
+              ) {
+                addTrainingUser(
+                  route.params.request.user.id,
+                  route.params.training.id,
+                )
+                  .then(response => {
+                    console.log(
+                      'Assigned ' +
+                        response.data.training.name +
+                        ' to ' +
+                        response.data.user.username,
+                    );
+                  })
+                  .catch(error => {
+                    console.log(error);
+                  });
+              }
+            }
             toggleSnackbar('Added exercises');
             wait(2000).then(() => {
               clearState();
