@@ -16,6 +16,10 @@ import {
 } from '../../../styles/Colors';
 
 const eRequestStyles = StyleSheet.create({
+  goBack: {
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
   requests: {
     marginTop: '2%',
     width: '100%',

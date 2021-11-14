@@ -114,7 +114,7 @@ const CreateTrainingScreen = ({navigation, route}) => {
         </Picker>
       </View>
       <TouchableOpacity style={styles.btn} onPress={() => saveTraining()}>
-        <Text style={styles.btnText}>Create training</Text>
+        <Text style={styles.btnText}>Next</Text>
       </TouchableOpacity>
       <Snackbar
         visible={visible}

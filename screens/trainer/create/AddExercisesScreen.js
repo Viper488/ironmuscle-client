@@ -34,6 +34,7 @@ import Bolts from '../../components/Bolts';
 import requestStyles from '../../../styles/RequestStyles';
 import {Picker} from '@react-native-picker/picker';
 import {Snackbar} from 'react-native-paper';
+import exerciseStyles from '../../../styles/ExerciseStyles';
 
 const AddExercisesScreen = ({navigation, route}) => {
   const [exercises, setExercises] = useState([]);
@@ -187,7 +188,9 @@ const AddExercisesScreen = ({navigation, route}) => {
   const renderItem = (item, index) => {
     return (
       <View style={[tdStyles.card, {marginTop: index === 0 ? 0 : '3%'}]}>
-        <Text style={tdStyles.exerciseName}>{item.name}</Text>
+        <Text style={tdStyles.exerciseName}>
+          {item.id} {item.name}
+        </Text>
         <CheckBox
           value={item.selected}
           onValueChange={() => {
@@ -280,12 +283,15 @@ const AddExercisesScreen = ({navigation, route}) => {
 
   const handleAddExercises = () => {
     if (!selected) {
-      setSelectedExercises(
-        exercises.filter(e => {
-          return e.selected;
-        }),
-      );
-      setSelected(true);
+      let selectedExe = exercises.filter(e => {
+        return e.selected;
+      });
+      if (selectedExe.length > 0) {
+        setSelectedExercises(selectedExe);
+        setSelected(true);
+      } else {
+        toggleSnackbar('Please select at least one exercise.');
+      }
     } else {
       let undefinedExe = selectedExercises.filter(e => {
         return e.value === '' || e.value === null;
@@ -355,6 +361,15 @@ const AddExercisesScreen = ({navigation, route}) => {
       <View style={trainingsStyles.card}>
         <View style={trainingsStyles.imageContent}>
           <View style={trainingsStyles.cardContent}>
+            {selected ? (
+              <TouchableOpacity
+                style={eRequestStyles.goBack}
+                onPress={() => setSelected(false)}>
+                <View>
+                  <FontAwesome5 name={'arrow-left'} size={20} color={white} />
+                </View>
+              </TouchableOpacity>
+            ) : undefined}
             <Text style={trainingsStyles.name}>
               {route.params.training.name} {route.params.training.difficulty}
             </Text>
@@ -377,7 +392,7 @@ const AddExercisesScreen = ({navigation, route}) => {
           style={tdStyles.btn}
           onPress={() => handleAddExercises()}>
           <Text style={tdStyles.btnText}>
-            {selected ? 'Add exercises' : 'Next'}
+            {selected ? 'Create training' : 'Next'}
           </Text>
         </TouchableOpacity>
       </View>
