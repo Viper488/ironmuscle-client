@@ -40,15 +40,16 @@ class RegisterScreen extends Component {
       roles: ['USER'],
     };
 
-    await requestRegister(request).then(response => {
-      if (response.status === 200) {
-        this.props.navigation.navigate('Login', {
-          message: 'Registered successfully!',
+    requestRegister(request)
+      .then(response => {
+        this.toggleSnackbar('Registered successfully!');
+        this.wait(2000).then(() => {
+          this.props.navigation.navigate('Login');
         });
-      } else {
-        this.toggleSnackbar(response.data);
-      }
-    });
+      })
+      .catch(error => {
+        this.toggleSnackbar(error);
+      });
   };
 
   validate = () => {
@@ -67,6 +68,10 @@ class RegisterScreen extends Component {
     } else {
       return true;
     }
+  };
+
+  wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
   };
 
   render() {
@@ -136,7 +141,7 @@ class RegisterScreen extends Component {
         </View>
         <TouchableOpacity
           style={styles.btn}
-          onPress={() => (this.validate() ? this.register() : null)}>
+          onPress={() => (this.validate() ? this.register() : undefined)}>
           <Text style={styles.btnText}>Register</Text>
         </TouchableOpacity>
         {

@@ -14,7 +14,12 @@ import {
 } from 'react-native';
 import styles from '../../../styles/Styles';
 import {useFocusEffect} from '@react-navigation/native';
-import {getTrainings, JWToken, RefreshToken} from '../../../Networking';
+import {
+  getTrainingDetails,
+  getTrainings,
+  JWToken,
+  RefreshToken,
+} from '../../../Networking';
 import {_removeData} from '../../../AsyncStorageManager';
 import eRequestStyles from '../styles/ERequestStyles';
 import trainingsStyles from '../../../styles/TrainingsStyles';
@@ -166,6 +171,37 @@ const ETrainingsScreen = ({navigation, route}) => {
                   <View style={trainingsStyles.bolts}>
                     <Bolts difficulty={item.difficulty} size={25} />
                   </View>
+                  <TouchableOpacity
+                    onPress={() => {
+                      getTrainingDetails(item.id)
+                        .then(response => {
+                          response.data.exercises.forEach((e, i) =>
+                            Object.assign(e, {
+                              key: e.id + '_' + i,
+                              selected: true,
+                              type: e.time === 0 ? 'Repetitions' : 'Time',
+                            }),
+                          );
+
+                          console.log(response.data.exercises);
+                          navigation.navigate('EditExercises', {
+                            request: null,
+                            training: item,
+                            edit: true,
+                            selectedExercises: response.data.exercises,
+                          });
+                        })
+                        .catch(error => {
+                          console.log(error);
+                        });
+                    }}>
+                    <FontAwesome5
+                      name={'cog'}
+                      size={20}
+                      color={white}
+                      style={trainingsStyles.searchIcon}
+                    />
+                  </TouchableOpacity>
                 </View>
                 <Image
                   style={trainingsStyles.image}

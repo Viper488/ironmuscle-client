@@ -104,20 +104,22 @@ const eRequestStyles = StyleSheet.create({
     color: white,
   },
   exerciseName: {
+    flex: 4,
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: '3%',
   },
   positionDrag: {
     flex: 1,
-    backgroundColor: blue,
-    justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
-    borderRadius: 20,
+    flexDirection: 'column',
     padding: '1%',
     marginRight: '3%',
     height: '100%',
+  },
+  positionDragBtn: {
+    flex: 1,
+    paddingVertical: '5%',
   },
   pickerExerciseContent: {
     flex: 3,

@@ -71,9 +71,10 @@ const CreateTrainingScreen = ({navigation, route}) => {
           wait(2000).then(() => {
             clearState();
             navigation.navigate('AddExercises', {
-              request:
-                route.params.request !== null ? route.params.request : null,
+              request: route.params.request,
               training: response.data,
+              selectedExercises: [],
+              edit: false,
             });
           });
         })

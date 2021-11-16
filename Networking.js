@@ -354,6 +354,17 @@ export const addExercises = async (id, exercises) => {
     });
 };
 
+export const editExercises = async (id, exercises) => {
+  return await instance
+    .put(baseUrl + '/training/' + id + '/exercises', exercises)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
 export const addTrainingUser = async (userId, trainingId) => {
   return await instance
     .post(

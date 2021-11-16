@@ -1,7 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import {
-  Alert,
   BackHandler,
   FlatList,
   Image,
@@ -14,32 +13,18 @@ import {
 import CheckBox from '@react-native-community/checkbox';
 import styles from '../../../styles/Styles';
 import {useFocusEffect} from '@react-navigation/native';
-import {
-  addExercises,
-  addTrainingUser,
-  editRequest,
-  getExercises,
-  JWToken,
-  RefreshToken,
-} from '../../../Networking';
-import {_removeData} from '../../../AsyncStorageManager';
-import DraggableFlatList from 'react-native-draggable-flatlist';
+import {getExercises} from '../../../Networking';
 import filter from 'lodash.filter';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import trainingsStyles from '../../../styles/TrainingsStyles';
 import eRequestStyles from '../styles/ERequestStyles';
 import tdStyles from '../../../styles/TrainingDetailsStyles';
-import {grey, grey4, grey5, white} from '../../../styles/Colors';
+import {grey} from '../../../styles/Colors';
 import Bolts from '../../components/Bolts';
-import requestStyles from '../../../styles/RequestStyles';
-import {Picker} from '@react-native-picker/picker';
 import {Snackbar} from 'react-native-paper';
-import exerciseStyles from '../../../styles/ExerciseStyles';
 
 const AddExercisesScreen = ({navigation, route}) => {
   const [exercises, setExercises] = useState([]);
-  const [selectedExercises, setSelectedExercises] = useState([]);
-  const [selected, setSelected] = useState(false);
   const [fullExercises, setFullExercises] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [changed, setChanged] = useState(false);
@@ -53,14 +38,26 @@ const AddExercisesScreen = ({navigation, route}) => {
     React.useCallback(() => {
       getExercises(page, 100)
         .then(response => {
-          response.data.exercises.forEach(item =>
+          response.data.exercises.forEach((item, index) =>
             Object.assign(item, {
-              key: item.id + item.name,
+              key: item.id + '_' + index,
               selected: false,
               type: 'Repetitions',
-              value: null,
+              time: null,
+              repetitions: null,
             }),
           );
+
+          if (route.params.selectedExercises.length > 0) {
+            route.params.selectedExercises.forEach(s => {
+              response.data.exercises.forEach(e => {
+                if (s.id === e.id) {
+                  e.selected = true;
+                }
+              });
+            });
+          }
+
           setPage(response.data.currentPage);
           setTotalPages(response.data.totalPages);
           setExercises([...exercises, ...response.data.exercises]);
@@ -72,12 +69,7 @@ const AddExercisesScreen = ({navigation, route}) => {
         });
 
       const onBackPress = () => {
-        if (selected) {
-          setSelected(false);
-          return false;
-        } else {
-          return true;
-        }
+        return false;
       };
 
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
@@ -89,8 +81,6 @@ const AddExercisesScreen = ({navigation, route}) => {
 
   const clearState = () => {
     setExercises([]);
-    setSelectedExercises([]);
-    setSelected(false);
     setFullExercises([]);
     setRefreshing(false);
     setChanged(false);
@@ -120,7 +110,13 @@ const AddExercisesScreen = ({navigation, route}) => {
     getExercises(0, 100)
       .then(response => {
         response.data.exercises.forEach(item =>
-          Object.assign(item, {selected: false}),
+          Object.assign(item, {
+            key: item.id,
+            selected: false,
+            type: 'Repetitions',
+            time: null,
+            repetitions: null,
+          }),
         );
 
         setPage(response.data.currentPage);
@@ -136,12 +132,10 @@ const AddExercisesScreen = ({navigation, route}) => {
   }, []);
 
   const loadMoreExercises = () => {
-    if (!selected) {
-      let newPage = page + 1;
-      if (newPage < totalPages) {
-        setPage(newPage);
-        console.log('Preparing to fetch ' + newPage);
-      }
+    let newPage = page + 1;
+    if (newPage < totalPages) {
+      setPage(newPage);
+      console.log('Preparing to fetch ' + newPage);
     }
   };
 
@@ -162,9 +156,7 @@ const AddExercisesScreen = ({navigation, route}) => {
   };
 
   const renderSearch = () => {
-    return selected ? (
-      <View />
-    ) : (
+    return (
       <View style={trainingsStyles.formContent}>
         <View style={trainingsStyles.inputContainer}>
           <FontAwesome5
@@ -202,53 +194,6 @@ const AddExercisesScreen = ({navigation, route}) => {
     );
   };
 
-  const renderSelectedItem = (item, index, drag, isActive) => {
-    return (
-      <View
-        style={[
-          eRequestStyles.selectedExercisesCard,
-          {marginTop: index === 0 ? 0 : '3%'},
-          {backgroundColor: isActive ? grey : white},
-        ]}>
-        <TouchableOpacity
-          style={eRequestStyles.positionDrag}
-          onLongPress={drag}>
-          <Text style={eRequestStyles.position}>
-            {index + 1}
-            {'.'}
-          </Text>
-        </TouchableOpacity>
-        <View style={eRequestStyles.exerciseDetailsContent}>
-          <View style={eRequestStyles.exerciseNameContent}>
-            <Text style={eRequestStyles.exerciseName}>{item.name}</Text>
-          </View>
-          <View style={eRequestStyles.pickerExerciseContent}>
-            <Picker
-              selectedValue={item.type}
-              style={eRequestStyles.pickerExercise}
-              onValueChange={(itemValue, itemIndex) => {
-                item.type = itemValue;
-                setChanged(!changed);
-              }}>
-              <Picker.Item label="Time" value="Time" />
-              <Picker.Item label="Repetitions" value="Repetitions" />
-            </Picker>
-            <TextInput
-              maxLength={10}
-              keyboardType="numeric"
-              style={eRequestStyles.inputExercise}
-              placeholder={item.type === 'Time' ? 'Seconds' : 'Repetitions'}
-              placeholderTextColor={grey4}
-              onChangeText={text => {
-                item.value = text.replace(/[^0-9]/g, '');
-              }}
-            />
-          </View>
-        </View>
-      </View>
-    );
-  };
-
   const renderFlatlist = () => {
     return (
       <FlatList
@@ -266,93 +211,20 @@ const AddExercisesScreen = ({navigation, route}) => {
     );
   };
 
-  const renderDraggableFlatlist = () => {
-    return (
-      <DraggableFlatList
-        style={eRequestStyles.selectedExercises}
-        data={selectedExercises}
-        keyExtractor={item => `draggable-item-${item.key}`}
-        extraData={changed}
-        onDragEnd={({data}) => setSelectedExercises(data)}
-        renderItem={({item, index, drag, isActive}) =>
-          renderSelectedItem(item, index, drag, isActive)
-        }
-      />
-    );
-  };
-
-  const handleAddExercises = () => {
-    if (!selected) {
-      let selectedExe = exercises.filter(e => {
-        return e.selected;
+  const handleAddSelected = () => {
+    let selectedExe = exercises.filter(e => {
+      return e.selected;
+    });
+    if (selectedExe.length > 0) {
+      console.log(selectedExe);
+      navigation.navigate('EditExercises', {
+        request: route.params.request,
+        training: route.params.training,
+        selectedExercises: selectedExe,
+        edit: route.params.edit,
       });
-      if (selectedExe.length > 0) {
-        setSelectedExercises(selectedExe);
-        setSelected(true);
-      } else {
-        toggleSnackbar('Please select at least one exercise.');
-      }
     } else {
-      let undefinedExe = selectedExercises.filter(e => {
-        return e.value === '' || e.value === null;
-      }).length;
-      if (undefinedExe > 0) {
-        toggleSnackbar('Number of undefined exercises ' + undefinedExe);
-      } else {
-        let addExe = [];
-        selectedExercises.map(exe => {
-          addExe.push({
-            exerciseId: exe.id,
-            time: exe.type === 'Time' ? parseInt(exe.value) : 0,
-            repetitions: exe.type === 'Repetitions' ? parseInt(exe.value) : 0,
-          });
-        });
-        console.log(addExe);
-
-        addExercises(route.params.training.id, addExe)
-          .then(response => {
-            if (route.params.request !== null) {
-              editRequest(route.params.request.id, {status: 'DONE'})
-                .then(response => {
-                  console.log(
-                    'Request ' +
-                      response.data.id +
-                      ' status: ' +
-                      response.data.status,
-                  );
-                })
-                .catch(error => console.log(error));
-              if (
-                route.params.training.type === 'custom' &&
-                route.params.request.user !== null
-              ) {
-                addTrainingUser(
-                  route.params.request.user.id,
-                  route.params.training.id,
-                )
-                  .then(response => {
-                    console.log(
-                      'Assigned ' +
-                        response.data.training.name +
-                        ' to ' +
-                        response.data.user.username,
-                    );
-                  })
-                  .catch(error => {
-                    console.log(error);
-                  });
-              }
-            }
-            toggleSnackbar('Added exercises');
-            wait(2000).then(() => {
-              clearState();
-              navigation.navigate('TrainingsE');
-            });
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
+      toggleSnackbar('Please select at least one exercise.');
     }
   };
 
@@ -361,15 +233,6 @@ const AddExercisesScreen = ({navigation, route}) => {
       <View style={trainingsStyles.card}>
         <View style={trainingsStyles.imageContent}>
           <View style={trainingsStyles.cardContent}>
-            {selected ? (
-              <TouchableOpacity
-                style={eRequestStyles.goBack}
-                onPress={() => setSelected(false)}>
-                <View>
-                  <FontAwesome5 name={'arrow-left'} size={20} color={white} />
-                </View>
-              </TouchableOpacity>
-            ) : undefined}
             <Text style={trainingsStyles.name}>
               {route.params.training.name} {route.params.training.difficulty}
             </Text>
@@ -384,16 +247,14 @@ const AddExercisesScreen = ({navigation, route}) => {
         </View>
       </View>
       {renderSearch()}
-      <View style={eRequestStyles.exercisesContent}>
-        {selected ? renderDraggableFlatlist() : renderFlatlist()}
-      </View>
+      <View style={eRequestStyles.exercisesContent}>{renderFlatlist()}</View>
       <View style={tdStyles.btnContainer}>
         <TouchableOpacity
           style={tdStyles.btn}
-          onPress={() => handleAddExercises()}>
-          <Text style={tdStyles.btnText}>
-            {selected ? 'Create training' : 'Next'}
-          </Text>
+          onPress={() => {
+            handleAddSelected();
+          }}>
+          <Text style={tdStyles.btnText}>Next</Text>
         </TouchableOpacity>
       </View>
       <Snackbar

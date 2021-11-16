@@ -30,6 +30,7 @@ import EExercisesScreen from './screens/trainer/tabscreens/EExercisesScreen';
 import ETrainingsScreen from './screens/trainer/tabscreens/ETrainingsScreen';
 import CreateTrainingScreen from './screens/trainer/create/CreateTrainingScreen';
 import AddExercisesScreen from './screens/trainer/create/AddExercisesScreen';
+import EditExercisesScreen from './screens/trainer/create/EditExercisesScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -178,6 +179,11 @@ const TrainerHome = () => {
       <Drawer.Screen
         name="AddExercises"
         component={AddExercisesScreen}
+        options={{headerShown: false}}
+      />
+      <Drawer.Screen
+        name="EditExercises"
+        component={EditExercisesScreen}
         options={{headerShown: false}}
       />
     </Drawer.Navigator>
