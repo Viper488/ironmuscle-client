@@ -392,3 +392,14 @@ export const getUsers = async (page, size) => {
       throw error;
     });
 };
+
+export const lockUser = async (id, lock) => {
+  return await instance
+    .put(baseUrl + '/user/lock?id=' + id, lock)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};

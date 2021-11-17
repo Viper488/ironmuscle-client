@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import styles from '../../../styles/Styles';
 import {useFocusEffect} from '@react-navigation/native';
-import {getUsers, JWToken, RefreshToken} from '../../../Networking';
+import {getUsers, JWToken, lockUser, RefreshToken} from '../../../Networking';
 import {_removeData} from '../../../AsyncStorageManager';
 import filter from 'lodash.filter';
 import trainingsStyles from '../../../styles/TrainingsStyles';
@@ -23,6 +23,7 @@ import tdStyles from '../../../styles/TrainingDetailsStyles';
 import requestStyles from '../../../styles/RequestStyles';
 
 const UsersScreen = ({navigation, route}) => {
+  const [changed, setChanged] = useState(false);
   const [users, setUsers] = useState([]);
   const [fullUsers, setFullUsers] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -114,7 +115,7 @@ const UsersScreen = ({navigation, route}) => {
 
   const contains = (item, query) => {
     let lowerQuery = query.toLowerCase();
-    return item.name.toLowerCase().includes(lowerQuery);
+    return item.username.toLowerCase().includes(lowerQuery);
   };
 
   return (
@@ -139,7 +140,10 @@ const UsersScreen = ({navigation, route}) => {
       <FlatList
         style={eRequestStyles.requests}
         data={users}
-        keyExtractor={(item, index) => index}
+        extraData={changed}
+        keyExtractor={item => {
+          return item.id;
+        }}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
@@ -149,11 +153,34 @@ const UsersScreen = ({navigation, route}) => {
           return (
             <View style={[tdStyles.card, {marginTop: index === 0 ? 0 : '3%'}]}>
               <Text style={tdStyles.exerciseName}>{item.username}</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  let lock = !item.locked;
+                  lockUser(item.id, {email: null, lock: lock})
+                    .then(response => {
+                      item.locked = lock;
+                      setChanged(!changed);
+                      console.log(
+                        'User ' + item.username + ' is ' + item.locked,
+                      );
+                    })
+                    .catch(error => console.log(error));
+                }}>
+                <FontAwesome5
+                  name={item.locked ? 'lock-open' : 'lock'}
+                  color={grey}
+                  size={20}
+                />
+              </TouchableOpacity>
             </View>
           );
         }}
       />
-      <TouchableOpacity style={requestStyles.floatingBtn} onPress={() => {}}>
+      <TouchableOpacity
+        style={requestStyles.floatingBtn}
+        onPress={() => {
+          navigation.navigate('ACreateUser');
+        }}>
         <FontAwesome5 name={'plus'} size={30} color={black2} />
       </TouchableOpacity>
     </View>

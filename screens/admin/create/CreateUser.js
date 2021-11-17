@@ -1,16 +1,17 @@
 import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
-import styles from '../styles/Styles';
-import {requestRegister} from '../Networking';
 import {Snackbar} from 'react-native-paper';
-import requestStyles from '../styles/RequestStyles';
+import requestStyles from '../../../styles/RequestStyles';
 import {Picker} from '@react-native-picker/picker';
+import {requestRegister} from '../../../Networking';
+import styles from '../../../styles/Styles';
 
-const RegisterScreen = ({navigation, route}) => {
+const CreateUser = ({navigation, route}) => {
   const [username, setUsername] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [role, setRole] = useState('USER');
   const [confirmPassword, setConfirmPassword] = useState(null);
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
@@ -26,7 +27,7 @@ const RegisterScreen = ({navigation, route}) => {
 
   const register = async () => {
     let roles = [];
-    roles.push('USER');
+    roles.push(role);
     let request = {
       username: username,
       email: email,
@@ -37,7 +38,7 @@ const RegisterScreen = ({navigation, route}) => {
     requestRegister(request)
       .then(response => {
         toggleSnackbar('Registered successfully!');
-        wait(2000).then(() => navigation.navigate('Login'));
+        wait(2000).then(() => navigation.navigate('AUsers'));
       })
       .catch(error => {
         toggleSnackbar(error);
@@ -87,6 +88,16 @@ const RegisterScreen = ({navigation, route}) => {
           onChangeText={email => setEmail(email)}
         />
       </View>
+      <View style={requestStyles.pickerContent}>
+        <Picker
+          selectedValue={role}
+          style={requestStyles.picker}
+          onValueChange={(itemValue, itemIndex) => setRole(itemValue)}>
+          <Picker.Item label="User" value="USER" />
+          <Picker.Item label="Trainer" value="TRAINER" />
+          <Picker.Item label="Admin" value="Admin" />
+        </Picker>
+      </View>
       <View style={styles.inputView}>
         <TextInput
           maxLength={255}
@@ -128,4 +139,4 @@ const RegisterScreen = ({navigation, route}) => {
   );
 };
 
-export default RegisterScreen;
+export default CreateUser;

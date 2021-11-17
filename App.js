@@ -32,6 +32,7 @@ import CreateTrainingScreen from './screens/trainer/create/CreateTrainingScreen'
 import AddExercisesScreen from './screens/trainer/create/AddExercisesScreen';
 import EditExercisesScreen from './screens/trainer/create/EditExercisesScreen';
 import UsersScreen from './screens/admin/tabscreens/UsersScreen';
+import CreateUser from './screens/admin/create/CreateUser';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -197,6 +198,11 @@ const AdminHome = () => {
       <Drawer.Screen
         name="AUsers"
         component={UsersScreen}
+        options={{headerShown: false}}
+      />
+      <Drawer.Screen
+        name="ACreateUser"
+        component={CreateUser}
         options={{headerShown: false}}
       />
     </Drawer.Navigator>
