@@ -31,6 +31,7 @@ import ETrainingsScreen from './screens/trainer/tabscreens/ETrainingsScreen';
 import CreateTrainingScreen from './screens/trainer/create/CreateTrainingScreen';
 import AddExercisesScreen from './screens/trainer/create/AddExercisesScreen';
 import EditExercisesScreen from './screens/trainer/create/EditExercisesScreen';
+import UsersScreen from './screens/admin/tabscreens/UsersScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -109,11 +110,11 @@ const TrainerHomeTab = () => {
             iconName = 'dumbbell';
             size = focused ? 25 : 20;
             color = focused ? white : grey3;
-          } else if (route.name === 'ExercisesE') {
+          } /* else if (route.name === 'ExercisesE') {
             iconName = 'award';
             size = focused ? 25 : 20;
             color = focused ? white : grey3;
-          }
+          }*/
           return <FontAwesome5 name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: white,
@@ -132,11 +133,11 @@ const TrainerHomeTab = () => {
         component={ETrainingsScreen}
         options={{headerShown: false}}
       />
-      <Tab.Screen
+      {/*      <Tab.Screen
         name="ExercisesE"
         component={EExercisesScreen}
         options={{headerShown: false}}
-      />
+      />*/}
     </Tab.Navigator>
   );
 };
@@ -190,6 +191,18 @@ const TrainerHome = () => {
   );
 };
 
+const AdminHome = () => {
+  return (
+    <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />}>
+      <Drawer.Screen
+        name="AUsers"
+        component={UsersScreen}
+        options={{headerShown: false}}
+      />
+    </Drawer.Navigator>
+  );
+};
+
 const App = () => {
   return (
     <PaperProvider>
@@ -218,6 +231,11 @@ const App = () => {
           <Stack.Screen
             name="TrainerHome"
             component={TrainerHome}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="AdminHome"
+            component={AdminHome}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

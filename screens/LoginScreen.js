@@ -36,7 +36,9 @@ const LoginScreen = ({navigation, route}) => {
           console.log(decoded);
           _storeData(RefreshToken, rftToken).then(() => {
             _storeData(JWToken, jwtToken).then(() => {
-              if (decoded.authorities.includes('TRAINER')) {
+              if (decoded.authorities.includes('ADMIN')) {
+                navigation.navigate('AdminHome');
+              } else if (decoded.authorities.includes('TRAINER')) {
                 navigation.navigate('TrainerHome');
               } else {
                 navigation.navigate('UserHome');

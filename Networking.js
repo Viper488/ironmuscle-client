@@ -381,3 +381,14 @@ export const addTrainingUser = async (userId, trainingId) => {
       throw error;
     });
 };
+
+export const getUsers = async (page, size) => {
+  return await instance
+    .get(baseUrl + '/users?page=' + page + '&size=' + size)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
