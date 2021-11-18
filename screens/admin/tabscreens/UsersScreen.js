@@ -25,20 +25,21 @@ import requestStyles from '../../../styles/RequestStyles';
 const UsersScreen = ({navigation, route}) => {
   const [changed, setChanged] = useState(false);
   const [users, setUsers] = useState([]);
-  const [fullUsers, setFullUsers] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [query, setQuery] = useState('');
 
   useFocusEffect(
     React.useCallback(() => {
-      getUsers(page, 100)
+      console.log('Request: ' + query);
+      getUsers(page, 100, query)
         .then(response => {
           setPage(response.data.currentPage);
           setTotalPages(response.data.totalPages);
           setUsers([...users, ...response.data.users]);
-          setFullUsers([...users, ...response.data.users]);
-          console.log('Fetched ' + page);
+          console.log('Fetched Page ' + page);
+          console.log('Fetched Length ' + response.data.users.length);
         })
         .catch(error => {
           console.log(error);
@@ -69,7 +70,7 @@ const UsersScreen = ({navigation, route}) => {
 
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [page, navigation]),
+    }, [query, page, navigation]),
   );
 
   const wait = timeout => {
@@ -79,20 +80,21 @@ const UsersScreen = ({navigation, route}) => {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setUsers([]);
-    setFullUsers([]);
-    getUsers(0, 100)
+    console.log('Request: ' + query);
+    getUsers(0, 100, query)
       .then(response => {
         setPage(response.data.currentPage);
         setTotalPages(response.data.totalPages);
-        setUsers([...users, ...response.data.users]);
-        setFullUsers([...users, ...response.data.users]);
-        console.log('Fetched ' + page);
+        setUsers(response.data.users);
+        console.log('Fetched Page ' + page);
+        console.log('Fetched Length ' + response.data.users.length);
+        console.log('Fetched Length ' + users.length);
       })
       .catch(error => {
         console.log(error);
       });
     wait(2000).then(() => setRefreshing(false));
-  }, []);
+  }, [query]);
 
   const loadMoreUsers = () => {
     let newPage = page + 1;
@@ -103,19 +105,17 @@ const UsersScreen = ({navigation, route}) => {
   };
 
   const handleSearch = text => {
-    if (text === '') {
-      setUsers(fullUsers);
-    } else {
-      const filteredData = filter(users, item => {
-        return contains(item, text);
-      });
-      setUsers(filteredData);
+    if (text.length >= 3) {
+      setUsers([]);
+      setPage(0);
+      setQuery(text);
+      console.log('Query: ' + query);
+      console.log('Preparing to fetch page ' + page);
+    } else if (text.length === 0) {
+      setUsers([]);
+      setPage(0);
+      setQuery('');
     }
-  };
-
-  const contains = (item, query) => {
-    let lowerQuery = query.toLowerCase();
-    return item.username.toLowerCase().includes(lowerQuery);
   };
 
   return (
@@ -133,7 +133,7 @@ const UsersScreen = ({navigation, route}) => {
             style={trainingsStyles.inputs}
             placeholder="Search"
             underlineColorAndroid="transparent"
-            onChangeText={query => handleSearch(query)}
+            onChangeText={text => handleSearch(text)}
           />
         </View>
       </View>

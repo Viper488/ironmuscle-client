@@ -25,18 +25,18 @@ import {Snackbar} from 'react-native-paper';
 
 const AddExercisesScreen = ({navigation, route}) => {
   const [exercises, setExercises] = useState([]);
-  const [fullExercises, setFullExercises] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [changed, setChanged] = useState(false);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [query, setQuery] = useState('');
 
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
 
   useFocusEffect(
     React.useCallback(() => {
-      getExercises(page, 100)
+      getExercises(page, 100, query)
         .then(response => {
           response.data.exercises.forEach((item, index) =>
             Object.assign(item, {
@@ -61,7 +61,6 @@ const AddExercisesScreen = ({navigation, route}) => {
           setPage(response.data.currentPage);
           setTotalPages(response.data.totalPages);
           setExercises([...exercises, ...response.data.exercises]);
-          setFullExercises([...exercises, ...response.data.exercises]);
           console.log('Fetched ' + page);
         })
         .catch(error => {
@@ -76,12 +75,11 @@ const AddExercisesScreen = ({navigation, route}) => {
 
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [page, navigation]),
+    }, [query, page, navigation]),
   );
 
   const clearState = () => {
     setExercises([]);
-    setFullExercises([]);
     setRefreshing(false);
     setChanged(false);
     setPage(0);
@@ -106,8 +104,7 @@ const AddExercisesScreen = ({navigation, route}) => {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setExercises([]);
-    setFullExercises([]);
-    getExercises(0, 100)
+    getExercises(0, 100, query)
       .then(response => {
         response.data.exercises.forEach(item =>
           Object.assign(item, {
@@ -122,14 +119,13 @@ const AddExercisesScreen = ({navigation, route}) => {
         setPage(response.data.currentPage);
         setTotalPages(response.data.totalPages);
         setExercises([...exercises, ...response.data.exercises]);
-        setFullExercises([...exercises, ...response.data.exercises]);
         console.log('Fetched ' + page);
       })
       .catch(error => {
         console.log(error);
       });
     wait(2000).then(() => setRefreshing(false));
-  }, []);
+  }, [query]);
 
   const loadMoreExercises = () => {
     let newPage = page + 1;
@@ -140,19 +136,17 @@ const AddExercisesScreen = ({navigation, route}) => {
   };
 
   const handleSearch = text => {
-    if (text === '') {
-      setExercises(fullExercises);
-    } else {
-      const filteredData = filter(exercises, item => {
-        return contains(item, text);
-      });
-      setExercises(filteredData);
+    if (text.length >= 3) {
+      setExercises([]);
+      setPage(0);
+      setQuery(text);
+      console.log('Query: ' + query);
+      console.log('Preparing to fetch page ' + page);
+    } else if (text.length === 0) {
+      setExercises([]);
+      setPage(0);
+      setQuery('');
     }
-  };
-
-  const contains = (item, query) => {
-    let lowerQuery = query.toLowerCase();
-    return item.name.toLowerCase().includes(lowerQuery);
   };
 
   const renderSearch = () => {
@@ -170,7 +164,7 @@ const AddExercisesScreen = ({navigation, route}) => {
             style={trainingsStyles.inputs}
             placeholder="Search"
             underlineColorAndroid="transparent"
-            onChangeText={query => handleSearch(query)}
+            onChangeText={text => handleSearch(text)}
           />
         </View>
       </View>
@@ -181,7 +175,7 @@ const AddExercisesScreen = ({navigation, route}) => {
     return (
       <View style={[tdStyles.card, {marginTop: index === 0 ? 0 : '3%'}]}>
         <Text style={tdStyles.exerciseName}>
-          {item.id} {item.name}
+          {item.name}
         </Text>
         <CheckBox
           value={item.selected}

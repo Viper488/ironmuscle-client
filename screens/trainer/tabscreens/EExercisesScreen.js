@@ -36,7 +36,7 @@ const EExercisesScreen = ({navigation, route}) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      getExercises(page, 100)
+      getExercises(page, 100, '')
         .then(response => {
           setPage(response.data.currentPage);
           setTotalPages(response.data.totalPages);
@@ -84,7 +84,7 @@ const EExercisesScreen = ({navigation, route}) => {
     setRefreshing(true);
     setExercises([]);
     setFullExercises([]);
-    getExercises(0, 100)
+    getExercises(0, 100, '')
       .then(response => {
         setPage(response.data.currentPage);
         setTotalPages(response.data.totalPages);

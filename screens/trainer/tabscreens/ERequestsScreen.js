@@ -6,11 +6,12 @@ import {
   FlatList,
   RefreshControl,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import styles from '../../../styles/Styles';
-import {blue, green} from '../../../styles/Colors';
+import {blue, green, grey} from '../../../styles/Colors';
 import requestStyles from '../../../styles/RequestStyles';
 import {useFocusEffect} from '@react-navigation/native';
 import {
@@ -21,16 +22,19 @@ import {
 } from '../../../Networking';
 import {_removeData} from '../../../AsyncStorageManager';
 import eRequestStyles from '../styles/ERequestStyles';
+import trainingsStyles from '../../../styles/TrainingsStyles';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const ERequestsScreen = ({navigation, route}) => {
   const [requests, setRequests] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [query, setQuery] = useState('');
 
   useFocusEffect(
     React.useCallback(() => {
-      getRequests(page, 100)
+      getRequests(page, 100, 'NEW', query)
         .then(response => {
           setPage(response.data.currentPage);
           setTotalPages(response.data.totalPages);
@@ -66,7 +70,7 @@ const ERequestsScreen = ({navigation, route}) => {
 
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [page, navigation]),
+    }, [query, page, navigation]),
   );
 
   const wait = timeout => {
@@ -76,7 +80,7 @@ const ERequestsScreen = ({navigation, route}) => {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setRequests([]);
-    getRequests(0, 100)
+    getRequests(0, 100, 'NEW', query)
       .then(response => {
         setPage(response.data.currentPage);
         setTotalPages(response.data.totalPages);
@@ -87,7 +91,7 @@ const ERequestsScreen = ({navigation, route}) => {
         console.log(error);
       });
     wait(2000).then(() => setRefreshing(false));
-  }, []);
+  }, [query]);
 
   const loadMoreERequests = () => {
     let newPage = page + 1;
@@ -97,8 +101,44 @@ const ERequestsScreen = ({navigation, route}) => {
     }
   };
 
+  const handleSearch = text => {
+    if (text.length >= 3) {
+      setRequests([]);
+      setPage(0);
+      setQuery(text);
+      console.log('Query: ' + query);
+      console.log('Preparing to fetch page ' + page);
+    } else if (text.length === 0) {
+      setRequests([]);
+      setPage(0);
+      setQuery('');
+    }
+  };
+  const renderSearch = () => {
+    return (
+      <View style={trainingsStyles.formContent}>
+        <View style={trainingsStyles.inputContainer}>
+          <FontAwesome5
+            name={'search'}
+            size={20}
+            color={grey}
+            style={trainingsStyles.searchIcon}
+          />
+          <TextInput
+            maxLength={255}
+            style={trainingsStyles.inputs}
+            placeholder="Search"
+            underlineColorAndroid="transparent"
+            onChangeText={text => handleSearch(text)}
+          />
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
+      {renderSearch()}
       <FlatList
         style={eRequestStyles.requests}
         data={requests}

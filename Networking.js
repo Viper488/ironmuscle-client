@@ -288,9 +288,19 @@ export const deleteTraining = async id => {
     });
 };
 
-export const getRequests = async (page, size) => {
+export const getRequests = async (page, size, status, query) => {
   return await instance
-    .get(baseUrl + '/request/all?page=' + page + '&size=' + size)
+    .get(
+      baseUrl +
+        '/request/all?page=' +
+        page +
+        '&size=' +
+        size +
+        '&status=' +
+        status +
+        '&query=' +
+        query,
+    )
     .then(response => {
       return response;
     })
@@ -310,9 +320,17 @@ export const editRequest = async (requestId, requestBody) => {
     });
 };
 
-export const getTrainings = async (page, size) => {
+export const getTrainings = async (page, size, query) => {
   return await instance
-    .get(baseUrl + '/training/all?page=' + page + '&size=' + size)
+    .get(
+      baseUrl +
+        '/training/all?page=' +
+        page +
+        '&size=' +
+        size +
+        '&query=' +
+        query,
+    )
     .then(response => {
       return response;
     })
@@ -321,9 +339,17 @@ export const getTrainings = async (page, size) => {
     });
 };
 
-export const getExercises = async (page, size) => {
+export const getExercises = async (page, size, query) => {
   return await instance
-    .get(baseUrl + '/exercise/all?page=' + page + '&size=' + size)
+    .get(
+      baseUrl +
+        '/exercise/all?page=' +
+        page +
+        '&size=' +
+        size +
+        '&query=' +
+        query,
+    )
     .then(response => {
       return response;
     })
@@ -382,9 +408,9 @@ export const addTrainingUser = async (userId, trainingId) => {
     });
 };
 
-export const getUsers = async (page, size) => {
+export const getUsers = async (page, size, query) => {
   return await instance
-    .get(baseUrl + '/users?page=' + page + '&size=' + size)
+    .get(baseUrl + '/users?page=' + page + '&size=' + size + '&query=' + query)
     .then(response => {
       return response;
     })
