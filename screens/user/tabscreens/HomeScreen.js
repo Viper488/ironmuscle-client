@@ -14,41 +14,38 @@ import {
 import styles from '../../../styles/Styles';
 import homeStyles from '../../../styles/HomeStyles';
 import {
-  deleteRequest,
   deleteTraining,
-  getStandardTrainings,
   getTrainingDetails,
-  getTrainingsByUser,
+  getUserTrainings,
   JWToken,
   RefreshToken,
 } from '../../../Networking';
-import {_removeData, _storeData} from '../../../AsyncStorageManager';
-import {black, black2, grey, white, yellow} from '../../../styles/Colors';
+import {_removeData} from '../../../AsyncStorageManager';
+import {black, black2, green, grey} from '../../../styles/Colors';
 import trainingsStyles from '../../../styles/TrainingsStyles';
 import {useFocusEffect} from '@react-navigation/native';
 import Bolts from '../../components/Bolts';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import filter from 'lodash.filter';
-import historyStyles from '../../../styles/HistoryStyles';
-import {Swipeable} from 'react-native-gesture-handler';
 
 const HomeScreen = ({navigation, route}) => {
-  const [trainings, setTrainings] = useState({});
-  const [trainingsNoFilter, setTrainingsNoFilter] = useState({});
-  const [type, setType] = useState('STANDARD');
+  const [trainings, setTrainings] = useState([]);
+  const [type, setType] = useState('');
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [query, setQuery] = useState('');
 
   useFocusEffect(
     React.useCallback(() => {
-      getStandardTrainings()
+      getUserTrainings(page, 100, type, query)
         .then(response => {
-          setTrainings(response.data);
-          setTrainingsNoFilter(response.data);
-          setType('STANDARD');
+          setPage(response.data.currentPage);
+          setTotalPages(response.data.totalPages);
+          setTrainings([...trainings, ...response.data.trainings]);
+          console.log('Fetched ' + page);
         })
         .catch(error => {
           console.log(error);
         });
-      //}
 
       const onBackPress = () => {
         Alert.alert('Hold on!', 'Are you sure you want to log out?', [
@@ -75,30 +72,29 @@ const HomeScreen = ({navigation, route}) => {
 
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation]),
+    }, [type, query, page, navigation]),
   );
 
   const handleSearch = text => {
-    if (text === '') {
-      setTrainings(trainingsNoFilter);
-    } else {
-      const filteredData = filter(trainings, item => {
-        return contains(item, text);
-      });
-      setTrainings(filteredData);
+    if (text.length >= 3) {
+      setTrainings([]);
+      setPage(0);
+      setQuery(text);
+      console.log('Query: ' + query);
+      console.log('Preparing to fetch page ' + page);
+    } else if (text.length === 0) {
+      setTrainings([]);
+      setPage(0);
+      setQuery('');
     }
   };
 
-  const contains = (item, query) => {
-    let lowerQuery = query.toLowerCase();
-    if (item.name.toLowerCase().includes(lowerQuery)) {
-      return true;
-    }
-
-    if (item.difficulty.toLowerCase().includes(lowerQuery)) {
-      return true;
-    }
-    return item.points == lowerQuery;
+  const handleTypeChange = text => {
+    setTrainings([]);
+    setPage(0);
+    setType(text);
+    console.log('Type: ' + type);
+    console.log('Preparing to fetch page ' + page);
   };
 
   const cardClickEventListener = item => {
@@ -120,54 +116,16 @@ const HomeScreen = ({navigation, route}) => {
       });
   };
 
-  const swipeRight = (progress, dragX) => {
-    const scale = dragX.interpolate({
-      inputRange: [-200, 0],
-      outputRange: [1, 0.5],
-      extrapolate: 'clamp',
-    });
-
-    return (
-      <Animated.View
-        style={{
-          backgroundColor: 'red',
-          width: '100%',
-          justifyContent: 'center',
-          marginTop: '3%',
-        }}>
-        <Animated.Text
-          style={{
-            marginLeft: 'auto',
-            marginRight: 50,
-            fontSize: 24,
-            color: white,
-            fontWeight: 'bold',
-            transform: [{scale}],
-          }}>
-          Delete training
-        </Animated.Text>
-      </Animated.View>
-    );
-  };
-
-  const animatedDelete = trainingId => {
-    Animated.timing(new Animated.Value(250), {
-      toValue: 0,
-      duration: 100,
-      useNativeDriver: false,
-    }).start(() => {
-      deleteTraining(trainingId)
-        .then(response => {
-          setTrainings(prevState => prevState.filter(t => t.id !== trainingId));
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    });
+  const loadMoreTrainings = () => {
+    let newPage = page + 1;
+    if (newPage < totalPages) {
+      setPage(newPage);
+      console.log('Preparing to fetch ' + newPage);
+    }
   };
 
   return (
-    <View style={[styles.container, {padding: '2.5%'}]}>
+    <View style={styles.container}>
       <View style={homeStyles.trainingsContent}>
         <View style={trainingsStyles.formContent}>
           <View style={trainingsStyles.inputContainer}>
@@ -190,20 +148,25 @@ const HomeScreen = ({navigation, route}) => {
           <TouchableOpacity
             style={homeStyles.typeBtn}
             onPress={() => {
-              getStandardTrainings()
-                .then(response => {
-                  setTrainings(response.data);
-                  setTrainingsNoFilter(response.data);
-                  setType('STANDARD');
-                })
-                .catch(error => {
-                  console.log(error);
-                });
+              handleTypeChange('');
             }}>
             <View
               style={[
                 homeStyles.typeContent,
-                {backgroundColor: type === 'STANDARD' ? grey : black2},
+                {backgroundColor: type === '' ? green : black2},
+              ]}>
+              <Text style={homeStyles.type}>ALL</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={homeStyles.typeBtn}
+            onPress={() => {
+              handleTypeChange('standard');
+            }}>
+            <View
+              style={[
+                homeStyles.typeContent,
+                {backgroundColor: type === 'standard' ? green : black2},
               ]}>
               <Text style={homeStyles.type}>STANDARD</Text>
             </View>
@@ -211,40 +174,27 @@ const HomeScreen = ({navigation, route}) => {
           <TouchableOpacity
             style={homeStyles.typeBtn}
             onPress={() => {
-              getTrainingsByUser()
-                .then(response => {
-                  setTrainings(response.data);
-                  setTrainingsNoFilter(response.data);
-                  setType('CUSTOM');
-                })
-                .catch(error => {
-                  console.log(error);
-                });
+              handleTypeChange('custom');
             }}>
             <View
               style={[
                 homeStyles.typeContent,
-                {backgroundColor: type === 'CUSTOM' ? grey : black2},
+                {backgroundColor: type === 'custom' ? green : black2},
               ]}>
               <Text style={homeStyles.type}>CUSTOM</Text>
             </View>
           </TouchableOpacity>
         </View>
-        {type === 'CUSTOM' && trainingsNoFilter.length === 0 ? (
-          <View style={trainingsStyles.notificationList}>
-            <Text style={historyStyles.noTrainingsText}>
-              No trainings to show yet
-            </Text>
-          </View>
-        ) : (
-          <FlatList
-            style={trainingsStyles.notificationList}
-            data={trainings}
-            keyExtractor={item => {
-              return item.id;
-            }}
-            renderItem={({item, index}) => {
-              return type === 'CUSTOM' ? (
+        <FlatList
+          style={[trainingsStyles.notificationList, {backgroundColor: green}]}
+          data={trainings}
+          keyExtractor={item => {
+            return item.id;
+          }}
+          onEndReachedThreshold={0.4}
+          onEndReached={loadMoreTrainings}
+          renderItem={({item, index}) => {
+            /*              return type === 'CUSTOM' ? (
                 <Swipeable
                   renderRightActions={swipeRight}
                   rightThreshold={-200}
@@ -281,42 +231,42 @@ const HomeScreen = ({navigation, route}) => {
                     </TouchableOpacity>
                   </Animated.View>
                 </Swipeable>
-              ) : (
-                <View
-                  style={[
-                    trainingsStyles.card,
-                    {marginTop: index === 0 ? 0 : '3%'},
-                  ]}>
-                  <View style={trainingsStyles.imageContent}>
-                    <View style={trainingsStyles.cardContent}>
-                      <Text style={trainingsStyles.name}>
-                        {item.name} {item.difficulty}
-                      </Text>
-                      <View style={trainingsStyles.bolts}>
-                        <Bolts difficulty={item.difficulty} size={25} />
-                      </View>
+              ) : (*/
+            return (
+              <View
+                style={[
+                  trainingsStyles.card,
+                  {marginTop: index === 0 ? 0 : '3%'},
+                ]}>
+                <View style={trainingsStyles.imageContent}>
+                  <View style={trainingsStyles.cardContent}>
+                    <Text style={trainingsStyles.name}>
+                      {item.name} {item.difficulty}
+                    </Text>
+                    <View style={trainingsStyles.bolts}>
+                      <Bolts difficulty={item.difficulty} size={25} />
                     </View>
-                    <Image
-                      style={trainingsStyles.image}
-                      source={{uri: item.image}}
-                    />
                   </View>
-                  <TouchableOpacity
-                    style={trainingsStyles.content}
-                    onPress={() => {
-                      cardClickEventListener(item);
-                    }}>
-                    <FontAwesome5
-                      name={'play-circle'}
-                      size={50}
-                      color={'black'}
-                    />
-                  </TouchableOpacity>
+                  <Image
+                    style={trainingsStyles.image}
+                    source={{uri: item.image}}
+                  />
                 </View>
-              );
-            }}
-          />
-        )}
+                <TouchableOpacity
+                  style={trainingsStyles.content}
+                  onPress={() => {
+                    cardClickEventListener(item);
+                  }}>
+                  <FontAwesome5
+                    name={'play-circle'}
+                    size={50}
+                    color={'black'}
+                  />
+                </TouchableOpacity>
+              </View>
+            );
+          }}
+        />
       </View>
     </View>
   );
