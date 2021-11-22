@@ -14,7 +14,6 @@ import CheckBox from '@react-native-community/checkbox';
 import styles from '../../../styles/Styles';
 import {useFocusEffect} from '@react-navigation/native';
 import {getExercises} from '../../../Networking';
-import filter from 'lodash.filter';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import trainingsStyles from '../../../styles/TrainingsStyles';
 import eRequestStyles from '../styles/ERequestStyles';

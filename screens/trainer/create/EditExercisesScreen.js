@@ -1,11 +1,8 @@
 import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react';
 import {
-  Alert,
   BackHandler,
-  FlatList,
   Image,
-  RefreshControl,
   Text,
   TextInput,
   TouchableOpacity,
@@ -58,7 +55,13 @@ const EditExercisesScreen = ({navigation, route}) => {
 
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation]),
+    }, [
+      navigation,
+      oSelectedExercises,
+      route.params.edit,
+      route.params.request,
+      route.params.training,
+    ]),
   );
 
   const clearState = () => {
@@ -292,6 +295,15 @@ const EditExercisesScreen = ({navigation, route}) => {
             <View style={trainingsStyles.bolts}>
               <Bolts difficulty={route.params.training.difficulty} size={25} />
             </View>
+            <TouchableOpacity
+              style={eRequestStyles.goBack}
+              onPress={() => {
+                navigation.navigate('TrainingsE');
+              }}>
+              <View>
+                <FontAwesome5 name={'times-circle'} size={20} color={white} />
+              </View>
+            </TouchableOpacity>
           </View>
           <Image
             style={trainingsStyles.image}
