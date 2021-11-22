@@ -4,7 +4,7 @@ import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import styles from '../../../styles/Styles';
 import requestStyles from '../../../styles/RequestStyles';
 import {Picker} from '@react-native-picker/picker';
-import {createTraining} from '../../../Networking';
+import {createTraining, editRequest} from '../../../Networking';
 import {Snackbar} from 'react-native-paper';
 
 const CreateTrainingScreen = ({navigation, route}) => {
@@ -21,7 +21,7 @@ const CreateTrainingScreen = ({navigation, route}) => {
   const [difficulty, setDifficulty] = useState(
     route.params.request !== null && route.params.request.difficulty !== null
       ? route.params.request.difficulty
-      : 'Beginner',
+      : 'beginner',
   );
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
@@ -29,7 +29,7 @@ const CreateTrainingScreen = ({navigation, route}) => {
   const clearState = () => {
     setName('');
     setType('standard');
-    setDifficulty('Beginner');
+    setDifficulty('beginner');
     setVisible(false);
     setMessage('');
   };
@@ -54,7 +54,7 @@ const CreateTrainingScreen = ({navigation, route}) => {
     } else {
       console.log(name);
       let points =
-        difficulty === 'Beginner' ? 10 : difficulty === 'Mediocre' ? 20 : 30;
+        difficulty === 'beginner' ? 10 : difficulty === 'mediocre' ? 20 : 30;
 
       let training = {
         name: name,
@@ -66,17 +66,33 @@ const CreateTrainingScreen = ({navigation, route}) => {
       };
 
       createTraining(training)
-        .then(response => {
-          toggleSnackbar('Training ' + response.data.name + ' created!');
-          wait(2000).then(() => {
-            clearState();
-            navigation.navigate('AddExercises', {
-              request: route.params.request,
-              training: response.data,
-              selectedExercises: [],
-              edit: false,
-            });
-          });
+        .then(trainingResponse => {
+          toggleSnackbar(
+            'Training ' + trainingResponse.data.name + ' created!',
+          );
+          console.log(trainingResponse.data);
+          clearState();
+          editRequest(route.params.request.id, {
+            status: 'in progress',
+            training: trainingResponse.data,
+          })
+            .then(requestResponse => {
+              console.log(
+                'Request ' +
+                  requestResponse.data.id +
+                  ' status: ' +
+                  requestResponse.data.status,
+              );
+              wait(2000).then(() => {
+                navigation.navigate('AddExercises', {
+                  request: requestResponse.data,
+                  training: trainingResponse.data,
+                  selectedExercises: [],
+                  edit: false,
+                });
+              });
+            })
+            .catch(error => console.log(error));
         })
         .catch(error => {
           console.log(error);
@@ -90,7 +106,7 @@ const CreateTrainingScreen = ({navigation, route}) => {
         <TextInput
           maxLength={255}
           style={styles.textInput}
-          placeholder={'Training name'}
+          placeholder={route.params.request.name}
           placeholderTextColor="#8c8c8c"
           onChangeText={name => setName(name)}
         />
@@ -109,9 +125,9 @@ const CreateTrainingScreen = ({navigation, route}) => {
           selectedValue={difficulty}
           style={requestStyles.picker}
           onValueChange={(itemValue, itemIndex) => setDifficulty(itemValue)}>
-          <Picker.Item label="Beginner" value="Beginner" />
-          <Picker.Item label="Mediocre" value="Mediocre" />
-          <Picker.Item label="Pro" value="Pro" />
+          <Picker.Item label="Beginner" value="beginner" />
+          <Picker.Item label="Mediocre" value="mediocre" />
+          <Picker.Item label="Pro" value="pro" />
         </Picker>
       </View>
       <TouchableOpacity style={styles.btn} onPress={() => saveTraining()}>

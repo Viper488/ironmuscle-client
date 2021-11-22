@@ -14,11 +14,6 @@ const homeStyles = StyleSheet.create({
     height: '100%',
     opacity: 0.8,
   },
-  typeContent: {
-    width: '100%',
-    backgroundColor: '#000',
-    borderRadius: 30,
-  },
   type: {
     textTransform: 'uppercase',
     textAlign: 'center',
@@ -28,14 +23,23 @@ const homeStyles = StyleSheet.create({
   },
   types: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    alignContent: 'center',
+    alignItems: 'center',
     marginTop: '1%',
     width: '100%',
+    backgroundColor: black,
   },
   typeBtn: {
     borderRadius: 30,
     flex: 1,
-    marginHorizontal: '3%',
+    height: '100%',
+    alignSelf: 'center',
+  },
+  typeContent: {
+    paddingVertical: '10%',
+    width: '100%',
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
   },
   trainingsContent: {
     flex: 10,

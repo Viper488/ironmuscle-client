@@ -12,3 +12,6 @@ export const white2 = '#eee';
 export const white3 = '#F5FCFF';
 export const yellow = '#fff000';
 export const blue = '#0b03fc';
+export const blue2 = '#3460d9';
+export const blue3 = '#0afafa';
+export const red = '#fa020b';

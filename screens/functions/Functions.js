@@ -19,9 +19,15 @@ export const toHHMMSS = sec_num => {
 };
 
 export const getDate = timestamp => {
-  return timestamp.split('T')[0];
+  return timestamp !== null ? timestamp.split('T')[0] : '';
 };
 
 export const getTime = timestamp => {
-  return timestamp.split('T')[1].split('.')[0];
+  return timestamp !== null ? timestamp.split('T')[1].split('.')[0] : '';
+};
+
+export const getDateTime = timestamp => {
+  return timestamp !== null
+    ? timestamp.split('T')[0] + ', ' + timestamp.split('T')[1].split('.')[0]
+    : '';
 };

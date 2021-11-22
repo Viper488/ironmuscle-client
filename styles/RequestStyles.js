@@ -1,5 +1,15 @@
 import {StyleSheet} from 'react-native';
-import {black, black2, green, grey, white, white2, white3} from './Colors';
+import {
+  black,
+  black2,
+  blue2,
+  green,
+  grey,
+  grey6,
+  white,
+  white2,
+  white3,
+} from './Colors';
 
 const requestStyles = StyleSheet.create({
   pickerContent: {
@@ -14,35 +24,43 @@ const requestStyles = StyleSheet.create({
     width: '100%',
     color: black,
   },
-  notificationList: {
-    marginTop: '2%',
+  requestsList: {
+    paddingTop: '2%',
     width: '100%',
     padding: 10,
   },
   card: {
-    height: 250,
+    flex: 1,
+    height: null,
     width: '100%',
     backgroundColor: white,
-    padding: '5%',
   },
   titleContent: {
-    flex: 1,
+    flex: 2,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginBottom: '5%',
+    backgroundColor: black2,
+    paddingVertical: '3%',
+  },
+  descriptionContent: {
+    flex: 2,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: '5%',
-  },
-  descriptionContent: {
-    flex: 3,
-    width: '100%',
+    paddingHorizontal: '5%',
   },
   title: {
     fontSize: 24,
     fontWeight: '600',
+    textTransform: 'capitalize',
+    color: white,
   },
   status: {
     fontSize: 24,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   floatingBtn: {
     height: 75,
@@ -51,7 +69,7 @@ const requestStyles = StyleSheet.create({
     bottom: '5%',
     right: '5%',
     borderRadius: 100,
-    backgroundColor: green,
+    backgroundColor: blue2,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -66,27 +84,51 @@ const requestStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  typeContent: {
-    width: '100%',
-    backgroundColor: '#000',
-    borderRadius: 30,
-  },
   type: {
     textAlign: 'center',
     color: white,
     fontWeight: 'bold',
     fontSize: 14,
+    textTransform: 'capitalize',
   },
   types: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    alignContent: 'center',
+    alignItems: 'center',
     marginTop: '1%',
     width: '100%',
+    backgroundColor: black,
   },
   typeBtn: {
     borderRadius: 30,
     flex: 1,
-    marginHorizontal: '1%',
+    height: '100%',
+    alignSelf: 'center',
+  },
+  typeContent: {
+    paddingVertical: '10%',
+    width: '100%',
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
+  },
+  timeContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: grey6,
+    marginVertical: '2%',
+    padding: '2%',
+    marginHorizontal: '5%',
+  },
+  time: {
+    fontSize: 16,
+  },
+  trainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bodyPart: {
+    fontSize: 18,
+    fontWeight: '600',
   },
 });
 

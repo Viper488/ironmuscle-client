@@ -14,7 +14,6 @@ import styles from '../../../styles/Styles';
 import {useFocusEffect} from '@react-navigation/native';
 import {getUsers, JWToken, lockUser, RefreshToken} from '../../../Networking';
 import {_removeData} from '../../../AsyncStorageManager';
-import filter from 'lodash.filter';
 import trainingsStyles from '../../../styles/TrainingsStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {black2, grey} from '../../../styles/Colors';

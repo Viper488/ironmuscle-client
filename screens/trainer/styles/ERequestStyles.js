@@ -49,6 +49,7 @@ const eRequestStyles = StyleSheet.create({
   btnText: {
     color: white,
     fontSize: 18,
+    fontWeight: 'bold',
   },
   bodyPart: {
     backgroundColor: white,
@@ -73,16 +74,17 @@ const eRequestStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    margin: '3%',
   },
   btn: {
     width: '60%',
-    borderRadius: 20,
+    borderRadius: 30,
     borderWidth: 3,
     borderColor: green,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: black,
+    backgroundColor: green,
   },
   exercisesContent: {
     flex: 1,

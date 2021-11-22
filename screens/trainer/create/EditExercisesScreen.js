@@ -222,7 +222,7 @@ const EditExercisesScreen = ({navigation, route}) => {
         addExercises(route.params.training.id, addExe)
           .then(response => {
             if (route.params.request !== null) {
-              editRequest(route.params.request.id, {status: 'DONE'})
+              editRequest(route.params.request.id, {status: 'done'})
                 .then(response => {
                   console.log(
                     'Request ' +

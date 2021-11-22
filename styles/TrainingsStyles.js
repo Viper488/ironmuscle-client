@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {black, black2, green, white, white2, white3} from './Colors';
+import {black, black2, green, grey, white, white2, white3} from './Colors';
 
 const trainingsStyles = StyleSheet.create({
   formContent: {
@@ -43,7 +43,7 @@ const trainingsStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   notificationList: {
-    marginTop: '2%',
+    paddingTop: '2%',
     width: '100%',
     padding: 10,
   },
@@ -76,9 +76,10 @@ const trainingsStyles = StyleSheet.create({
   name: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginLeft: 10,
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
     color: white,
+    marginLeft: '3%',
+    textTransform: 'capitalize',
   },
   btnColor: {
     padding: 10,

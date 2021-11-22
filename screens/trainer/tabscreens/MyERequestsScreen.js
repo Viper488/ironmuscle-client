@@ -16,6 +16,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {
   createRequest,
   deleteDoneRequests,
+  editRequest,
   getUserRequests,
 } from '../../../Networking';
 import requestStyles from '../../../styles/RequestStyles';
@@ -26,17 +27,12 @@ import profileStyles from '../../../styles/ProfileStyles';
 import {Snackbar} from 'react-native-paper';
 import {getDate, getDateTime} from '../../functions/Functions';
 import {Picker} from '@react-native-picker/picker';
+import eRequestStyles from '../styles/ERequestStyles';
 
 const RequestsScreen = ({navigation, route}) => {
   const [requests, setRequests] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const allStatus = ['all', 'new', 'in progress', 'done'];
+  const allStatus = ['all', 'in progress', 'done'];
   const [status, setStatus] = useState('all');
-
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [bodyPart, setBodyPart] = useState('Abdominal');
-  const [difficulty, setDifficulty] = useState('beginner');
 
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
@@ -92,35 +88,6 @@ const RequestsScreen = ({navigation, route}) => {
     setVisible(false);
   };
 
-  const saveRequest = () => {
-    let request = {
-      title: title,
-      description: description,
-      bodyPart: bodyPart,
-      difficulty: difficulty,
-      status: 'new',
-    };
-    console.log('Request: ' + request.bodyPart);
-    createRequest(request)
-      .then(response => {
-        console.log(response.data);
-        setTitle('');
-        setDescription('');
-        setBodyPart('');
-        setDifficulty('');
-        setModalVisible(false);
-        setRequests([]);
-        setPage(0);
-        setChanged(!changed);
-        toggleSnackbar(
-          'Created request at ' + getDate(response.data.created_at),
-        );
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
   const renderRequest = (item, index) => {
     return (
       <View style={[requestStyles.card, {marginTop: index === 0 ? 0 : '3%'}]}>
@@ -151,10 +118,10 @@ const RequestsScreen = ({navigation, route}) => {
             <Text>{item.description}</Text>
           </View>
           <View>
-            {item.trainer !== null ? (
+            {item.user !== null ? (
               <View style={requestStyles.trainer}>
-                <FontAwesome5 name={'user-tie'} size={30} color={grey} />
-                <Text>{item.trainer.username}</Text>
+                <FontAwesome5 name={'user'} size={30} color={grey} />
+                <Text>{item.user.username}</Text>
               </View>
             ) : undefined}
           </View>
@@ -175,76 +142,28 @@ const RequestsScreen = ({navigation, route}) => {
             </View>
           )}
         </View>
+        {item.status !== 'done' ? (
+          <View style={eRequestStyles.cardFooter}>
+            <TouchableOpacity
+              style={eRequestStyles.btn}
+              onPress={() => {
+                navigation.navigate('AddExercises', {
+                  request: item,
+                  training: item.training,
+                  selectedExercises: [],
+                  edit: false,
+                });
+              }}>
+              <Text style={eRequestStyles.btnText}>Continue</Text>
+            </TouchableOpacity>
+          </View>
+        ) : undefined}
       </View>
     );
   };
+
   return (
     <View style={styles.container}>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}>
-        <View style={exerciseStyles.modalContent}>
-          <TouchableOpacity
-            style={exerciseStyles.exitModalBtn}
-            onPress={() => setModalVisible(false)}>
-            <View>
-              <FontAwesome5 name={'arrow-left'} size={50} color={white} />
-            </View>
-          </TouchableOpacity>
-          <View style={profileStyles.modalBody}>
-            <Text style={styles.btnText}>New training request</Text>
-            <View style={styles.inputView}>
-              <TextInput
-                maxLength={255}
-                style={styles.textInput}
-                placeholder={'Title'}
-                placeholderTextColor="#8c8c8c"
-                onChangeText={title => setTitle(title)}
-              />
-            </View>
-            <View style={styles.inputView}>
-              <TextInput
-                maxLength={255}
-                style={styles.textInput}
-                placeholder={'Description'}
-                placeholderTextColor="#8c8c8c"
-                onChangeText={description => setDescription(description)}
-              />
-            </View>
-            <View style={requestStyles.pickerContent}>
-              <Picker
-                selectedValue={bodyPart}
-                style={requestStyles.picker}
-                onValueChange={(itemValue, itemIndex) =>
-                  setBodyPart(itemValue)
-                }>
-                <Picker.Item label="Abdominal" value="abdominal" />
-                <Picker.Item label="Arms" value="arms" />
-                <Picker.Item label="Back" value="back" />
-                <Picker.Item label="Chest" value="chest" />
-                <Picker.Item label="Legs" value="legs" />
-              </Picker>
-            </View>
-            <View style={requestStyles.pickerContent}>
-              <Picker
-                selectedValue={difficulty}
-                style={requestStyles.picker}
-                onValueChange={(itemValue, itemIndex) =>
-                  setDifficulty(itemValue)
-                }>
-                <Picker.Item label="Beginner" value="beginner" />
-                <Picker.Item label="Mediocre" value="mediocre" />
-                <Picker.Item label="Pro" value="pro" />
-              </Picker>
-            </View>
-            <TouchableOpacity style={styles.btn} onPress={() => saveRequest()}>
-              <Text style={styles.btnText}>Create request</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
       <View style={trainingsStyles.formContent}>
         <View style={trainingsStyles.inputContainer}>
           <FontAwesome5
@@ -294,40 +213,6 @@ const RequestsScreen = ({navigation, route}) => {
         onEndReached={loadMoreRequests}
         renderItem={({item, index}) => renderRequest(item, index)}
       />
-      <TouchableOpacity
-        style={requestStyles.floatingBtn}
-        onPress={() => setModalVisible(true)}>
-        <FontAwesome5 name={'plus'} size={30} color={black2} />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={requestStyles.floatingBtn2}
-        onPress={() =>
-          Alert.alert(
-            'Delete requests',
-            "Are you sure you want to delete all 'DONE' requests?",
-            [
-              {
-                text: 'No',
-                onPress: () => null,
-                style: 'cancel',
-              },
-              {
-                text: 'YES',
-                onPress: () => {
-                  deleteDoneRequests()
-                    .then(response => {
-                      toggleSnackbar("'DONE' requests deleted!");
-                    })
-                    .catch(error => {
-                      console.log(error);
-                    });
-                },
-              },
-            ],
-          )
-        }>
-        <FontAwesome5 name={'minus'} size={20} color={black2} />
-      </TouchableOpacity>
       <Snackbar
         visible={visible}
         onDismiss={() => onDismissSnackBar()}

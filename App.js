@@ -33,6 +33,7 @@ import AddExercisesScreen from './screens/trainer/create/AddExercisesScreen';
 import EditExercisesScreen from './screens/trainer/create/EditExercisesScreen';
 import UsersScreen from './screens/admin/tabscreens/UsersScreen';
 import CreateUser from './screens/admin/create/CreateUser';
+import MyERequestsScreen from './screens/trainer/tabscreens/MyERequestsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -107,15 +108,15 @@ const TrainerHomeTab = () => {
             iconName = 'align-justify';
             size = focused ? 25 : 20;
             color = focused ? white : grey3;
+          } else if (route.name === 'MyRequests') {
+            iconName = 'award';
+            size = focused ? 25 : 20;
+            color = focused ? white : grey3;
           } else if (route.name === 'TrainingsE') {
             iconName = 'dumbbell';
             size = focused ? 25 : 20;
             color = focused ? white : grey3;
-          } /* else if (route.name === 'ExercisesE') {
-            iconName = 'award';
-            size = focused ? 25 : 20;
-            color = focused ? white : grey3;
-          }*/
+          }
           return <FontAwesome5 name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: white,
@@ -130,15 +131,15 @@ const TrainerHomeTab = () => {
         options={{headerShown: false}}
       />
       <Tab.Screen
+        name="MyRequests"
+        component={MyERequestsScreen}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
         name="TrainingsE"
         component={ETrainingsScreen}
         options={{headerShown: false}}
       />
-      {/*      <Tab.Screen
-        name="ExercisesE"
-        component={EExercisesScreen}
-        options={{headerShown: false}}
-      />*/}
     </Tab.Navigator>
   );
 };

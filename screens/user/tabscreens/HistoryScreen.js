@@ -4,7 +4,12 @@ import {View, Text, FlatList, Image} from 'react-native';
 import styles from '../../../styles/Styles';
 import {getUserActivities} from '../../../Networking';
 import historyStyles from '../../../styles/HistoryStyles';
-import {getDate, getTime, toHHMMSS} from '../../functions/Functions';
+import {
+  getDate,
+  getDateTime,
+  getTime,
+  toHHMMSS,
+} from '../../functions/Functions';
 import Bolts from '../../components/Bolts';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Calendar} from 'react-native-calendars';
@@ -78,11 +83,7 @@ const HistoryScreen = ({navigation, route}) => {
                   <View style={historyStyles.sections}>
                     <View style={historyStyles.nameSection}>
                       <View style={historyStyles.dateContent}>
-                        <Text>
-                          {getDate(item.date)}
-                          {', '}
-                          {getTime(item.date)}
-                        </Text>
+                        <Text>{getDateTime(item.date)}</Text>
                         <Text />
                         <View style={historyStyles.bolts}>
                           <Bolts difficulty={item.difficulty} size={20} />

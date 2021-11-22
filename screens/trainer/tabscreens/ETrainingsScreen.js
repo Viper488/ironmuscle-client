@@ -27,15 +27,14 @@ import Bolts from '../../components/Bolts';
 import requestStyles from '../../../styles/RequestStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {black2, grey, white} from '../../../styles/Colors';
-import filter from 'lodash.filter';
 
 const ETrainingsScreen = ({navigation, route}) => {
   const [trainings, setTrainings] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-
   const [query, setQuery] = useState('');
+
   useFocusEffect(
     React.useCallback(() => {
       getTrainings(page, 100, query)
@@ -89,7 +88,6 @@ const ETrainingsScreen = ({navigation, route}) => {
         setPage(response.data.currentPage);
         setTotalPages(response.data.totalPages);
         setTrainings([...trainings, ...response.data.trainings]);
-        setFullTrainings([...trainings, ...response.data.trainings]);
         console.log('Fetched ' + page);
       })
       .catch(error => {
@@ -167,13 +165,18 @@ const ETrainingsScreen = ({navigation, route}) => {
                     onPress={() => {
                       getTrainingDetails(item.id)
                         .then(response => {
-                          response.data.exercises.forEach((e, i) =>
-                            Object.assign(e, {
-                              key: e.id + '_' + i,
-                              selected: true,
-                              type: e.time === 0 ? 'Repetitions' : 'Time',
-                            }),
-                          );
+                          if (
+                            response.data.exercises !== null &&
+                            response.data.exercises.length > 0
+                          ) {
+                            response.data.exercises.forEach((e, i) =>
+                              Object.assign(e, {
+                                key: e.id + '_' + i,
+                                selected: true,
+                                type: e.time === 0 ? 'Repetitions' : 'Time',
+                              }),
+                            );
+                          }
 
                           console.log(response.data.exercises);
                           navigation.navigate('EditExercises', {

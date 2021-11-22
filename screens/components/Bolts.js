@@ -5,13 +5,13 @@ import {blue, grey2} from '../../styles/Colors';
 
 const Bolts = ({difficulty, size}) => {
   let color1 =
-    difficulty === 'Beginner' ||
-    difficulty === 'Mediocre' ||
-    difficulty === 'Pro'
+    difficulty === 'beginner' ||
+    difficulty === 'mediocre' ||
+    difficulty === 'pro'
       ? blue
       : grey2;
-  let color2 = difficulty === 'Mediocre' || difficulty === 'Pro' ? blue : grey2;
-  let color3 = difficulty === 'Pro' ? blue : grey2;
+  let color2 = difficulty === 'mediocre' || difficulty === 'pro' ? blue : grey2;
+  let color3 = difficulty === 'pro' ? blue : grey2;
 
   return (
     <View style={{flexDirection: 'row'}}>

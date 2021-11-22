@@ -178,20 +178,19 @@ export const refreshToken = () => {
     });
 };
 
-export const getTrainingsByUser = async () => {
+export const getUserTrainings = async (page, size, type, query) => {
   return await instance
-    .get(baseUrl + '/user/trainings')
-    .then(response => {
-      return response;
-    })
-    .catch(error => {
-      throw error;
-    });
-};
-
-export const getStandardTrainings = async () => {
-  return await instance
-    .get(baseUrl + '/training/type/Standard')
+    .get(
+      baseUrl +
+        '/user/trainings?page=' +
+        page +
+        '&size=' +
+        size +
+        '&type=' +
+        type +
+        '&query=' +
+        query,
+    )
     .then(response => {
       return response;
     })
@@ -233,9 +232,19 @@ export const getUserActivities = async (year, month) => {
     });
 };
 
-export const getUserRequests = async () => {
+export const getUserRequests = async (page, size, status, query) => {
   return await instance
-    .get(baseUrl + '/request/user')
+    .get(
+      baseUrl +
+        '/request/user?page=' +
+        page +
+        '&size=' +
+        size +
+        '&status=' +
+        status +
+        '&query=' +
+        query,
+    )
     .then(response => {
       return response;
     })
