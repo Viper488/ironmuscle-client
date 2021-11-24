@@ -33,15 +33,16 @@ const EditExercisesScreen = ({navigation, route}) => {
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    setSelectedExercises(route.params.selectedExercises);
-    setOSelectedExercises(route.params.selectedExercises);
-    console.log('SET SELECTED');
-  }, [route.params.selectedExercises]);
-
   useFocusEffect(
     React.useCallback(() => {
+      setSelectedExercises([]);
+      setSelectedExercises(route.params.selectedExercises);
+      setOSelectedExercises([]);
+      setOSelectedExercises(route.params.selectedExercises);
+
       const onBackPress = () => {
+        console.log('BACK');
+        console.log(oSelectedExercises.length);
         navigation.navigate('AddExercises', {
           request: route.params.request !== null ? route.params.request : null,
           training: route.params.training,
@@ -53,8 +54,10 @@ const EditExercisesScreen = ({navigation, route}) => {
 
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
 
-      return () =>
+      return () => {
+        clearState();
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      };
     }, [
       navigation,
       oSelectedExercises,
@@ -65,6 +68,7 @@ const EditExercisesScreen = ({navigation, route}) => {
   );
 
   const clearState = () => {
+    console.log('CLEARED EDIT');
     setOSelectedExercises([]);
     setSelectedExercises([]);
     setChanged(false);
@@ -107,15 +111,13 @@ const EditExercisesScreen = ({navigation, route}) => {
                 image: item.image,
                 name: item.name,
                 video: item.video,
-                key: item.key.slice(16, -1) + selectedExercises.length,
+                key: item.key + '_' + selectedExercises.length,
                 selected: item.selected,
                 type: item.type,
                 time: item.time,
                 repetitions: item.repetitions,
               };
-
-              console.log(item);
-              console.log(addedItem);
+              console.log('ADDED: ' + addedItem.key);
               selectedAdd.push(addedItem);
               setSelectedExercises(selectedAdd);
               setChanged(!changed);
@@ -277,6 +279,8 @@ const EditExercisesScreen = ({navigation, route}) => {
             <TouchableOpacity
               style={eRequestStyles.goBack}
               onPress={() => {
+                console.log('BACK');
+                console.log(oSelectedExercises.length);
                 navigation.navigate('AddExercises', {
                   request:
                     route.params.request !== null ? route.params.request : null,

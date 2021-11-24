@@ -35,11 +35,11 @@ const AddExercisesScreen = ({navigation, route}) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      getExercises(page, 100, query)
+      getExercises(page, 1000, query)
         .then(response => {
           response.data.exercises.forEach((item, index) =>
             Object.assign(item, {
-              key: item.id + '_' + index,
+              key: item.id,
               selected: false,
               type: 'Repetitions',
               time: null,
@@ -48,10 +48,15 @@ const AddExercisesScreen = ({navigation, route}) => {
           );
 
           if (route.params.selectedExercises.length > 0) {
+            console.log('FROM BACK');
+            console.log(route.params.selectedExercises.length);
             route.params.selectedExercises.forEach(s => {
               response.data.exercises.forEach(e => {
                 if (s.id === e.id) {
                   e.selected = true;
+                  e.type = s.type;
+                  e.time = s.time;
+                  e.repetitions = s.repetitions;
                 }
               });
             });
@@ -72,12 +77,14 @@ const AddExercisesScreen = ({navigation, route}) => {
 
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
 
-      return () =>
+      return () => {
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [query, page, navigation]),
+      };
+    }, [route.params.selectedExercises, query, page, navigation]),
   );
 
   const clearState = () => {
+    console.log('CLEARED ADD');
     setExercises([]);
     setRefreshing(false);
     setChanged(false);
@@ -103,9 +110,9 @@ const AddExercisesScreen = ({navigation, route}) => {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setExercises([]);
-    getExercises(0, 100, query)
+    getExercises(0, 1000, query)
       .then(response => {
-        response.data.exercises.forEach(item =>
+        response.data.exercises.forEach((item, index) =>
           Object.assign(item, {
             key: item.id,
             selected: false,
@@ -114,6 +121,21 @@ const AddExercisesScreen = ({navigation, route}) => {
             repetitions: null,
           }),
         );
+
+        if (route.params.selectedExercises.length > 0) {
+          console.log('FROM BACK');
+          console.log(route.params.selectedExercises.length);
+          route.params.selectedExercises.forEach(s => {
+            response.data.exercises.forEach(e => {
+              if (s.id === e.id) {
+                e.selected = true;
+                e.type = s.type;
+                e.time = s.time;
+                e.repetitions = s.repetitions;
+              }
+            });
+          });
+        }
 
         setPage(response.data.currentPage);
         setTotalPages(response.data.totalPages);
@@ -173,9 +195,7 @@ const AddExercisesScreen = ({navigation, route}) => {
   const renderItem = (item, index) => {
     return (
       <View style={[tdStyles.card, {marginTop: index === 0 ? 0 : '3%'}]}>
-        <Text style={tdStyles.exerciseName}>
-          {item.name}
-        </Text>
+        <Text style={tdStyles.exerciseName}>{item.name}</Text>
         <CheckBox
           value={item.selected}
           onValueChange={() => {
@@ -205,11 +225,12 @@ const AddExercisesScreen = ({navigation, route}) => {
   };
 
   const handleAddSelected = () => {
-    let selectedExe = exercises.filter(e => {
+    const selectedExe = exercises.filter(e => {
       return e.selected;
     });
+    console.log('SEND SELECTED:' + selectedExe.length);
     if (selectedExe.length > 0) {
-      console.log(selectedExe);
+      clearState();
       navigation.navigate('EditExercises', {
         request: route.params.request,
         training: route.params.training,

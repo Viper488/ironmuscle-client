@@ -171,7 +171,7 @@ const ETrainingsScreen = ({navigation, route}) => {
                           ) {
                             response.data.exercises.forEach((e, i) =>
                               Object.assign(e, {
-                                key: e.id + '_' + i,
+                                key: e.id,
                                 selected: true,
                                 type: e.time === 0 ? 'Repetitions' : 'Time',
                               }),

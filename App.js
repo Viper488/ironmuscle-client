@@ -26,7 +26,6 @@ import RankingScreen from './screens/user/tabscreens/RankingScreen';
 import RequestsScreen from './screens/user/tabscreens/RequestsScreen';
 import {black, grey3, grey4, white} from './styles/Colors';
 import ERequestsScreen from './screens/trainer/tabscreens/ERequestsScreen';
-import EExercisesScreen from './screens/trainer/tabscreens/EExercisesScreen';
 import ETrainingsScreen from './screens/trainer/tabscreens/ETrainingsScreen';
 import CreateTrainingScreen from './screens/trainer/create/CreateTrainingScreen';
 import AddExercisesScreen from './screens/trainer/create/AddExercisesScreen';

@@ -40,6 +40,7 @@ const CreateUser = ({navigation, route}) => {
       })
       .catch(error => {
         console.log(error);
+        toggleSnackbar(error.response.data);
       });
   };
 

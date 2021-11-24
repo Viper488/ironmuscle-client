@@ -240,7 +240,9 @@ const HomeScreen = ({navigation, route}) => {
                 ]}>
                 <View style={trainingsStyles.imageContent}>
                   <View style={trainingsStyles.cardContent}>
-                    <Text style={trainingsStyles.name}>{item.name} {item.difficulty}</Text>
+                    <Text style={trainingsStyles.name}>
+                      {item.name} {item.difficulty}
+                    </Text>
                     <View style={trainingsStyles.bolts}>
                       <Bolts difficulty={item.difficulty} size={25} />
                     </View>

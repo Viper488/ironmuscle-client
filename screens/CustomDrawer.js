@@ -13,11 +13,7 @@ import styles from '../styles/Styles';
 import profileStyles from '../styles/ProfileStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Snackbar} from 'react-native-paper';
-import {
-  changeEmail,
-  changePassword,
-  getMyself,
-} from '../Networking';
+import {changeEmail, changePassword, getMyself} from '../Networking';
 import exerciseStyles from '../styles/ExerciseStyles';
 import {white} from '../styles/Colors';
 import {useFocusEffect} from '@react-navigation/native';
