@@ -13,7 +13,11 @@ import styles from '../styles/Styles';
 import profileStyles from '../styles/ProfileStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Snackbar} from 'react-native-paper';
-import {changePassword, getMyself, getUserRequests} from '../Networking';
+import {
+  changeEmail,
+  changePassword,
+  getMyself,
+} from '../Networking';
 import exerciseStyles from '../styles/ExerciseStyles';
 import {white} from '../styles/Colors';
 import {useFocusEffect} from '@react-navigation/native';
@@ -26,6 +30,7 @@ const CustomDrawer = ({navigation, route}) => {
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [user, setUser] = useState({});
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -123,22 +128,39 @@ const CustomDrawer = ({navigation, route}) => {
                 placeholder={'Enter new email'}
                 placeholderTextColor="#8c8c8c"
                 onChangeText={email => {
-                  const user = Object.assign({}, user, {
-                    email: email,
-                  });
-                  setUser(user);
+                  setEmail(email);
                 }}
               />
             </View>
             <TouchableOpacity
               style={styles.btn}
               onPress={() => {
-                setModalVisible(!modalVisible);
+                changeEmail({email: email, lock: null})
+                  .then(response => {
+                    toggleSnackbar('Email changed!');
+                    setModalVisible(!modalVisible);
+                    navigation.navigate('Login');
+                  })
+                  .catch(error => {
+                    console.log(error.response.data);
+                    toggleSnackbar(error.response.data);
+                  });
               }}>
               <Text style={styles.btnText}>Save</Text>
             </TouchableOpacity>
           </View>
         </View>
+        <Snackbar
+          visible={visible}
+          onDismiss={() => onDismissSnackBar()}
+          action={{
+            label: 'Close',
+            onPress: () => {
+              setVisible(false);
+            },
+          }}>
+          {message}
+        </Snackbar>
       </Modal>
 
       <Modal
@@ -200,6 +222,17 @@ const CustomDrawer = ({navigation, route}) => {
             </TouchableOpacity>
           </View>
         </View>
+        <Snackbar
+          visible={visible}
+          onDismiss={() => onDismissSnackBar()}
+          action={{
+            label: 'Close',
+            onPress: () => {
+              setVisible(false);
+            },
+          }}>
+          {message}
+        </Snackbar>
       </Modal>
       <View style={profileStyles.body}>
         <TouchableOpacity
@@ -217,19 +250,17 @@ const CustomDrawer = ({navigation, route}) => {
           <Text style={styles.btnText}>Change password</Text>
         </TouchableOpacity>
       </View>
-      {
-        <Snackbar
-          visible={visible}
-          onDismiss={() => onDismissSnackBar()}
-          action={{
-            label: 'Close',
-            onPress: () => {
-              setVisible(false);
-            },
-          }}>
-          {message}
-        </Snackbar>
-      }
+      <Snackbar
+        visible={visible}
+        onDismiss={() => onDismissSnackBar()}
+        action={{
+          label: 'Close',
+          onPress: () => {
+            setVisible(false);
+          },
+        }}>
+        {message}
+      </Snackbar>
     </SafeAreaView>
   );
 };

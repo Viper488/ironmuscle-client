@@ -449,3 +449,14 @@ export const initializeRegister = async request => {
       throw error;
     });
 };
+
+export const changeEmail = async request => {
+  return await instance
+    .put(baseUrl + '/myself', request)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
