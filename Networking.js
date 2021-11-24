@@ -438,3 +438,14 @@ export const lockUser = async (id, lock) => {
       throw error;
     });
 };
+
+export const initializeRegister = async request => {
+  return await instance
+    .post(baseUrl + '/registration/user', request)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      throw error;
+    });
+};

@@ -4,15 +4,13 @@ import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {Snackbar} from 'react-native-paper';
 import requestStyles from '../../../styles/RequestStyles';
 import {Picker} from '@react-native-picker/picker';
-import {requestRegister} from '../../../Networking';
+import {initializeRegister, requestRegister} from '../../../Networking';
 import styles from '../../../styles/Styles';
 
 const CreateUser = ({navigation, route}) => {
   const [username, setUsername] = useState(null);
   const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
   const [role, setRole] = useState('USER');
-  const [confirmPassword, setConfirmPassword] = useState(null);
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -31,17 +29,17 @@ const CreateUser = ({navigation, route}) => {
     let request = {
       username: username,
       email: email,
-      password: password,
       roles: roles,
     };
 
-    requestRegister(request)
+    initializeRegister(request)
       .then(response => {
-        toggleSnackbar('Registered successfully!');
+        console.log('Created');
+        toggleSnackbar('Created successfully!');
         wait(2000).then(() => navigation.navigate('AUsers'));
       })
       .catch(error => {
-        toggleSnackbar(error);
+        console.log(error);
       });
   };
 
@@ -51,12 +49,6 @@ const CreateUser = ({navigation, route}) => {
       return false;
     } else if (email == null) {
       toggleSnackbar('Email is empty!');
-      return false;
-    } else if (password == null) {
-      toggleSnackbar('Password is empty!');
-      return false;
-    } else if (password !== confirmPassword) {
-      toggleSnackbar('Passwords are different!');
       return false;
     } else {
       return true;
@@ -95,35 +87,14 @@ const CreateUser = ({navigation, route}) => {
           onValueChange={(itemValue, itemIndex) => setRole(itemValue)}>
           <Picker.Item label="User" value="USER" />
           <Picker.Item label="Trainer" value="TRAINER" />
-          <Picker.Item label="Admin" value="Admin" />
+          <Picker.Item label="Admin" value="ADMIN" />
         </Picker>
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          maxLength={255}
-          style={styles.textInput}
-          placeholder="Password."
-          placeholderTextColor="#8c8c8c"
-          secureTextEntry={true}
-          onChangeText={password => setPassword(password)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          maxLength={255}
-          style={styles.textInput}
-          placeholder="Confirm password."
-          placeholderTextColor="#8c8c8c"
-          secureTextEntry={true}
-          onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
-        />
       </View>
       <TouchableOpacity
         style={styles.btn}
         onPress={() => (validate() ? register() : undefined)}>
-        <Text style={styles.btnText}>Register</Text>
+        <Text style={styles.btnText}>Create</Text>
       </TouchableOpacity>
-
       <Snackbar
         visible={visible}
         onDismiss={onDismissSnackBar}
