@@ -40,7 +40,7 @@ const RegisterScreen = ({navigation, route}) => {
         wait(2000).then(() => navigation.navigate('Login'));
       })
       .catch(error => {
-        toggleSnackbar(error);
+        toggleSnackbar(error.response.data.message);
       });
   };
 
