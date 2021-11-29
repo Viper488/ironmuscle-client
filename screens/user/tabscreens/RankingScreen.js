@@ -12,6 +12,7 @@ import {
 } from '../../../Networking';
 import Badges from '../../components/Badges';
 import {white, yellow} from '../../../styles/Colors';
+import profileStyles from '../../../styles/ProfileStyles';
 
 const RankingScreen = ({navigation, route}) => {
   const [badges, setBadges] = useState([]);
@@ -88,7 +89,10 @@ const RankingScreen = ({navigation, route}) => {
             <Image
               style={rankingStyles.avatar}
               source={{
-                uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                uri:
+                  userRanking.icon != null
+                    ? 'data:image/png;base64,' + userRanking.icon
+                    : 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
               }}
             />
           </View>
@@ -133,13 +137,24 @@ const RankingScreen = ({navigation, route}) => {
                     },
                   ]}>
                   <View style={rankingStyles.rankingItemContent}>
-                    <Text>{item.rank}</Text>
+                    <Text style={rankingStyles.rank}>{item.rank}#</Text>
                   </View>
                   <View style={rankingStyles.rankingItemContent}>
-                    <Text>{item.username}</Text>
+                    <Image
+                      style={rankingStyles.avatarItem}
+                      source={{
+                        uri:
+                          item.icon != null
+                            ? 'data:image/png;base64,' + item.icon
+                            : 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
+                      }}
+                    />
                   </View>
                   <View style={rankingStyles.rankingItemContent}>
-                    <Text>{item.points}</Text>
+                    <Text style={rankingStyles.username}>{item.username}</Text>
+                  </View>
+                  <View style={[rankingStyles.rankingItemContent, {alignItems: 'flex-end'}]}>
+                    <Text style={rankingStyles.points}>{item.points}</Text>
                   </View>
                 </View>
               );

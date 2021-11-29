@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {
   black,
-  black2,
+  black2, blue,
   green,
   grey,
   grey2,
@@ -13,6 +13,19 @@ import {
 } from './Colors';
 
 const rankingStyles = StyleSheet.create({
+  rank: {
+    fontSize: 32,
+    fontWeight: '600',
+  },
+  username: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  points: {
+    fontSize: 26,
+    fontWeight: '600',
+    color: blue,
+  },
   header: {
     flex: 1,
     width: '100%',
@@ -82,10 +95,11 @@ const rankingStyles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: black,
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   rankingItemContent: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignContent: 'center',
   },
   rankingHeader: {
@@ -102,6 +116,14 @@ const rankingStyles = StyleSheet.create({
     fontSize: 29,
     color: white,
     fontWeight: '600',
+  },
+  avatarItem: {
+    width: 60,
+    height: 60,
+    borderRadius: 63,
+    borderWidth: 1,
+    borderColor: black,
+    margin: 2,
   },
 });
 
