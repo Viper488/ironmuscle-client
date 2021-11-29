@@ -522,3 +522,19 @@ export const changeEmail = async request => {
       }
     });
 };
+
+export const changeIcon = data => {
+  return instance
+    .post(baseUrl + '/user/icon', data, {
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
+    })
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      if (error) {
+        throw error;
+      }
+    });
+};

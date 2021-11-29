@@ -15,6 +15,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Snackbar} from 'react-native-paper';
 import {
   changeEmail,
+  changeIcon,
   changePassword,
   getMyself,
   handleError,
@@ -22,11 +23,12 @@ import {
 import exerciseStyles from '../styles/ExerciseStyles';
 import {white} from '../styles/Colors';
 import {useFocusEffect} from '@react-navigation/native';
+import ImagePicker from 'react-native-document-picker';
 
 const CustomDrawer = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [passwordModalVisible, setPasswordModalVisible] = useState(false);
-  const [icon, setIcon] = useState('cog');
+  const [icon, setIcon] = useState(null);
   const [editable, setEditable] = useState(false);
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
@@ -88,6 +90,45 @@ const CustomDrawer = ({navigation, route}) => {
     setVisible(false);
   };
 
+  const pickFile = async () => {
+    try {
+      const res = await ImagePicker.pick({
+        type: [ImagePicker.types.images],
+      });
+      console.log(res[0]);
+
+      const data = new FormData();
+      data.append('file', {
+        uri: res[0].uri,
+        type: res[0].type,
+        name: res[0].name,
+      });
+
+      changeIcon(data)
+        .then(response => {
+          console.log(response.status);
+          toggleSnackbar('Image uploaded successfully');
+          getMyself()
+            .then(response => {
+              setUser(response.data);
+            })
+            .catch(error => {
+              handleError({navigation, error});
+            });
+        })
+        .catch(error => {
+          handleError({navigation, error});
+          toggleSnackbar(error.response.data.message);
+        });
+    } catch (err) {
+      if (ImagePicker.isCancel(err)) {
+        console.log(err);
+      } else {
+        console.log(err);
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={profileStyles.header}>
@@ -95,9 +136,15 @@ const CustomDrawer = ({navigation, route}) => {
           <Image
             style={profileStyles.avatar}
             source={{
-              uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+              uri:
+                user.icon != null
+                  ? 'data:image/png;base64,' + user.icon
+                  : 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
             }}
           />
+          <TouchableOpacity onPress={pickFile}>
+            <Text>Upload file</Text>
+          </TouchableOpacity>
           <Text style={profileStyles.name}>{user.username}</Text>
           <Text>{user.email}</Text>
         </View>
