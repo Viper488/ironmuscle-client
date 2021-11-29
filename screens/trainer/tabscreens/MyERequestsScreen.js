@@ -18,6 +18,7 @@ import {
   deleteDoneRequests,
   editRequest,
   getUserRequests,
+  handleError,
 } from '../../../Networking';
 import requestStyles from '../../../styles/RequestStyles';
 import {black2, blue3, green, grey, red, white} from '../../../styles/Colors';
@@ -52,7 +53,7 @@ const RequestsScreen = ({navigation, route}) => {
           console.log('Fetched ' + page);
         })
         .catch(error => {
-          console.log(error);
+          handleError({navigation, error});
         });
     }, [changed, status, query, page]),
   );

@@ -38,25 +38,17 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   response => {
-    if (response.status === 401) {
-      alert('Not authorized');
-    }
     return response;
   },
   async error => {
-    const originalRequest = error.config;
-    if (
-      error.response.status === 401 &&
-      error.response.data.message.startsWith('The Token has expired')
-    ) {
+    if (error.response.status === 401) {
       await refreshToken()
         .then(async refreshResponse => {
           console.log('Token refreshed!');
           await _storeData(JWToken, refreshResponse.data.access_token);
-          return new Promise(resolve => resolve(instance(originalRequest)));
+          return new instance.request(error.config);
         })
         .catch(err => {
-          console.log('401 Interceptor: ' + err);
           return Promise.reject(err);
         });
     } else {
@@ -65,6 +57,14 @@ instance.interceptors.response.use(
   },
 );
 
+export const handleError = ({navigation, error}) => {
+  console.log(error);
+  console.log(error.response.data.message);
+  if (error.response.status === 401) {
+    navigation.navigate('Login');
+  }
+};
+
 export const requestAuth = async (username, password) => {
   return await axios
     .post(baseUrl + '/login?username=' + username + '&password=' + password)
@@ -72,7 +72,9 @@ export const requestAuth = async (username, password) => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -83,7 +85,9 @@ export const requestRegister = async request => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -94,7 +98,9 @@ export const requestPasswordReset = async email => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -105,7 +111,9 @@ export const getMyself = async () => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -116,7 +124,9 @@ export const getBadges = async () => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -127,7 +137,9 @@ export const getUserRanking = async () => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -138,7 +150,9 @@ export const getRanking = async page => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -149,7 +163,9 @@ export const getWelcome = async () => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -160,7 +176,9 @@ export const changePassword = async request => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -174,7 +192,9 @@ export const refreshToken = () => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -195,7 +215,9 @@ export const getUserTrainings = async (page, size, type, query) => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -206,7 +228,9 @@ export const getTrainingDetails = async id => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -217,7 +241,9 @@ export const saveUserActivity = async (trainingId, time) => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -228,7 +254,9 @@ export const getUserActivities = async (year, month) => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -249,7 +277,9 @@ export const getUserRequests = async (page, size, status, query) => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -260,7 +290,9 @@ export const createRequest = async request => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -271,7 +303,9 @@ export const deleteDoneRequests = async () => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -282,7 +316,9 @@ export const deleteRequest = async id => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -293,7 +329,9 @@ export const deleteTraining = async id => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -314,7 +352,9 @@ export const getRequests = async (page, size, status, query) => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -325,7 +365,9 @@ export const editRequest = async (requestId, requestBody) => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -344,7 +386,9 @@ export const getTrainings = async (page, size, query) => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -363,7 +407,9 @@ export const getExercises = async (page, size, query) => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -374,7 +420,9 @@ export const createTraining = async training => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -385,7 +433,9 @@ export const addExercises = async (id, exercises) => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -396,7 +446,9 @@ export const editExercises = async (id, exercises) => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -413,7 +465,9 @@ export const addTrainingUser = async (userId, trainingId) => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -424,7 +478,9 @@ export const getUsers = async (page, size, query) => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -435,7 +491,9 @@ export const lockUser = async (id, lock) => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -446,7 +504,9 @@ export const initializeRegister = async request => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };
 
@@ -457,6 +517,8 @@ export const changeEmail = async request => {
       return response;
     })
     .catch(error => {
-      throw error;
+      if (error) {
+        throw error;
+      }
     });
 };

@@ -4,7 +4,12 @@ import {FlatList, Image, RefreshControl, Text, View} from 'react-native';
 import styles from '../../../styles/Styles';
 import rankingStyles from '../../../styles/RankingStyles';
 import {useFocusEffect} from '@react-navigation/native';
-import {getBadges, getRanking, getUserRanking} from '../../../Networking';
+import {
+  getBadges,
+  getRanking,
+  getUserRanking,
+  handleError,
+} from '../../../Networking';
 import Badges from '../../components/Badges';
 import {white, yellow} from '../../../styles/Colors';
 
@@ -23,14 +28,14 @@ const RankingScreen = ({navigation, route}) => {
           setBadges(response.data);
         })
         .catch(error => {
-          console.log(error);
+          handleError({navigation, error});
         });
       getUserRanking()
         .then(response => {
           setUserRanking(response.data);
         })
         .catch(error => {
-          console.log(error);
+          handleError({navigation, error});
         });
       getRanking(page)
         .then(response => {
@@ -41,7 +46,7 @@ const RankingScreen = ({navigation, route}) => {
           console.log('Fetched ' + page);
         })
         .catch(error => {
-          console.log(error);
+          handleError({navigation, error});
         });
     }, [page]),
   );
@@ -62,7 +67,7 @@ const RankingScreen = ({navigation, route}) => {
         console.log('Fetched ' + page);
       })
       .catch(error => {
-        console.log(error);
+        handleError({navigation, error});
       });
     wait(2000).then(() => setRefreshing(false));
   }, []);

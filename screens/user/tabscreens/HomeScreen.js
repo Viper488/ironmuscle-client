@@ -17,6 +17,7 @@ import {
   deleteTraining,
   getTrainingDetails,
   getUserTrainings,
+  handleError,
   JWToken,
   RefreshToken,
 } from '../../../Networking';
@@ -38,13 +39,15 @@ const HomeScreen = ({navigation, route}) => {
     React.useCallback(() => {
       getUserTrainings(page, 100, type, query)
         .then(response => {
-          setPage(response.data.currentPage);
-          setTotalPages(response.data.totalPages);
-          setTrainings([...trainings, ...response.data.trainings]);
-          console.log('Fetched ' + page);
+          if (response) {
+            setPage(response.data.currentPage);
+            setTotalPages(response.data.totalPages);
+            setTrainings([...trainings, ...response.data.trainings]);
+            console.log('Fetched ' + page);
+          }
         })
         .catch(error => {
-          console.log(error);
+          handleError({navigation, error});
         });
 
       const onBackPress = () => {
@@ -112,7 +115,7 @@ const HomeScreen = ({navigation, route}) => {
         });
       })
       .catch(error => {
-        console.log(error);
+        handleError({navigation, error});
       });
   };
 
@@ -194,44 +197,6 @@ const HomeScreen = ({navigation, route}) => {
           onEndReachedThreshold={0.4}
           onEndReached={loadMoreTrainings}
           renderItem={({item, index}) => {
-            /*              return type === 'CUSTOM' ? (
-                <Swipeable
-                  renderRightActions={swipeRight}
-                  rightThreshold={-200}
-                  onSwipeableOpen={() => animatedDelete(item.id)}>
-                  <Animated.View
-                    style={[
-                      trainingsStyles.card,
-                      {marginTop: index === 0 ? 0 : '3%'},
-                    ]}>
-                    <View style={trainingsStyles.imageContent}>
-                      <View style={trainingsStyles.cardContent}>
-                        <Text style={trainingsStyles.name}>
-                          {item.name} {item.difficulty}
-                        </Text>
-                        <View style={trainingsStyles.bolts}>
-                          <Bolts difficulty={item.difficulty} size={25} />
-                        </View>
-                      </View>
-                      <Image
-                        style={trainingsStyles.image}
-                        source={{uri: item.image}}
-                      />
-                    </View>
-                    <TouchableOpacity
-                      style={trainingsStyles.content}
-                      onPress={() => {
-                        cardClickEventListener(item);
-                      }}>
-                      <FontAwesome5
-                        name={'play-circle'}
-                        size={50}
-                        color={'black'}
-                      />
-                    </TouchableOpacity>
-                  </Animated.View>
-                </Swipeable>
-              ) : (*/
             return (
               <View
                 style={[

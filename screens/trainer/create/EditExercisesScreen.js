@@ -15,6 +15,7 @@ import {
   addTrainingUser,
   editExercises,
   editRequest,
+  handleError,
 } from '../../../Networking';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -221,7 +222,7 @@ const EditExercisesScreen = ({navigation, route}) => {
             });
           })
           .catch(error => {
-            console.log(error);
+            handleError({navigation, error});
           });
       } else {
         addExercises(route.params.training.id, addExe)
@@ -254,7 +255,7 @@ const EditExercisesScreen = ({navigation, route}) => {
                     );
                   })
                   .catch(error => {
-                    console.log(error);
+                    handleError({navigation, error});
                   });
               }
             }
@@ -265,7 +266,7 @@ const EditExercisesScreen = ({navigation, route}) => {
             });
           })
           .catch(error => {
-            console.log(error);
+            handleError({navigation, error});
           });
       }
     }

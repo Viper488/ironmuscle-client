@@ -17,6 +17,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {
   getTrainingDetails,
   getTrainings,
+  handleError,
   JWToken,
   RefreshToken,
 } from '../../../Networking';
@@ -45,7 +46,7 @@ const ETrainingsScreen = ({navigation, route}) => {
           console.log('Fetched ' + page);
         })
         .catch(error => {
-          console.log(error);
+          handleError({navigation, error});
         });
 
       const onBackPress = () => {
@@ -91,7 +92,7 @@ const ETrainingsScreen = ({navigation, route}) => {
         console.log('Fetched ' + page);
       })
       .catch(error => {
-        console.log(error);
+        handleError({navigation, error});
       });
     wait(2000).then(() => setRefreshing(false));
   }, [query]);
@@ -187,7 +188,7 @@ const ETrainingsScreen = ({navigation, route}) => {
                           });
                         })
                         .catch(error => {
-                          console.log(error);
+                          handleError({navigation, error});
                         });
                     }}>
                     <FontAwesome5

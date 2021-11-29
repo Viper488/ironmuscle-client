@@ -17,6 +17,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {
   editRequest,
   getRequests,
+  handleError,
   JWToken,
   RefreshToken,
 } from '../../../Networking';
@@ -43,7 +44,7 @@ const ERequestsScreen = ({navigation, route}) => {
           console.log('Fetched ' + page);
         })
         .catch(error => {
-          console.log(error);
+          handleError({navigation, error});
         });
 
       const onBackPress = () => {
@@ -89,7 +90,7 @@ const ERequestsScreen = ({navigation, route}) => {
         console.log('Fetched ' + page);
       })
       .catch(error => {
-        console.log(error);
+        handleError({navigation, error});
       });
     wait(2000).then(() => setRefreshing(false));
   }, [query]);

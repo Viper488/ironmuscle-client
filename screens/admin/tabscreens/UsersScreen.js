@@ -12,7 +12,13 @@ import {
 } from 'react-native';
 import styles from '../../../styles/Styles';
 import {useFocusEffect} from '@react-navigation/native';
-import {getUsers, JWToken, lockUser, RefreshToken} from '../../../Networking';
+import {
+  getUsers,
+  handleError,
+  JWToken,
+  lockUser,
+  RefreshToken,
+} from '../../../Networking';
 import {_removeData} from '../../../AsyncStorageManager';
 import trainingsStyles from '../../../styles/TrainingsStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -41,7 +47,9 @@ const UsersScreen = ({navigation, route}) => {
           console.log('Fetched Length ' + response.data.users.length);
         })
         .catch(error => {
-          console.log(error);
+          if (error) {
+            handleError({navigation, error});
+          }
         });
 
       const onBackPress = () => {
@@ -90,7 +98,9 @@ const UsersScreen = ({navigation, route}) => {
         console.log('Fetched Length ' + users.length);
       })
       .catch(error => {
-        console.log(error);
+        if (error) {
+          handleError({navigation, error});
+        }
       });
     wait(2000).then(() => setRefreshing(false));
   }, [query]);

@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import styles from '../styles/Styles';
-import {requestRegister} from '../Networking';
+import {handleError, requestRegister} from '../Networking';
 import {Snackbar} from 'react-native-paper';
 import requestStyles from '../styles/RequestStyles';
 import {Picker} from '@react-native-picker/picker';

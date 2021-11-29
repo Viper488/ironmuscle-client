@@ -13,7 +13,7 @@ import {
 import CheckBox from '@react-native-community/checkbox';
 import styles from '../../../styles/Styles';
 import {useFocusEffect} from '@react-navigation/native';
-import {getExercises} from '../../../Networking';
+import {getExercises, handleError} from '../../../Networking';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import trainingsStyles from '../../../styles/TrainingsStyles';
 import eRequestStyles from '../styles/ERequestStyles';
@@ -68,7 +68,7 @@ const AddExercisesScreen = ({navigation, route}) => {
           console.log('Fetched ' + page);
         })
         .catch(error => {
-          console.log(error);
+          handleError({navigation, error});
         });
 
       const onBackPress = () => {
@@ -143,7 +143,7 @@ const AddExercisesScreen = ({navigation, route}) => {
         console.log('Fetched ' + page);
       })
       .catch(error => {
-        console.log(error);
+        handleError({navigation, error});
       });
     wait(2000).then(() => setRefreshing(false));
   }, [query]);

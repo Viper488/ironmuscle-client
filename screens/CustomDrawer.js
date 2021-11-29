@@ -13,7 +13,12 @@ import styles from '../styles/Styles';
 import profileStyles from '../styles/ProfileStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Snackbar} from 'react-native-paper';
-import {changeEmail, changePassword, getMyself} from '../Networking';
+import {
+  changeEmail,
+  changePassword,
+  getMyself,
+  handleError,
+} from '../Networking';
 import exerciseStyles from '../styles/ExerciseStyles';
 import {white} from '../styles/Colors';
 import {useFocusEffect} from '@react-navigation/native';
@@ -38,7 +43,7 @@ const CustomDrawer = ({navigation, route}) => {
           setUser(response.data);
         })
         .catch(error => {
-          console.log(error);
+          handleError({navigation, error});
         });
     }, []),
   );
@@ -68,12 +73,8 @@ const CustomDrawer = ({navigation, route}) => {
           toggleSnackbar('Password changed');
         })
         .catch(error => {
-          console.log(error.status);
-          console.log(error.response.data.message);
+          handleError({navigation, error});
           toggleSnackbar(error.response.data.message);
-          if (error.response.status === 401) {
-            navigation.navigate('Login');
-          }
         });
     }
   };
@@ -138,8 +139,8 @@ const CustomDrawer = ({navigation, route}) => {
                     navigation.navigate('Login');
                   })
                   .catch(error => {
-                    console.log(error.response.data);
-                    toggleSnackbar(error.response.data);
+                    handleError({navigation, error});
+                    toggleSnackbar(error.response.data.message);
                   });
               }}>
               <Text style={styles.btnText}>Save</Text>

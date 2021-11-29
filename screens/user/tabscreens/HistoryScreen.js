@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, Image} from 'react-native';
 import styles from '../../../styles/Styles';
-import {getUserActivities} from '../../../Networking';
+import {getUserActivities, handleError} from '../../../Networking';
 import historyStyles from '../../../styles/HistoryStyles';
 import {
   getDate,
@@ -28,10 +28,12 @@ const HistoryScreen = ({navigation, route}) => {
   const getUserHistory = (year, month) => {
     getUserActivities(year, month)
       .then(response => {
-        setHistory(response.data);
+        if (response) {
+          setHistory(response.data);
+        }
       })
       .catch(error => {
-        console.log(error);
+        handleError({navigation, error});
       });
   };
 

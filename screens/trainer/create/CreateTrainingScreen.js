@@ -4,7 +4,7 @@ import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import styles from '../../../styles/Styles';
 import requestStyles from '../../../styles/RequestStyles';
 import {Picker} from '@react-native-picker/picker';
-import {createTraining, editRequest} from '../../../Networking';
+import {createTraining, editRequest, handleError} from '../../../Networking';
 import {Snackbar} from 'react-native-paper';
 
 const CreateTrainingScreen = ({navigation, route}) => {
@@ -95,7 +95,7 @@ const CreateTrainingScreen = ({navigation, route}) => {
             .catch(error => console.log(error));
         })
         .catch(error => {
-          console.log(error);
+          handleError({navigation, error});
         });
     }
   };

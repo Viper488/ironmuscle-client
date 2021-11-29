@@ -4,7 +4,11 @@ import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {Snackbar} from 'react-native-paper';
 import requestStyles from '../../../styles/RequestStyles';
 import {Picker} from '@react-native-picker/picker';
-import {initializeRegister, requestRegister} from '../../../Networking';
+import {
+  handleError,
+  initializeRegister,
+  requestRegister,
+} from '../../../Networking';
 import styles from '../../../styles/Styles';
 
 const CreateUser = ({navigation, route}) => {
@@ -39,8 +43,8 @@ const CreateUser = ({navigation, route}) => {
         wait(2000).then(() => navigation.navigate('AUsers'));
       })
       .catch(error => {
-        console.log(error);
-        toggleSnackbar(error.response.data);
+        handleError({navigation, error});
+        toggleSnackbar(error.response.data.message);
       });
   };
 
