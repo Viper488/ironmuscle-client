@@ -89,10 +89,7 @@ const RankingScreen = ({navigation, route}) => {
             <Image
               style={rankingStyles.avatar}
               source={{
-                uri:
-                  userRanking.icon != null
-                    ? 'data:image/png;base64,' + userRanking.icon
-                    : 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
+                uri: 'data:image/png;base64,' + userRanking.icon,
               }}
             />
           </View>
@@ -143,17 +140,18 @@ const RankingScreen = ({navigation, route}) => {
                     <Image
                       style={rankingStyles.avatarItem}
                       source={{
-                        uri:
-                          item.icon != null
-                            ? 'data:image/png;base64,' + item.icon
-                            : 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
+                        uri: 'data:image/png;base64,' + item.icon,
                       }}
                     />
                   </View>
                   <View style={rankingStyles.rankingItemContent}>
                     <Text style={rankingStyles.username}>{item.username}</Text>
                   </View>
-                  <View style={[rankingStyles.rankingItemContent, {alignItems: 'flex-end'}]}>
+                  <View
+                    style={[
+                      rankingStyles.rankingItemContent,
+                      {alignItems: 'flex-end'},
+                    ]}>
                     <Text style={rankingStyles.points}>{item.points}</Text>
                   </View>
                 </View>

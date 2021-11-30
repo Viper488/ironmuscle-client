@@ -4,6 +4,7 @@ import {
   Alert,
   BackHandler,
   FlatList,
+  Image,
   RefreshControl,
   Text,
   TextInput,
@@ -26,6 +27,7 @@ import {black2, grey} from '../../../styles/Colors';
 import eRequestStyles from '../../trainer/styles/ERequestStyles';
 import tdStyles from '../../../styles/TrainingDetailsStyles';
 import requestStyles from '../../../styles/RequestStyles';
+import rankingStyles from '../../../styles/RankingStyles';
 
 const UsersScreen = ({navigation, route}) => {
   const [changed, setChanged] = useState(false);
@@ -161,6 +163,14 @@ const UsersScreen = ({navigation, route}) => {
         renderItem={({item, index}) => {
           return (
             <View style={[tdStyles.card, {marginTop: index === 0 ? 0 : '3%'}]}>
+              <View style={rankingStyles.avatarContent}>
+                <Image
+                  style={rankingStyles.avatarItem}
+                  source={{
+                    uri: 'data:image/png;base64,' + item.icon,
+                  }}
+                />
+              </View>
               <Text style={tdStyles.exerciseName}>{item.username}</Text>
               <TouchableOpacity
                 onPress={() => {
