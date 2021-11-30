@@ -78,7 +78,7 @@ const HistoryScreen = ({navigation, route}) => {
                   <View style={historyStyles.imageSection}>
                     <Image
                       style={historyStyles.image}
-                      source={{uri: item.image}}
+                      source={{uri: 'data:image/png;base64,' + item.image}}
                       resizeMode={'cover'}
                     />
                   </View>

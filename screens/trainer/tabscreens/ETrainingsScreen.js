@@ -201,7 +201,7 @@ const ETrainingsScreen = ({navigation, route}) => {
                 </View>
                 <Image
                   style={trainingsStyles.image}
-                  source={{uri: item.image}}
+                  source={{uri: 'data:image/png;base64,' + item.image}}
                 />
               </View>
             </View>

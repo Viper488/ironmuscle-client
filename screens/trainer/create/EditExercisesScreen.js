@@ -312,7 +312,9 @@ const EditExercisesScreen = ({navigation, route}) => {
           </View>
           <Image
             style={trainingsStyles.image}
-            source={{uri: route.params.training.image}}
+            source={{
+              uri: 'data:image/png;base64,' + route.params.training.image,
+            }}
           />
         </View>
       </View>

@@ -82,7 +82,10 @@ const TrainingDetailsScreen = ({navigation, route}) => {
           />
         </View>
       </Modal>
-      <Image source={{uri: training.image}} style={tdStyles.imageBanner} />
+      <Image
+        source={{uri: 'data:image/png;base64,' + training.image}}
+        style={tdStyles.imageBanner}
+      />
       <View style={tdStyles.cardContent}>
         <Text style={trainingsStyles.name}>
           {training.name} {training.difficulty} {'\n'}

@@ -59,8 +59,7 @@ const CreateTrainingScreen = ({navigation, route}) => {
       let training = {
         name: name,
         type: type,
-        image:
-          'https://passionsport.pl/wp-content/uploads/2016/04/Fotolia_1000x77-min.jpg',
+        image: null,
         difficulty: difficulty,
         points: points,
       };
