@@ -12,6 +12,14 @@ import {
 } from './Colors';
 
 const requestStyles = StyleSheet.create({
+  labelContent: {
+    width: '80%',
+    marginBottom: 5,
+  },
+  label: {
+    color: white,
+    alignSelf: 'flex-start',
+  },
   pickerContent: {
     backgroundColor: white,
     width: '80%',

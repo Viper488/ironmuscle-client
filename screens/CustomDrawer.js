@@ -8,6 +8,7 @@ import {
   TextInput,
   SafeAreaView,
   Modal,
+  Alert,
 } from 'react-native';
 import styles from '../styles/Styles';
 import profileStyles from '../styles/ProfileStyles';
@@ -19,11 +20,14 @@ import {
   changePassword,
   getMyself,
   handleError,
+  JWToken,
+  RefreshToken,
 } from '../Networking';
 import exerciseStyles from '../styles/ExerciseStyles';
 import {white} from '../styles/Colors';
 import {useFocusEffect} from '@react-navigation/native';
 import ImagePicker from 'react-native-document-picker';
+import {_removeData} from '../AsyncStorageManager';
 
 const CustomDrawer = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -49,6 +53,25 @@ const CustomDrawer = ({navigation, route}) => {
         });
     }, []),
   );
+
+  const logOut = () => {
+    Alert.alert('Hold on!', 'Are you sure you want to log out?', [
+      {
+        text: 'No',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {
+        text: 'YES',
+        onPress: async () => {
+          await _removeData(JWToken);
+          await _removeData(RefreshToken);
+
+          navigation.navigate('Login');
+        },
+      },
+    ]);
+  };
 
   const changePasswordRequest = () => {
     let password = password;
@@ -139,8 +162,8 @@ const CustomDrawer = ({navigation, route}) => {
               uri: 'data:image/png;base64,' + user.icon,
             }}
           />
-          <TouchableOpacity onPress={pickFile}>
-            <Text>Upload file</Text>
+          <TouchableOpacity onPress={pickFile} style={styles.cogBtn}>
+            <FontAwesome5 name={'cog'} size={20} color={white} />
           </TouchableOpacity>
           <Text style={profileStyles.name}>{user.username}</Text>
           <Text>{user.email}</Text>
@@ -289,6 +312,13 @@ const CustomDrawer = ({navigation, route}) => {
             setPasswordModalVisible(!passwordModalVisible);
           }}>
           <Text style={styles.btnText}>Change password</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => {
+            logOut();
+          }}>
+          <Text style={styles.btnText}>Log out</Text>
         </TouchableOpacity>
       </View>
       <Snackbar

@@ -8,6 +8,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  cogBtn: {
+    backgroundColor: black,
+    padding: 5,
+    borderRadius: 20,
+    position: 'absolute',
+    top: '70%',
+    left: '75%',
+  },
   image: {
     width: '100%',
     height: '100%',

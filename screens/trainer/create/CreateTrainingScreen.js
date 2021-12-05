@@ -9,9 +9,9 @@ import {Snackbar} from 'react-native-paper';
 
 const CreateTrainingScreen = ({navigation, route}) => {
   const [name, setName] = useState(
-    route.params.request !== null && route.params.request.name !== null
-      ? route.params.request.name
-      : undefined,
+    route.params.request != null && route.params.request.title !== null
+      ? route.params.request.title
+      : null,
   );
   const [type, setType] = useState(
     route.params.request !== null && route.params.request.user !== null
@@ -23,6 +23,13 @@ const CreateTrainingScreen = ({navigation, route}) => {
       ? route.params.request.difficulty
       : 'beginner',
   );
+
+  const [image, setImage] = useState(
+    route.params.request !== null && route.params.request.bodyPart !== null
+      ? route.params.request.bodyPart
+      : 'abdominal',
+  );
+
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -59,7 +66,7 @@ const CreateTrainingScreen = ({navigation, route}) => {
       let training = {
         name: name,
         type: type,
-        image: null,
+        image: image,
         difficulty: difficulty,
         points: points,
       };
@@ -70,28 +77,39 @@ const CreateTrainingScreen = ({navigation, route}) => {
             'Training ' + trainingResponse.data.name + ' created!',
           );
           console.log(trainingResponse.data);
-          clearState();
-          editRequest(route.params.request.id, {
-            status: 'in progress',
-            training: trainingResponse.data,
-          })
-            .then(requestResponse => {
-              console.log(
-                'Request ' +
-                  requestResponse.data.id +
-                  ' status: ' +
-                  requestResponse.data.status,
-              );
-              wait(2000).then(() => {
-                navigation.navigate('AddExercises', {
-                  request: requestResponse.data,
-                  training: trainingResponse.data,
-                  selectedExercises: [],
-                  edit: false,
-                });
-              });
+          //clearState();
+          if (route.params.request !== null) {
+            editRequest(route.params.request.id, {
+              status: 'in progress',
+              training: trainingResponse.data,
             })
-            .catch(error => console.log(error));
+              .then(requestResponse => {
+                console.log(
+                  'Request ' +
+                    requestResponse.data.id +
+                    ' status: ' +
+                    requestResponse.data.status,
+                );
+                wait(2000).then(() => {
+                  navigation.navigate('AddExercises', {
+                    request: requestResponse.data,
+                    training: trainingResponse.data,
+                    selectedExercises: [],
+                    edit: false,
+                  });
+                });
+              })
+              .catch(error => handleError(error));
+          } else {
+            wait(2000).then(() => {
+              navigation.navigate('AddExercises', {
+                request: null,
+                training: trainingResponse.data,
+                selectedExercises: [],
+                edit: false,
+              });
+            });
+          }
         })
         .catch(error => {
           handleError({navigation, error});
@@ -105,10 +123,17 @@ const CreateTrainingScreen = ({navigation, route}) => {
         <TextInput
           maxLength={255}
           style={styles.textInput}
-          placeholder={route.params.request.name}
+          placeholder={
+            route.params.request !== null && route.params.request.title !== null
+              ? route.params.request.title
+              : 'Training title'
+          }
           placeholderTextColor="#8c8c8c"
           onChangeText={name => setName(name)}
         />
+      </View>
+      <View style={requestStyles.labelContent}>
+        <Text style={requestStyles.label}>Type:</Text>
       </View>
       <View style={requestStyles.pickerContent}>
         <Picker
@@ -119,6 +144,9 @@ const CreateTrainingScreen = ({navigation, route}) => {
           <Picker.Item label="Custom" value="custom" />
         </Picker>
       </View>
+      <View style={requestStyles.labelContent}>
+        <Text style={requestStyles.label}>Difficulty:</Text>
+      </View>
       <View style={requestStyles.pickerContent}>
         <Picker
           selectedValue={difficulty}
@@ -127,6 +155,20 @@ const CreateTrainingScreen = ({navigation, route}) => {
           <Picker.Item label="Beginner" value="beginner" />
           <Picker.Item label="Mediocre" value="mediocre" />
           <Picker.Item label="Pro" value="pro" />
+        </Picker>
+      </View>
+      <View style={requestStyles.labelContent}>
+        <Text style={requestStyles.label}>Image:</Text>
+      </View>
+      <View style={requestStyles.pickerContent}>
+        <Picker
+          selectedValue={image}
+          style={requestStyles.picker}
+          onValueChange={(itemValue, itemIndex) => setImage(itemValue)}>
+          <Picker.Item label="Abdominal" value="abdominal" />
+          <Picker.Item label="Arms" value="arms" />
+          <Picker.Item label="Chest" value="chest" />
+          <Picker.Item label="Legs" value="legs" />
         </Picker>
       </View>
       <TouchableOpacity style={styles.btn} onPress={() => saveTraining()}>
