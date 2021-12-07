@@ -1,11 +1,13 @@
 import {StyleSheet} from 'react-native';
 import {
   black,
-  black2, blue,
+  black2,
+  blue,
   green,
   grey,
   grey2,
   grey3,
+  grey6,
   white,
   white2,
   white3,
@@ -13,9 +15,14 @@ import {
 } from './Colors';
 
 const rankingStyles = StyleSheet.create({
+  crown: {
+    height: 70,
+    width: 70,
+  },
   rank: {
     fontSize: 32,
     fontWeight: '600',
+    color: white,
   },
   username: {
     fontSize: 18,
@@ -24,17 +31,18 @@ const rankingStyles = StyleSheet.create({
   points: {
     fontSize: 26,
     fontWeight: '600',
-    color: blue,
+    color: green,
   },
   header: {
     flex: 1,
     width: '100%',
-    backgroundColor: grey2,
+    backgroundColor: black,
   },
   headerContent: {
-    padding: 15,
+    flex: 4,
     flexDirection: 'row',
     alignItems: 'center',
+    margin: 15,
   },
   avatar: {
     width: 75,
@@ -42,18 +50,76 @@ const rankingStyles = StyleSheet.create({
     borderRadius: 63,
     borderWidth: 4,
     borderColor: black,
-    marginBottom: 2,
+    margin: 1,
+  },
+  user: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: '20%',
+    flex: 1,
+  },
+  top1: {
+    alignSelf: 'flex-start',
+    height: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  top3: {
+    marginTop: 30,
+    height: '100%',
+    alignSelf: 'flex-end',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  modalUser: {
+    fontSize: 26,
+    fontWeight: '400',
+    color: white,
+  },
+  top3username: {
+    fontWeight: '400',
+    color: white,
+  },
+  top3points: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: green,
+  },
+  avatarContent: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  avatar1: {
+    width: 100,
+    height: 100,
+    borderRadius: 63,
+    borderWidth: 6,
+    borderColor: green,
+  },
+  avatar2: {
+    width: 75,
+    height: 75,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: green,
+  },
+  avatar3: {
+    width: 50,
+    height: 50,
+    borderRadius: 63,
+    borderWidth: 2,
+    borderColor: green,
   },
   name: {
     marginLeft: 3,
     fontSize: 22,
     color: white,
   },
-  avatarContent: {
-    flex: 1,
-  },
   rankingContent: {
-    flex: 10,
+    flex: 5,
     backgroundColor: black,
   },
   userBadgeContent: {
@@ -70,11 +136,24 @@ const rankingStyles = StyleSheet.create({
   userRankContent: {
     flexDirection: 'row',
   },
+  modalBody: {
+    alignSelf: 'center',
+    marginTop: '10%',
+    marginBottom: '10%',
+    backgroundColor: black,
+    flex: 2,
+    width: '80%',
+    alignItems: 'center',
+  },
   badgesContent: {
+    backgroundColor: grey,
+    borderRadius: 30,
     justifyContent: 'center',
     width: '100%',
+    flex: 4,
     flexDirection: 'row',
     paddingBottom: '1%',
+    flexWrap: 'wrap',
   },
   badge: {
     flexWrap: 'wrap',
@@ -90,12 +169,17 @@ const rankingStyles = StyleSheet.create({
     flexDirection: 'row',
     paddingTop: '2%',
     paddingBottom: '2%',
-    paddingHorizontal: '2%',
-    backgroundColor: white,
-    borderBottomWidth: 1,
-    borderColor: black,
+    paddingHorizontal: '4%',
+    marginBottom: '1%',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  rankingItemContainer: {
+    flex: 6,
+    backgroundColor: grey6,
+    borderRadius: 30,
+    flexDirection: 'row',
+    paddingRight: '5%',
   },
   rankingItemContent: {
     flex: 1,
@@ -106,24 +190,36 @@ const rankingStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    paddingBottom: '1%',
+    flexDirection: 'row',
+    paddingVertical: '1%',
     borderBottomWidth: 2,
-    borderTopWidth: 2,
     borderColor: black,
+  },
+  openBadges: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+  },
+  leaderboard: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   rankingHeaderText: {
     marginLeft: 3,
-    fontSize: 29,
+    fontSize: 20,
     color: white,
     fontWeight: '600',
+  },
+  rankingHeaderMonth: {
+    marginLeft: 3,
+    fontSize: 16,
+    color: white,
+    fontWeight: '400',
   },
   avatarItem: {
     width: 60,
     height: 60,
     borderRadius: 63,
-    borderWidth: 1,
-    borderColor: black,
-    margin: 2,
   },
 });
 

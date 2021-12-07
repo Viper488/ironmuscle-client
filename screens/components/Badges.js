@@ -9,7 +9,7 @@ const Badges = ({badges}) => {
         <Image
           source={{uri: 'data:image/png;base64,' + badge.icon}}
           resizeMode={'center'}
-          style={{height: 50, width: 50}}
+          style={{height: 100, width: 100}}
         />
       </View>
     );
