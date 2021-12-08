@@ -36,14 +36,29 @@ import exerciseStyles from '../../../styles/ExerciseStyles';
 import {Snackbar} from 'react-native-paper';
 
 const RankingScreen = ({navigation, route}) => {
-  const [badges, setBadges] = useState([]);
   const [userRanking, setUserRanking] = useState({});
   const [ranking, setRanking] = useState([]);
   const [top3, setTop3] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [message, setMessage] = useState('');
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
 
   useFocusEffect(
     React.useCallback(() => {
@@ -108,14 +123,6 @@ const RankingScreen = ({navigation, route}) => {
     }
   };
   const showBadges = () => {
-    getBadges()
-      .then(response => {
-        console.log(response.data.length);
-        setBadges(response.data);
-      })
-      .catch(error => {
-        handleError({navigation, error});
-      });
     getUserRanking()
       .then(response => {
         setUserRanking(response.data);
@@ -123,25 +130,37 @@ const RankingScreen = ({navigation, route}) => {
       .catch(error => {
         handleError({navigation, error});
       });
+    setModalVisible(true);
+  };
+
+  const toggleSnackbar = message => {
+    setMessage(message);
     setVisible(true);
   };
+
+  const onDismissSnackBar = () => {
+    setVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       <View style={rankingStyles.header}>
         <View style={rankingStyles.rankingHeader}>
           <View style={rankingStyles.leaderboard}>
             <Text style={rankingStyles.rankingHeaderText}>Leaderboard</Text>
-            <Text style={rankingStyles.rankingHeaderMonth}>Month</Text>
+            <Text style={rankingStyles.rankingHeaderMonth}>
+              {months[new Date().getMonth()]}
+            </Text>
           </View>
           <Modal
             animationType="slide-left"
             transparent={true}
-            visible={visible}
-            onRequestClose={() => setVisible(false)}>
+            visible={modalVisible}
+            onRequestClose={() => setModalVisible(false)}>
             <View style={exerciseStyles.modalContent}>
               <TouchableOpacity
                 style={exerciseStyles.exitModalBtn}
-                onPress={() => setVisible(false)}>
+                onPress={() => setModalVisible(false)}>
                 <View>
                   <FontAwesome5 name={'arrow-right'} size={50} color={white} />
                 </View>
@@ -149,7 +168,9 @@ const RankingScreen = ({navigation, route}) => {
 
               <View style={rankingStyles.modalBody}>
                 <View style={rankingStyles.user}>
-                  <Text style={rankingStyles.modalUser}>1</Text>
+                  <Text style={rankingStyles.modalUser}>
+                    {userRanking.rank}
+                  </Text>
                   <Image
                     style={rankingStyles.avatar1}
                     source={{
@@ -164,9 +185,20 @@ const RankingScreen = ({navigation, route}) => {
                   </Text>
                 </View>
                 <View style={rankingStyles.badgesContent}>
-                  <Badges badges={badges} />
+                  <Badges badges={navigation} toggle={toggleSnackbar} />
                 </View>
               </View>
+              <Snackbar
+                visible={visible}
+                onDismiss={() => onDismissSnackBar()}
+                action={{
+                  label: 'Close',
+                  onPress: () => {
+                    setVisible(false);
+                  },
+                }}>
+                {message}
+              </Snackbar>
             </View>
           </Modal>
           <TouchableOpacity
