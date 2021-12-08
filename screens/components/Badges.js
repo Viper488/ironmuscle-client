@@ -8,70 +8,51 @@ import {
 import React, {useEffect, useState} from 'react';
 import rankingStyles from '../../styles/RankingStyles';
 import {useFocusEffect} from '@react-navigation/native';
-import {getBadges, handleError} from '../../Networking';
+import {getBadges, getUserBadges, handleError} from '../../Networking';
 
 const Badges = ({navigation, toggle}) => {
   const [changed, setChanged] = useState(false);
-  const [localBadge, setLocalBadge] = useState([
-    {
-      key: 1,
-      name: 'Silver',
-      icon: require('../../images/badges/silver.png'),
-      opacity: 0.3,
-    },
-    {
-      key: 2,
-      name: 'Gold',
-      icon: require('../../images/badges/gold.png'),
-      opacity: 0.3,
-    },
-    {
-      key: 3,
-      name: 'Platinum',
-      icon: require('../../images/badges/platinum.png'),
-      opacity: 0.3,
-    },
-    {
-      key: 4,
-      name: 'Diamond',
-      icon: require('../../images/badges/diamond.png'),
-      opacity: 0.3,
-    },
-    {
-      key: 5,
-      name: 'Master',
-      icon: require('../../images/badges/master.png'),
-      opacity: 0.3,
-    },
-    {
-      key: 6,
-      name: 'Grandmaster',
-      icon: require('../../images/badges/grandmaster.png'),
-      opacity: 0.3,
-    },
-    {
-      key: 7,
-      name: 'Champion',
-      icon: require('../../images/badges/champion.png'),
-      opacity: 0.3,
-    },
-  ]);
+  const [badges, setBadges] = useState([]);
+  const localBadge = new Map();
+  localBadge.set('Iron', require('../../images/badges/iron.png'));
+  localBadge.set('Bronze', require('../../images/badges/bronze.png'));
+  localBadge.set('Silver', require('../../images/badges/silver.png'));
+  localBadge.set('Gold', require('../../images/badges/gold.png'));
+  localBadge.set('Platinum', require('../../images/badges/platinum.png'));
+  localBadge.set('Diamond', require('../../images/badges/diamond.png'));
+  localBadge.set('Master', require('../../images/badges/master.png'));
+  localBadge.set('Grandmaster', require('../../images/badges/grandmaster.png'));
+  localBadge.set('Champion', require('../../images/badges/champion.png'));
+
   useFocusEffect(
     React.useCallback(() => {
       getBadges()
         .then(response => {
-          console.log(response.data);
-          let lbadge = localBadge;
           response.data.forEach(b => {
-            lbadge.forEach(lb => {
-              if (lb.name === b.name) {
-                lb.opacity = 1;
-                setChanged(!changed);
-              }
+            Object.assign(b, {
+              key: b.id,
+              icon: localBadge.get(b.name),
+              opacity: 0.3,
             });
           });
-          setLocalBadge([]);
-          setLocalBadge(lbadge);
+          console.log(response.data);
+          getUserBadges()
+            .then(r => {
+              console.log(r.data);
+              r.data.forEach(b => {
+                response.data.forEach(b2 => {
+                  if (b2.name === b.name) {
+                    b2.opacity = 1;
+                  }
+                });
+              });
+              setChanged(!changed);
+              setBadges(response.data);
+              console.log(badges);
+            })
+            .catch(error => {
+              handleError({navigation, error});
+            });
         })
         .catch(error => {
           handleError({navigation, error});
@@ -83,17 +64,17 @@ const Badges = ({navigation, toggle}) => {
     <FlatList
       style={{flexDirection: 'column'}}
       numColumns={3}
-      data={localBadge}
+      data={badges}
       extraData={changed}
       keyExtractor={item => {
-        return item.id;
+        return item.key;
       }}
       renderItem={({item, index}) => {
         return (
           <TouchableOpacity
             style={rankingStyles.badge}
             onPress={() => {
-              toggle(item.name);
+              toggle(item.name + ' ' + item.goal);
             }}>
             <Image
               source={item.icon}

@@ -119,6 +119,19 @@ export const getMyself = async () => {
 
 export const getBadges = async () => {
   return await instance
+    .get(baseUrl + '/badges')
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      if (error) {
+        throw error;
+      }
+    });
+};
+
+export const getUserBadges = async () => {
+  return await instance
     .get(baseUrl + '/user/badges')
     .then(response => {
       return response;

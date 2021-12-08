@@ -149,11 +149,9 @@ const rankingStyles = StyleSheet.create({
     backgroundColor: grey,
     borderRadius: 30,
     justifyContent: 'center',
+    alignContent: 'center',
     width: '100%',
     flex: 4,
-    flexDirection: 'row',
-    paddingBottom: '1%',
-    flexWrap: 'wrap',
   },
   badge: {
     flexWrap: 'wrap',

@@ -15,7 +15,7 @@ import rankingStyles from '../../../styles/RankingStyles';
 import {useFocusEffect} from '@react-navigation/native';
 import {
   changeEmail,
-  getBadges,
+  getUserBadges,
   getRanking,
   getUserRanking,
   handleError,
