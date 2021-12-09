@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {black, green, grey, white} from './Colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,17 +26,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: grey,
     width: '80%',
-    height: 45,
-    marginBottom: 20,
+    height: RFValue(45),
+    marginBottom: RFValue(20),
     alignItems: 'flex-start',
   },
 
   textInput: {
-    height: 50,
+    height: RFValue(50),
     flex: 1,
-    padding: 10,
-    marginLeft: 20,
-    fontSize: 16,
+    padding: RFValue(10),
+    marginLeft: RFValue(20),
+    fontSize: RFValue(16),
     color: grey,
   },
 
@@ -44,15 +45,25 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 3,
     borderColor: green,
-    height: 50,
+    height: RFValue(50),
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40,
+    marginTop: RFValue(40),
     backgroundColor: black,
   },
   btnText: {
     color: white,
-    fontSize: 18,
+    fontSize: RFValue(18),
+  },
+  exitBtn: {
+    position: 'absolute',
+    top: 1,
+    left: 1,
+    marginLeft: '5%',
+    marginTop: '5%',
+  },
+  pickerItem: {
+    fontSize: RFValue(14),
   },
 });
 

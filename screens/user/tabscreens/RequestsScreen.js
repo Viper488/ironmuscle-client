@@ -27,6 +27,7 @@ import profileStyles from '../../../styles/ProfileStyles';
 import {Snackbar} from 'react-native-paper';
 import {getDate, getDateTime} from '../../functions/Functions';
 import {Picker} from '@react-native-picker/picker';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const RequestsScreen = ({navigation, route}) => {
   const [requests, setRequests] = useState([]);
@@ -149,12 +150,12 @@ const RequestsScreen = ({navigation, route}) => {
             <Text style={requestStyles.bodyPart}>
               {item.bodyPart.toUpperCase()}
             </Text>
-            <Text>{item.description}</Text>
+            <Text style={requestStyles.description}>{item.description}</Text>
           </View>
           <View>
             {item.trainer !== null ? (
               <View style={requestStyles.trainer}>
-                <FontAwesome5 name={'user-tie'} size={30} color={grey} />
+                <FontAwesome5 name={'user-tie'} size={RFValue(30)} color={grey} />
                 <Text>{item.trainer.username}</Text>
               </View>
             ) : undefined}
@@ -191,7 +192,7 @@ const RequestsScreen = ({navigation, route}) => {
             style={exerciseStyles.exitModalBtn}
             onPress={() => setModalVisible(false)}>
             <View>
-              <FontAwesome5 name={'arrow-left'} size={50} color={white} />
+              <FontAwesome5 name={'arrow-left'} size={RFValue(50)} color={white} />
             </View>
           </TouchableOpacity>
           <View style={profileStyles.modalBody}>
@@ -221,11 +222,11 @@ const RequestsScreen = ({navigation, route}) => {
                 onValueChange={(itemValue, itemIndex) =>
                   setBodyPart(itemValue)
                 }>
-                <Picker.Item label="Abdominal" value="abdominal" />
-                <Picker.Item label="Arms" value="arms" />
-                <Picker.Item label="Back" value="back" />
-                <Picker.Item label="Chest" value="chest" />
-                <Picker.Item label="Legs" value="legs" />
+                <Picker.Item style={styles.pickerItem} label="Abdominal" value="abdominal" />
+                <Picker.Item style={styles.pickerItem} label="Arms" value="arms" />
+                <Picker.Item style={styles.pickerItem} label="Back" value="back" />
+                <Picker.Item style={styles.pickerItem} label="Chest" value="chest" />
+                <Picker.Item style={styles.pickerItem} label="Legs" value="legs" />
               </Picker>
             </View>
             <View style={requestStyles.pickerContent}>
@@ -235,9 +236,9 @@ const RequestsScreen = ({navigation, route}) => {
                 onValueChange={(itemValue, itemIndex) =>
                   setDifficulty(itemValue)
                 }>
-                <Picker.Item label="Beginner" value="beginner" />
-                <Picker.Item label="Mediocre" value="mediocre" />
-                <Picker.Item label="Pro" value="pro" />
+                <Picker.Item style={styles.pickerItem} label="Beginner" value="beginner" />
+                <Picker.Item style={styles.pickerItem} label="Mediocre" value="mediocre" />
+                <Picker.Item style={styles.pickerItem} label="Pro" value="pro" />
               </Picker>
             </View>
             <TouchableOpacity style={styles.btn} onPress={() => saveRequest()}>
@@ -250,7 +251,7 @@ const RequestsScreen = ({navigation, route}) => {
         <View style={trainingsStyles.inputContainer}>
           <FontAwesome5
             name={'search'}
-            size={20}
+            size={RFValue(20)}
             color={grey}
             style={trainingsStyles.searchIcon}
           />
@@ -298,7 +299,7 @@ const RequestsScreen = ({navigation, route}) => {
       <TouchableOpacity
         style={requestStyles.floatingBtn}
         onPress={() => setModalVisible(true)}>
-        <FontAwesome5 name={'plus'} size={30} color={black2} />
+        <FontAwesome5 name={'plus'} size={RFValue(30)} color={black2} />
       </TouchableOpacity>
       <TouchableOpacity
         style={requestStyles.floatingBtn2}
@@ -327,7 +328,7 @@ const RequestsScreen = ({navigation, route}) => {
             ],
           )
         }>
-        <FontAwesome5 name={'minus'} size={20} color={black2} />
+        <FontAwesome5 name={'minus'} size={RFValue(20)} color={black2} />
       </TouchableOpacity>
       <Snackbar
         visible={visible}

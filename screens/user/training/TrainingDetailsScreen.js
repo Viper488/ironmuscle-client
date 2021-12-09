@@ -19,6 +19,7 @@ import {grey, white} from '../../../styles/Colors';
 import exerciseStyles from '../../../styles/ExerciseStyles';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {toHHMMSS} from '../../functions/Functions';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const TrainingDetailsScreen = ({navigation, route}) => {
   const [training, setTraining] = useState({});
@@ -70,7 +71,11 @@ const TrainingDetailsScreen = ({navigation, route}) => {
             style={exerciseStyles.exitModalBtn}
             onPress={() => setModalVisible(false)}>
             <View>
-              <FontAwesome5 name={'arrow-left'} size={50} color={white} />
+              <FontAwesome5
+                name={'arrow-left'}
+                size={RFValue(50)}
+                color={white}
+              />
             </View>
           </TouchableOpacity>
           <Text style={exerciseStyles.modalTitle}>{modalName}</Text>
@@ -92,7 +97,7 @@ const TrainingDetailsScreen = ({navigation, route}) => {
           {exercises.length + ' exercises'}
         </Text>
         <View style={trainingsStyles.bolts}>
-          <Bolts difficulty={training.difficulty} size={25} />
+          <Bolts difficulty={training.difficulty} size={RFValue(25)} />
         </View>
       </View>
       <View style={tdStyles.contentList}>
@@ -109,7 +114,7 @@ const TrainingDetailsScreen = ({navigation, route}) => {
                   {backgroundColor: isActive ? grey : white},
                 ]}>
                 <TouchableOpacity style={tdStyles.dragBtn} onLongPress={drag}>
-                  <FontAwesome5 name={'bars'} size={50} color={grey} />
+                  <FontAwesome5 name={'bars'} size={RFValue(50)} color={grey} />
                 </TouchableOpacity>
                 <Text style={tdStyles.exerciseName}>{item.name}</Text>
                 <TouchableOpacity
@@ -120,7 +125,7 @@ const TrainingDetailsScreen = ({navigation, route}) => {
                   }}>
                   <FontAwesome5
                     name={'question-circle'}
-                    size={30}
+                    size={RFValue(30)}
                     color={'grey'}
                   />
                 </TouchableOpacity>

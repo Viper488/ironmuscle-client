@@ -1,28 +1,21 @@
 import {StyleSheet} from 'react-native';
 import {black, black2, green, white, yellow} from './Colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const tdStyles = StyleSheet.create({
   trainingName: {
     position: 'absolute',
-    top: 10,
-    left: 30,
-    fontSize: 24,
+    top: RFValue(10),
+    left: RFValue(30),
+    fontSize: RFValue(24),
     fontWeight: 'bold',
     color: yellow,
   },
-  /*  trainingDiff: {
-    position: 'absolute',
-    top: 70,
-    left: 30,
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: yellow,
-  },*/
   trainingLength: {
     position: 'absolute',
-    top: 40,
-    left: 30,
-    fontSize: 18,
+    top: RFValue(40),
+    left: RFValue(30),
+    fontSize: RFValue(18),
     fontWeight: 'bold',
     color: yellow,
   },
@@ -40,8 +33,8 @@ const tdStyles = StyleSheet.create({
     paddingVertical: '2%',
     paddingHorizontal: '5%',
     justifyContent: 'space-between',
-    borderBottomWidth: 2,
-    borderLeftWidth: 2,
+    borderBottomWidth: RFValue(2),
+    borderLeftWidth: RFValue(2),
     borderColor: black2,
   },
   contentList: {
@@ -50,18 +43,19 @@ const tdStyles = StyleSheet.create({
   },
   bolts: {
     position: 'absolute',
-    top: 10,
-    right: 30,
+    top: RFValue(10),
+    right: RFValue(30),
     flexDirection: 'row',
   },
   card: {
     height: null,
     width: '100%',
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: RFValue(10),
+    paddingBottom: RFValue(10),
+    paddingLeft: RFValue(10),
     backgroundColor: white,
     flexDirection: 'row',
-    marginBottom: 20,
+    marginBottom: RFValue(20),
     alignItems: 'center',
     justifyContent: 'space-around',
   },
@@ -74,14 +68,14 @@ const tdStyles = StyleSheet.create({
   exerciseName: {
     flex: 3,
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: RFValue(18),
   },
   exerciseDuration: {
     flex: 1,
     marginLeft: '10%',
   },
   exerciseDurationText: {
-    fontSize: 16,
+    fontSize: RFValue(16),
   },
   btnContainer: {
     width: '100%',
@@ -91,18 +85,18 @@ const tdStyles = StyleSheet.create({
   },
   btn: {
     width: '60%',
-    borderRadius: 35,
-    borderWidth: 3,
+    borderRadius: RFValue(35),
+    borderWidth: RFValue(3),
     borderColor: green,
-    height: 50,
+    height: RFValue(50),
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 5,
+    marginVertical: RFValue(5),
     backgroundColor: green,
   },
   btnText: {
     color: white,
-    fontSize: 24,
+    fontSize: RFValue(24),
     fontWeight: '700',
   },
 });

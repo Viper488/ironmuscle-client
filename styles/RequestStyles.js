@@ -10,11 +10,12 @@ import {
   white2,
   white3,
 } from './Colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const requestStyles = StyleSheet.create({
   labelContent: {
     width: '80%',
-    marginBottom: 5,
+    marginBottom: RFValue(5),
   },
   label: {
     color: white,
@@ -23,8 +24,8 @@ const requestStyles = StyleSheet.create({
   pickerContent: {
     backgroundColor: white,
     width: '80%',
-    height: 40,
-    marginBottom: 20,
+    height: RFValue(40),
+    marginBottom: RFValue(20),
     alignItems: 'flex-start',
     justifyContent: 'center',
   },
@@ -35,7 +36,7 @@ const requestStyles = StyleSheet.create({
   requestsList: {
     paddingTop: '2%',
     width: '100%',
-    padding: 10,
+    padding: RFValue(10),
   },
   card: {
     flex: 1,
@@ -61,18 +62,18 @@ const requestStyles = StyleSheet.create({
     paddingHorizontal: '5%',
   },
   title: {
-    fontSize: 24,
+    fontSize: RFValue(24),
     fontWeight: '600',
     textTransform: 'capitalize',
     color: white,
   },
   status: {
-    fontSize: 24,
+    fontSize: RFValue(24),
     fontWeight: '700',
   },
   floatingBtn: {
-    height: 75,
-    width: 75,
+    height: RFValue(75),
+    width: RFValue(75),
     position: 'absolute',
     bottom: '5%',
     right: '5%',
@@ -82,8 +83,8 @@ const requestStyles = StyleSheet.create({
     alignItems: 'center',
   },
   floatingBtn2: {
-    height: 40,
-    width: 40,
+    height: RFValue(40),
+    width: RFValue(40),
     position: 'absolute',
     bottom: '3%',
     right: '3%',
@@ -96,7 +97,7 @@ const requestStyles = StyleSheet.create({
     textAlign: 'center',
     color: white,
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: RFValue(14),
     textTransform: 'capitalize',
   },
   types: {
@@ -108,7 +109,7 @@ const requestStyles = StyleSheet.create({
     backgroundColor: black,
   },
   typeBtn: {
-    borderRadius: 30,
+    borderRadius: RFValue(30),
     flex: 1,
     height: '100%',
     alignSelf: 'center',
@@ -116,8 +117,8 @@ const requestStyles = StyleSheet.create({
   typeContent: {
     paddingVertical: '10%',
     width: '100%',
-    borderTopStartRadius: 20,
-    borderTopEndRadius: 20,
+    borderTopStartRadius: RFValue(20),
+    borderTopEndRadius: RFValue(20),
   },
   timeContent: {
     flexDirection: 'row',
@@ -128,16 +129,19 @@ const requestStyles = StyleSheet.create({
     marginHorizontal: '5%',
   },
   time: {
-    fontSize: 16,
+    fontSize: RFValue(16),
   },
   trainer: {
     justifyContent: 'center',
     alignItems: 'center',
   },
   bodyPart: {
-    fontSize: 18,
+    fontSize: RFValue(18),
     fontWeight: '600',
   },
+  description: {
+    fontSize: RFValue(16),
+  }
 });
 
 export default requestStyles;

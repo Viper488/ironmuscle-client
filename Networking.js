@@ -65,6 +65,22 @@ export const handleError = ({navigation, error}) => {
   }
 };
 
+export const refreshToken = () => {
+  return refreshInstance
+    .get(baseUrl + '/token/refresh', {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    })
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      if (error) {
+        throw error;
+      }
+    });
+};
+
 export const requestAuth = async (username, password) => {
   return await axios
     .post(baseUrl + '/login?username=' + username + '&password=' + password)
@@ -117,6 +133,48 @@ export const getMyself = async () => {
     });
 };
 
+export const changeEmail = async request => {
+  return await instance
+    .put(baseUrl + '/myself', request)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      if (error) {
+        throw error;
+      }
+    });
+};
+
+export const changePassword = async request => {
+  return await instance
+    .post(baseUrl + '/password/change', request)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      if (error) {
+        throw error;
+      }
+    });
+};
+
+export const changeIcon = data => {
+  return instance
+    .post(baseUrl + '/user/icon', data, {
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
+    })
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      if (error) {
+        throw error;
+      }
+    });
+};
+
 export const getBadges = async () => {
   return await instance
     .get(baseUrl + '/badges')
@@ -159,48 +217,6 @@ export const getUserRanking = async () => {
 export const getRanking = async page => {
   return await instance
     .get(baseUrl + '/user/ranking/list?page=' + page + '&size=' + 100)
-    .then(response => {
-      return response;
-    })
-    .catch(error => {
-      if (error) {
-        throw error;
-      }
-    });
-};
-
-export const getWelcome = async () => {
-  return await instance
-    .get(baseUrl + '/welcome')
-    .then(response => {
-      return response;
-    })
-    .catch(error => {
-      if (error) {
-        throw error;
-      }
-    });
-};
-
-export const changePassword = async request => {
-  return await instance
-    .post(baseUrl + '/password/change', request)
-    .then(response => {
-      return response;
-    })
-    .catch(error => {
-      if (error) {
-        throw error;
-      }
-    });
-};
-
-export const refreshToken = () => {
-  return refreshInstance
-    .get(baseUrl + '/token/refresh', {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    })
     .then(response => {
       return response;
     })
@@ -513,35 +529,6 @@ export const lockUser = async (id, lock) => {
 export const initializeRegister = async request => {
   return await instance
     .post(baseUrl + '/registration/user', request)
-    .then(response => {
-      return response;
-    })
-    .catch(error => {
-      if (error) {
-        throw error;
-      }
-    });
-};
-
-export const changeEmail = async request => {
-  return await instance
-    .put(baseUrl + '/myself', request)
-    .then(response => {
-      return response;
-    })
-    .catch(error => {
-      if (error) {
-        throw error;
-      }
-    });
-};
-
-export const changeIcon = data => {
-  return instance
-    .post(baseUrl + '/user/icon', data, {
-      Accept: 'application/json',
-      'Content-Type': 'multipart/form-data',
-    })
     .then(response => {
       return response;
     })

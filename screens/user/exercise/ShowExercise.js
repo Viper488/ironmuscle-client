@@ -15,6 +15,7 @@ import CountDown from 'react-native-countdown-component';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {black, white} from '../../../styles/Colors';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const ShowExercise = ({
   navigation,
@@ -67,12 +68,12 @@ const ShowExercise = ({
             style={exerciseStyles.exitModalBtn}
             onPress={() => handleExitModal()}>
             <View>
-              <FontAwesome5 name={'arrow-left'} size={50} color={white} />
+              <FontAwesome5 name={'arrow-left'} size={RFValue(50)} color={white} />
             </View>
           </TouchableOpacity>
           <Text style={exerciseStyles.modalTitle}>{exercises[index].name}</Text>
           <YoutubePlayer
-            height={300}
+            height={RFValue(300)}
             play={playing}
             videoId={exercises[index].video}
             onChangeState={onStateChange}
@@ -97,7 +98,7 @@ const ShowExercise = ({
             onPress={() => {
               handlePressMore();
             }}>
-            <FontAwesome5 name={'question-circle'} size={40} color={'grey'} />
+            <FontAwesome5 name={'question-circle'} size={RFValue(40)} color={'grey'} />
           </TouchableOpacity>
         </View>
       </View>
@@ -110,7 +111,7 @@ const ShowExercise = ({
           <CountDown
             id={key.toString()}
             until={exercises[index].time}
-            size={30}
+            size={RFValue(30)}
             onFinish={() => {
               setKey(prevKey => prevKey + 1);
               setRun(false);
@@ -135,7 +136,7 @@ const ShowExercise = ({
         <View style={exerciseStyles.skipBtn}>
           <TouchableOpacity>
             <View style={exerciseStyles.btnContent}>
-              <FontAwesome5 color={'#000'} name={'backward'} size={15} />
+              <FontAwesome5 color={'#000'} name={'backward'} size={RFValue(15)} />
               <Text
                 style={exerciseStyles.skipBtnText}
                 onPress={() => {
@@ -162,7 +163,7 @@ const ShowExercise = ({
           {exercises[index].time === 0 ? (
             <TouchableOpacity>
               <View style={exerciseStyles.btnContent}>
-                <FontAwesome5 name={'check'} size={30} color={'#FFF'} />
+                <FontAwesome5 name={'check'} size={RFValue(30)} color={'#FFF'} />
                 <Text
                   style={exerciseStyles.btnText}
                   onPress={() => {
@@ -221,7 +222,7 @@ const ShowExercise = ({
                 }}>
                 Skip
               </Text>
-              <FontAwesome5 name={'forward'} size={15} color={'#000'} />
+              <FontAwesome5 name={'forward'} size={RFValue(15)} color={'#000'} />
             </View>
           </TouchableOpacity>
         </View>

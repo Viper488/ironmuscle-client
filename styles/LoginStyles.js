@@ -1,14 +1,16 @@
 import {StyleSheet} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const loginStyles = StyleSheet.create({
   forgotBtn: {
     alignSelf: 'flex-end',
     marginRight: '10%',
-    marginTop: -18,
-    height: 30,
-    marginBottom: 30,
+    marginTop: RFValue(-18),
+    height: RFValue(30),
+    marginBottom: RFValue(30),
   },
   forgotText: {
+    fontSize: RFValue(12),
     color: '#0eb05f',
   },
   imageContainer: {
@@ -34,6 +36,7 @@ const loginStyles = StyleSheet.create({
     flexDirection: 'row',
   },
   registerText: {
+    fontSize: RFValue(12),
     color: '#fff',
   },
   signupText: {

@@ -12,16 +12,20 @@ import {
   white3,
   yellow,
 } from './Colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 const historyStyles = StyleSheet.create({
   calendarContent: {
-    flex: 5,
     width: '100%',
     backgroundColor: white,
     borderBottomWidth: 1,
     borderColor: black,
   },
+  contentList: {
+    flex: 5,
+    width: '100%',
+  },
   noTrainingsText: {
-    fontSize: 26,
+    fontSize: RFValue(26),
     color: white,
     alignSelf: 'center',
   },
@@ -30,27 +34,24 @@ const historyStyles = StyleSheet.create({
     width: '100%',
   },
   card: {
-    height: 125,
+    height: RFValue(125),
     flexDirection: 'row',
     paddingTop: '2%',
     paddingBottom: '2%',
     paddingHorizontal: '2%',
     backgroundColor: white,
-    borderBottomWidth: 1,
+    borderBottomWidth: RFValue(1),
     borderColor: black,
   },
   image: {
     height: '100%',
     width: '100%',
   },
-  contentList: {
-    flex: 3,
-    width: '100%',
-  },
   name: {
-    fontSize: 20,
+    fontSize: RFValue(20),
     fontWeight: 'bold',
     alignSelf: 'flex-start',
+    textTransform: 'capitalize',
   },
   imageSection: {
     flex: 1,
@@ -93,6 +94,9 @@ const historyStyles = StyleSheet.create({
   stopwatch: {
     marginRight: '3%',
   },
+  dateText: {
+    fontSize: RFValue(14),
+  }
 });
 
 export default historyStyles;

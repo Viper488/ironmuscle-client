@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {black, blue, green, grey, white, yellow} from './Colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const exerciseStyles = StyleSheet.create({
   titleContent: {
@@ -11,7 +12,7 @@ const exerciseStyles = StyleSheet.create({
   },
   title: {
     alignSelf: 'center',
-    fontSize: 36,
+    fontSize: RFValue(36),
     color: white,
   },
   exerciseTitleContent: {
@@ -24,7 +25,7 @@ const exerciseStyles = StyleSheet.create({
   },
   exerciseTitle: {
     alignSelf: 'center',
-    fontSize: 24,
+    fontSize: RFValue(24),
     color: black,
     fontWeight: 'bold',
   },
@@ -68,8 +69,8 @@ const exerciseStyles = StyleSheet.create({
   btn: {
     flex: 2,
     width: '200%',
-    paddingHorizontal: 20,
-    borderRadius: 30,
+    paddingHorizontal: RFValue(20),
+    borderRadius: RFValue(30),
     alignContent: 'center',
     justifyContent: 'center',
     backgroundColor: black,
@@ -81,8 +82,8 @@ const exerciseStyles = StyleSheet.create({
   skipBtn: {
     flex: 1,
     width: '100%',
-    paddingHorizontal: 20,
-    borderRadius: 30,
+    paddingHorizontal: RFValue(20),
+    borderRadius: RFValue(30),
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: grey,
@@ -98,20 +99,20 @@ const exerciseStyles = StyleSheet.create({
   },
   modalTitle: {
     color: '#FFF',
-    fontSize: 26,
+    fontSize: RFValue(26),
     alignSelf: 'center',
     fontWeight: 'bold',
     marginBottom: '5%',
   },
   btnText: {
     color: '#FFF',
-    fontSize: 26,
+    fontSize: RFValue(26),
     alignSelf: 'center',
     fontWeight: 'bold',
   },
   skipBtnText: {
     color: '#000',
-    fontSize: 16,
+    fontSize: RFValue(16),
     alignSelf: 'center',
     margin: '5%',
   },
@@ -126,11 +127,12 @@ const exerciseStyles = StyleSheet.create({
   },
   repetitions: {
     alignSelf: 'center',
-    fontSize: 32,
+    fontSize: RFValue(32),
     color: black,
     fontWeight: 'bold',
   },
   modalContent: {
+    paddingHorizontal: '2%',
     height: '100%',
     width: '100%',
     backgroundColor: black,
@@ -138,6 +140,7 @@ const exerciseStyles = StyleSheet.create({
     alignContent: 'center',
   },
   exitModalBtn: {
+    alignSelf: 'flex-start',
     marginLeft: '5%',
     marginTop: '5%',
   },

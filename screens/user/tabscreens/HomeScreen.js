@@ -27,6 +27,7 @@ import trainingsStyles from '../../../styles/TrainingsStyles';
 import {useFocusEffect} from '@react-navigation/native';
 import Bolts from '../../components/Bolts';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const HomeScreen = ({navigation, route}) => {
   const [trainings, setTrainings] = useState([]);
@@ -134,7 +135,7 @@ const HomeScreen = ({navigation, route}) => {
           <View style={trainingsStyles.inputContainer}>
             <FontAwesome5
               name={'search'}
-              size={20}
+              size={RFValue(20)}
               color={grey}
               style={trainingsStyles.searchIcon}
             />
@@ -209,7 +210,7 @@ const HomeScreen = ({navigation, route}) => {
                       {item.name} {item.difficulty}
                     </Text>
                     <View style={trainingsStyles.bolts}>
-                      <Bolts difficulty={item.difficulty} size={25} />
+                      <Bolts difficulty={item.difficulty} size={RFValue(25)} />
                     </View>
                   </View>
                   <Image
@@ -224,7 +225,7 @@ const HomeScreen = ({navigation, route}) => {
                   }}>
                   <FontAwesome5
                     name={'play-circle'}
-                    size={50}
+                    size={RFValue(50)}
                     color={'black'}
                   />
                 </TouchableOpacity>

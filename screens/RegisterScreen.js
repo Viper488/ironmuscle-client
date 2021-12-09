@@ -6,6 +6,10 @@ import {handleError, requestRegister} from '../Networking';
 import {Snackbar} from 'react-native-paper';
 import requestStyles from '../styles/RequestStyles';
 import {Picker} from '@react-native-picker/picker';
+import exerciseStyles from '../styles/ExerciseStyles';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {white} from '../styles/Colors';
 
 const RegisterScreen = ({navigation, route}) => {
   const [username, setUsername] = useState(null);
@@ -68,6 +72,13 @@ const RegisterScreen = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.exitBtn}
+        onPress={() => navigation.navigate('Login')}>
+        <View>
+          <FontAwesome5 name={'arrow-left'} size={RFValue(50)} color={white} />
+        </View>
+      </TouchableOpacity>
       <View style={styles.inputView}>
         <TextInput
           maxLength={255}

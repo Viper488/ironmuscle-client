@@ -34,6 +34,7 @@ import profileStyles from '../../../styles/ProfileStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import exerciseStyles from '../../../styles/ExerciseStyles';
 import {Snackbar} from 'react-native-paper';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const RankingScreen = ({navigation, route}) => {
   const [userRanking, setUserRanking] = useState({});
@@ -148,9 +149,6 @@ const RankingScreen = ({navigation, route}) => {
         <View style={rankingStyles.rankingHeader}>
           <View style={rankingStyles.leaderboard}>
             <Text style={rankingStyles.rankingHeaderText}>Leaderboard</Text>
-            <Text style={rankingStyles.rankingHeaderMonth}>
-              {months[new Date().getMonth()]}
-            </Text>
           </View>
           <Modal
             animationType="slide-left"
@@ -162,7 +160,7 @@ const RankingScreen = ({navigation, route}) => {
                 style={exerciseStyles.exitModalBtn}
                 onPress={() => setModalVisible(false)}>
                 <View>
-                  <FontAwesome5 name={'arrow-right'} size={50} color={white} />
+                  <FontAwesome5 name={'arrow-right'} size={RFValue(50)} color={white} />
                 </View>
               </TouchableOpacity>
 
@@ -204,7 +202,7 @@ const RankingScreen = ({navigation, route}) => {
           <TouchableOpacity
             style={rankingStyles.openBadges}
             onPress={() => showBadges()}>
-            <FontAwesome5 name={'arrow-left'} color={white} size={30} />
+            <FontAwesome5 name={'arrow-left'} color={white} size={RFValue(30)} />
           </TouchableOpacity>
         </View>
         <View style={rankingStyles.headerContent}>

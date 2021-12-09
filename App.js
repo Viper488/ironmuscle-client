@@ -33,10 +33,13 @@ import EditExercisesScreen from './screens/trainer/create/EditExercisesScreen';
 import UsersScreen from './screens/admin/tabscreens/UsersScreen';
 import CreateUser from './screens/admin/create/CreateUser';
 import MyERequestsScreen from './screens/trainer/tabscreens/MyERequestsScreen';
+import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+const focusedSize = RFValue(25);
+const unFocusedSize = RFValue(20);
 
 const UserHomeTab = () => {
   return (
@@ -48,28 +51,36 @@ const UserHomeTab = () => {
           let iconName;
           if (route.name === 'Trainings') {
             iconName = 'dumbbell';
-            size = focused ? 25 : 20;
+            size = focused ? focusedSize : unFocusedSize;
             color = focused ? white : grey3;
           } else if (route.name === 'Requests') {
             iconName = 'align-justify';
-            size = focused ? 25 : 20;
+            size = focused ? focusedSize : unFocusedSize;
             color = focused ? white : grey3;
           } else if (route.name === 'History') {
             iconName = 'user';
-            size = focused ? 25 : 20;
+            size = focused ? focusedSize : unFocusedSize;
             color = focused ? white : grey3;
           } else if (route.name === 'Leaderboard') {
             iconName = 'award';
-            size = focused ? 25 : 20;
+            size = focused ? focusedSize : unFocusedSize;
             color = focused ? white : grey3;
           }
           return <FontAwesome5 name={iconName} size={size} color={color} />;
         },
+
         tabBarActiveTintColor: white,
         tabBarInactiveTintColor: grey3,
         tabBarActiveBackgroundColor: grey4,
         tabBarInactiveBackgroundColor: black,
-        tabBarLabelStyle: {fontSize: 14},
+        tabBarLabelStyle: {fontSize: RFValue(16)},
+        tabBarStyle: {
+          height: RFPercentage(8),
+        },
+        tabBarItemStyle: {
+          justifyContent: 'center',
+          alignContent: 'center',
+        },
       })}>
       <Tab.Screen
         name="Trainings"
@@ -105,15 +116,15 @@ const TrainerHomeTab = () => {
           let iconName;
           if (route.name === 'RequestsE') {
             iconName = 'align-justify';
-            size = focused ? 25 : 20;
+            size = focused ? focusedSize : unFocusedSize;
             color = focused ? white : grey3;
           } else if (route.name === 'MyRequests') {
             iconName = 'award';
-            size = focused ? 25 : 20;
+            size = focused ? focusedSize : unFocusedSize;
             color = focused ? white : grey3;
           } else if (route.name === 'TrainingsE') {
             iconName = 'dumbbell';
-            size = focused ? 25 : 20;
+            size = focused ? focusedSize : unFocusedSize;
             color = focused ? white : grey3;
           }
           return <FontAwesome5 name={iconName} size={size} color={color} />;
@@ -122,7 +133,7 @@ const TrainerHomeTab = () => {
         tabBarInactiveTintColor: grey3,
         tabBarActiveBackgroundColor: grey4,
         tabBarInactiveBackgroundColor: black,
-        tabBarLabelStyle: {fontSize: 14},
+        tabBarLabelStyle: {fontSize: RFValue(14)},
       })}>
       <Tab.Screen
         name="RequestsE"

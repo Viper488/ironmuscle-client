@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {black, blue, green, grey, white, yellow} from './Colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const stopTrainingStyles = StyleSheet.create({
   content: {
@@ -16,10 +17,12 @@ const stopTrainingStyles = StyleSheet.create({
     paddingHorizontal: '10%',
   },
   finishedText: {
-    fontSize: 20,
+    fontSize: RFValue(20),
     color: black,
   },
   finishedImage: {
+    height: RFValue(200),
+    width: RFValue(200),
     alignSelf: 'center',
   },
   headerContent: {
@@ -32,7 +35,7 @@ const stopTrainingStyles = StyleSheet.create({
   },
   headerText: {
     alignSelf: 'center',
-    fontSize: 20,
+    fontSize: RFValue(20),
     fontWeight: 'bold',
     color: black,
     marginBottom: '10%',
@@ -42,7 +45,7 @@ const stopTrainingStyles = StyleSheet.create({
   },
   statisticsText: {
     alignSelf: 'center',
-    fontSize: 18,
+    fontSize: RFValue(18),
     color: black,
   },
 
@@ -55,7 +58,7 @@ const stopTrainingStyles = StyleSheet.create({
     backgroundColor: white,
   },
   btn: {
-    borderRadius: 30,
+    borderRadius: RFValue(30),
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'center',
@@ -74,7 +77,7 @@ const stopTrainingStyles = StyleSheet.create({
   },
   btnText: {
     color: '#FFF',
-    fontSize: 18,
+    fontSize: RFValue(18),
     alignSelf: 'center',
   },
 });

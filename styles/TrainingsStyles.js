@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {black, black2, green, grey, white, white2, white3} from './Colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const trainingsStyles = StyleSheet.create({
   formContent: {
@@ -8,17 +9,17 @@ const trainingsStyles = StyleSheet.create({
   inputContainer: {
     borderBottomColor: white3,
     backgroundColor: white,
-    borderRadius: 30,
+    borderRadius: RFValue(30),
     borderBottomWidth: 1,
-    height: 45,
+    height: RFValue(45),
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
-    margin: 10,
+    margin: RFValue(10),
   },
   icon: {
-    width: 30,
-    height: 30,
+    width: RFValue(30),
+    height: RFValue(30),
   },
   iconBtnSearch: {
     alignSelf: 'center',
@@ -27,25 +28,26 @@ const trainingsStyles = StyleSheet.create({
     marginLeft: '5%',
   },
   inputs: {
-    height: 45,
-    marginLeft: 16,
+    fontSize: RFValue(16),
+    height: RFValue(45),
+    marginLeft: RFValue(16),
     borderBottomColor: white,
     flex: 1,
   },
   inputsExercise: {
-    height: 45,
+    height: RFValue(45),
     marginLeft: 16,
     borderBottomColor: black,
     flex: 1,
   },
   inputIcon: {
-    marginLeft: 15,
+    marginLeft: RFValue(15),
     justifyContent: 'center',
   },
   notificationList: {
     paddingTop: '2%',
     width: '100%',
-    padding: 10,
+    padding: RFValue(10),
   },
   card: {
     width: '100%',
@@ -71,10 +73,10 @@ const trainingsStyles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   image: {
-    height: 120,
+    height: RFValue(120),
   },
   name: {
-    fontSize: 20,
+    fontSize: RFValue(20),
     fontWeight: 'bold',
     alignSelf: 'flex-start',
     color: white,

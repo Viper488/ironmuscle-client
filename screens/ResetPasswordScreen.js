@@ -4,6 +4,10 @@ import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import styles from '../styles/Styles';
 import {Snackbar} from 'react-native-paper';
 import {requestPasswordReset} from '../Networking';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {white} from '../styles/Colors';
+import exerciseStyles from '../styles/ExerciseStyles';
 
 class ResetPasswordScreen extends Component {
   constructor(props) {
@@ -44,6 +48,17 @@ class ResetPasswordScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.exitBtn}
+          onPress={() => this.props.navigation.navigate('Login')}>
+          <View>
+            <FontAwesome5
+              name={'arrow-left'}
+              size={RFValue(50)}
+              color={white}
+            />
+          </View>
+        </TouchableOpacity>
         <View style={styles.inputView}>
           <TextInput
             maxLength={255}

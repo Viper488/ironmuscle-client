@@ -13,8 +13,9 @@ import {
 import Bolts from '../../components/Bolts';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Calendar} from 'react-native-calendars';
-import {blue, grey} from '../../../styles/Colors';
+import {blue, green, grey} from '../../../styles/Colors';
 import {useFocusEffect} from '@react-navigation/native';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const HistoryScreen = ({navigation, route}) => {
   const [history, setHistory] = useState([]);
@@ -42,7 +43,7 @@ const HistoryScreen = ({navigation, route}) => {
     history.forEach(item => {
       dateHolder.push([
         getDate(item.date),
-        {selected: true, selectedColor: blue},
+        {selected: true, selectedColor: green},
       ]);
     });
     return Object.fromEntries(dateHolder);
@@ -52,6 +53,12 @@ const HistoryScreen = ({navigation, route}) => {
     <View style={styles.container}>
       <View style={historyStyles.calendarContent}>
         <Calendar
+          style={{marginBottom: '2%'}}
+          theme={{
+            textDayFontSize: RFValue(10),
+            textMonthFontSize: RFValue(16),
+            textDayHeaderFontSize: RFValue(8),
+          }}
           onMonthChange={month => {
             getUserHistory(month.year, month.month);
           }}
@@ -72,7 +79,7 @@ const HistoryScreen = ({navigation, route}) => {
             keyExtractor={item => {
               return item.id;
             }}
-            renderItem={({item}) => {
+            renderItem={({item, index}) => {
               return (
                 <View style={historyStyles.card}>
                   <View style={historyStyles.imageSection}>
@@ -85,26 +92,33 @@ const HistoryScreen = ({navigation, route}) => {
                   <View style={historyStyles.sections}>
                     <View style={historyStyles.nameSection}>
                       <View style={historyStyles.dateContent}>
-                        <Text>{getDateTime(item.date)}</Text>
+                        <Text style={historyStyles.dateText}>
+                          {getDateTime(item.date)}
+                        </Text>
                         <Text />
                         <View style={historyStyles.bolts}>
-                          <Bolts difficulty={item.difficulty} size={20} />
+                          <Bolts
+                            difficulty={item.difficulty}
+                            size={RFValue(20)}
+                          />
                         </View>
                       </View>
                       <View style={historyStyles.nameContent}>
                         <Text style={historyStyles.name}>
-                          {item.name + ' ' + item.difficulty}
+                          {item.name} {item.difficulty}
                         </Text>
                       </View>
                     </View>
                     <View style={historyStyles.contentSection}>
                       <FontAwesome5
                         name={'stopwatch'}
-                        size={20}
+                        size={RFValue(20)}
                         color={'blue'}
                         style={historyStyles.stopwatch}
                       />
-                      <Text>{toHHMMSS(item.time)}</Text>
+                      <Text style={historyStyles.dateText}>
+                        {toHHMMSS(item.time)}
+                      </Text>
                     </View>
                   </View>
                 </View>

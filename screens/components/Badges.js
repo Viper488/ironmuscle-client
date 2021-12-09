@@ -9,6 +9,7 @@ import React, {useEffect, useState} from 'react';
 import rankingStyles from '../../styles/RankingStyles';
 import {useFocusEffect} from '@react-navigation/native';
 import {getBadges, getUserBadges, handleError} from '../../Networking';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const Badges = ({navigation, toggle}) => {
   const [changed, setChanged] = useState(false);
@@ -62,7 +63,14 @@ const Badges = ({navigation, toggle}) => {
 
   return (
     <FlatList
-      style={{flexDirection: 'column'}}
+      style={{
+        flexDirection: 'column',
+      }}
+      contentContainerStyle={{
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
       numColumns={3}
       data={badges}
       extraData={changed}
@@ -79,7 +87,11 @@ const Badges = ({navigation, toggle}) => {
             <Image
               source={item.icon}
               resizeMode={'center'}
-              style={{height: 100, width: 100, opacity: item.opacity}}
+              style={{
+                height: RFValue(100),
+                width: RFValue(100),
+                opacity: item.opacity,
+              }}
             />
           </TouchableOpacity>
         );

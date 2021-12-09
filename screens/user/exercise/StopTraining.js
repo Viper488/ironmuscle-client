@@ -1,13 +1,12 @@
 import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react';
-import {Alert, BackHandler, Image, Text, View} from 'react-native';
+import {BackHandler, Image, Text, View} from 'react-native';
 import styles from '../../../styles/Styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {handleError, saveUserActivity} from '../../../Networking';
 import stopTrainingStyles from '../../../styles/StopTrainingStyles';
 import {useFocusEffect} from '@react-navigation/native';
 import {getDate, toHHMMSS} from '../../functions/Functions';
-import {Snackbar} from 'react-native-paper';
 
 const StopTraining = ({navigation, training, length, startTime, endTime}) => {
   const [trainingDate, setTrainingDate] = useState('');

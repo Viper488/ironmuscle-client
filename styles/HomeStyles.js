@@ -1,15 +1,16 @@
 import {StyleSheet} from 'react-native';
 import {black, green, grey3, grey4, white, yellow} from './Colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const homeStyles = StyleSheet.create({
   filter: {
     opacity: 0.3,
     width: '100%',
     height: '100%',
-    borderRadius: 30,
+    borderRadius: RFValue(30),
   },
   image: {
-    borderRadius: 30,
+    borderRadius: RFValue(30),
     width: '100%',
     height: '100%',
     opacity: 0.8,
@@ -19,7 +20,7 @@ const homeStyles = StyleSheet.create({
     textAlign: 'center',
     color: white,
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: RFValue(18),
   },
   types: {
     flexDirection: 'row',
@@ -30,7 +31,7 @@ const homeStyles = StyleSheet.create({
     backgroundColor: black,
   },
   typeBtn: {
-    borderRadius: 30,
+    borderRadius: RFValue(30),
     flex: 1,
     height: '100%',
     alignSelf: 'center',
@@ -38,8 +39,8 @@ const homeStyles = StyleSheet.create({
   typeContent: {
     paddingVertical: '10%',
     width: '100%',
-    borderTopStartRadius: 20,
-    borderTopEndRadius: 20,
+    borderTopStartRadius: RFValue(20),
+    borderTopEndRadius: RFValue(20),
   },
   trainingsContent: {
     flex: 10,
