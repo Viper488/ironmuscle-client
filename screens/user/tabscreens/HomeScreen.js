@@ -38,7 +38,7 @@ const HomeScreen = ({navigation, route}) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      getUserTrainings(page, 100, type, query)
+      getUserTrainings(page, 6, type, query)
         .then(response => {
           if (response) {
             setPage(response.data.currentPage);

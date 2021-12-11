@@ -14,20 +14,14 @@ import styles from '../../../styles/Styles';
 import trainingsStyles from '../../../styles/TrainingsStyles';
 import {useFocusEffect} from '@react-navigation/native';
 import {
-  createRequest,
-  deleteDoneRequests,
-  editRequest,
   getUserRequests,
   handleError,
 } from '../../../Networking';
 import requestStyles from '../../../styles/RequestStyles';
-import {black2, blue3, green, grey, red, white} from '../../../styles/Colors';
+import {black2, blue3, green, grey, red} from '../../../styles/Colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import exerciseStyles from '../../../styles/ExerciseStyles';
-import profileStyles from '../../../styles/ProfileStyles';
 import {Snackbar} from 'react-native-paper';
 import {getDate, getDateTime} from '../../functions/Functions';
-import {Picker} from '@react-native-picker/picker';
 import eRequestStyles from '../styles/ERequestStyles';
 
 const RequestsScreen = ({navigation, route}) => {
