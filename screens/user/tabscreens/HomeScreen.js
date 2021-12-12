@@ -9,12 +9,10 @@ import {
   BackHandler,
   TextInput,
   FlatList,
-  Animated,
 } from 'react-native';
 import styles from '../../../styles/Styles';
 import homeStyles from '../../../styles/HomeStyles';
 import {
-  deleteTraining,
   getTrainingDetails,
   getUserTrainings,
   handleError,
@@ -224,9 +222,9 @@ const HomeScreen = ({navigation, route}) => {
                     cardClickEventListener(item);
                   }}>
                   <FontAwesome5
-                    name={'play-circle'}
+                    name={'play'}
                     size={RFValue(50)}
-                    color={'black'}
+                    color={black}
                   />
                 </TouchableOpacity>
               </View>

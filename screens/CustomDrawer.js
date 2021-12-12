@@ -33,8 +33,6 @@ import {RFValue} from 'react-native-responsive-fontsize';
 const CustomDrawer = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [passwordModalVisible, setPasswordModalVisible] = useState(false);
-  const [icon, setIcon] = useState(null);
-  const [editable, setEditable] = useState(false);
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [user, setUser] = useState({});
