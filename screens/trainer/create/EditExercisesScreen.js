@@ -26,6 +26,7 @@ import {grey, grey4, grey5, white} from '../../../styles/Colors';
 import Bolts from '../../components/Bolts';
 import {Picker} from '@react-native-picker/picker';
 import {Snackbar} from 'react-native-paper';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const EditExercisesScreen = ({navigation, route}) => {
   const [oSelectedExercises, setOSelectedExercises] = useState([]);
@@ -102,7 +103,7 @@ const EditExercisesScreen = ({navigation, route}) => {
           <TouchableOpacity
             onLongPress={drag}
             style={eRequestStyles.positionDragBtn}>
-            <FontAwesome5 name={'bars'} size={20} color={grey} />
+            <FontAwesome5 name={'bars'} size={RFValue(20)} color={grey} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -124,7 +125,7 @@ const EditExercisesScreen = ({navigation, route}) => {
               setChanged(!changed);
             }}
             style={eRequestStyles.positionDragBtn}>
-            <FontAwesome5 name={'plus'} size={20} color={grey} />
+            <FontAwesome5 name={'plus'} size={RFValue(20)} color={grey} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -134,7 +135,7 @@ const EditExercisesScreen = ({navigation, route}) => {
               setChanged(!changed);
             }}
             style={eRequestStyles.positionDragBtn}>
-            <FontAwesome5 name={'minus'} size={20} color={grey} />
+            <FontAwesome5 name={'minus'} size={RFValue(20)} color={grey} />
           </TouchableOpacity>
         </View>
         <View style={eRequestStyles.exerciseDetailsContent}>
@@ -153,8 +154,8 @@ const EditExercisesScreen = ({navigation, route}) => {
                 item.type = itemValue;
                 setChanged(!changed);
               }}>
-              <Picker.Item label="Time" value="Time" />
-              <Picker.Item label="Repetitions" value="Repetitions" />
+              <Picker.Item style={styles.pickerItem} label="Time" value="Time" />
+              <Picker.Item style={styles.pickerItem} label="Repetitions" value="Repetitions" />
             </Picker>
             <TextInput
               placeholder={
@@ -291,14 +292,14 @@ const EditExercisesScreen = ({navigation, route}) => {
                 });
               }}>
               <View>
-                <FontAwesome5 name={'arrow-left'} size={20} color={white} />
+                <FontAwesome5 name={'arrow-left'} size={RFValue(20)} color={white} />
               </View>
             </TouchableOpacity>
             <Text style={trainingsStyles.name}>
               {route.params.training.name} {route.params.training.difficulty}
             </Text>
             <View style={trainingsStyles.bolts}>
-              <Bolts difficulty={route.params.training.difficulty} size={25} />
+              <Bolts difficulty={route.params.training.difficulty} size={RFValue(25)} />
             </View>
             <TouchableOpacity
               style={eRequestStyles.goBack}
@@ -306,7 +307,7 @@ const EditExercisesScreen = ({navigation, route}) => {
                 navigation.navigate('TrainingsE');
               }}>
               <View>
-                <FontAwesome5 name={'times-circle'} size={20} color={white} />
+                <FontAwesome5 name={'times-circle'} size={RFValue(20)} color={white} />
               </View>
             </TouchableOpacity>
           </View>

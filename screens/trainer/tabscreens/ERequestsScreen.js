@@ -26,6 +26,7 @@ import eRequestStyles from '../styles/ERequestStyles';
 import trainingsStyles from '../../../styles/TrainingsStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {getDateTime} from '../../functions/Functions';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const ERequestsScreen = ({navigation, route}) => {
   const [requests, setRequests] = useState([]);
@@ -122,7 +123,7 @@ const ERequestsScreen = ({navigation, route}) => {
         <View style={trainingsStyles.inputContainer}>
           <FontAwesome5
             name={'search'}
-            size={20}
+            size={RFValue(20)}
             color={grey}
             style={trainingsStyles.searchIcon}
           />
@@ -165,13 +166,13 @@ const ERequestsScreen = ({navigation, route}) => {
             <Text style={requestStyles.bodyPart}>
               {item.bodyPart.toUpperCase()}
             </Text>
-            <Text>{item.description}</Text>
+            <Text style={requestStyles.description}>{item.description}</Text>
           </View>
           <View>
             {item.user !== null ? (
               <View style={requestStyles.trainer}>
-                <FontAwesome5 name={'user'} size={30} color={grey} />
-                <Text>{item.user.username}</Text>
+                <FontAwesome5 name={'user'} size={RFValue(30)} color={grey} />
+                <Text style={requestStyles.description}>{item.user.username}</Text>
               </View>
             ) : undefined}
           </View>

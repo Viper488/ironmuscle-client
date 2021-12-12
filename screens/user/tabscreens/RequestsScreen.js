@@ -156,7 +156,7 @@ const RequestsScreen = ({navigation, route}) => {
             {item.trainer !== null ? (
               <View style={requestStyles.trainer}>
                 <FontAwesome5 name={'user-tie'} size={RFValue(30)} color={grey} />
-                <Text>{item.trainer.username}</Text>
+                <Text style={requestStyles.description}>{item.trainer.username}</Text>
               </View>
             ) : undefined}
           </View>
@@ -300,35 +300,6 @@ const RequestsScreen = ({navigation, route}) => {
         style={requestStyles.floatingBtn}
         onPress={() => setModalVisible(true)}>
         <FontAwesome5 name={'plus'} size={RFValue(30)} color={black2} />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={requestStyles.floatingBtn2}
-        onPress={() =>
-          Alert.alert(
-            'Delete requests',
-            "Are you sure you want to delete all 'DONE' requests?",
-            [
-              {
-                text: 'No',
-                onPress: () => null,
-                style: 'cancel',
-              },
-              {
-                text: 'YES',
-                onPress: () => {
-                  deleteDoneRequests()
-                    .then(response => {
-                      toggleSnackbar("'DONE' requests deleted!");
-                    })
-                    .catch(error => {
-                      handleError({navigation, error});
-                    });
-                },
-              },
-            ],
-          )
-        }>
-        <FontAwesome5 name={'minus'} size={RFValue(20)} color={black2} />
       </TouchableOpacity>
       <Snackbar
         visible={visible}

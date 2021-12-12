@@ -28,6 +28,7 @@ import Bolts from '../../components/Bolts';
 import requestStyles from '../../../styles/RequestStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {black2, grey, white} from '../../../styles/Colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const ETrainingsScreen = ({navigation, route}) => {
   const [trainings, setTrainings] = useState([]);
@@ -125,7 +126,7 @@ const ETrainingsScreen = ({navigation, route}) => {
         <View style={trainingsStyles.inputContainer}>
           <FontAwesome5
             name={'search'}
-            size={20}
+            size={RFValue(20)}
             color={grey}
             style={trainingsStyles.searchIcon}
           />
@@ -160,7 +161,7 @@ const ETrainingsScreen = ({navigation, route}) => {
                     {item.name} {item.difficulty}
                   </Text>
                   <View style={trainingsStyles.bolts}>
-                    <Bolts difficulty={item.difficulty} size={25} />
+                    <Bolts difficulty={item.difficulty} size={RFValue(25)} />
                   </View>
                   <TouchableOpacity
                     onPress={() => {
@@ -193,7 +194,7 @@ const ETrainingsScreen = ({navigation, route}) => {
                     }}>
                     <FontAwesome5
                       name={'cog'}
-                      size={20}
+                      size={RFValue(20)}
                       color={white}
                       style={trainingsStyles.searchIcon}
                     />
@@ -216,7 +217,7 @@ const ETrainingsScreen = ({navigation, route}) => {
             training: null,
           });
         }}>
-        <FontAwesome5 name={'plus'} size={30} color={black2} />
+        <FontAwesome5 name={'plus'} size={RFValue(30)} color={black2} />
       </TouchableOpacity>
     </View>
   );

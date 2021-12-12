@@ -133,7 +133,14 @@ const TrainerHomeTab = () => {
         tabBarInactiveTintColor: grey3,
         tabBarActiveBackgroundColor: grey4,
         tabBarInactiveBackgroundColor: black,
-        tabBarLabelStyle: {fontSize: RFValue(14)},
+        tabBarLabelStyle: {fontSize: RFValue(16)},
+        tabBarStyle: {
+          height: RFPercentage(8),
+        },
+        tabBarItemStyle: {
+          justifyContent: 'center',
+          alignContent: 'center',
+        },
       })}>
       <Tab.Screen
         name="RequestsE"

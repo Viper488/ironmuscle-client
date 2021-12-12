@@ -21,6 +21,7 @@ import tdStyles from '../../../styles/TrainingDetailsStyles';
 import {grey} from '../../../styles/Colors';
 import Bolts from '../../components/Bolts';
 import {Snackbar} from 'react-native-paper';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const AddExercisesScreen = ({navigation, route}) => {
   const [exercises, setExercises] = useState([]);
@@ -176,7 +177,7 @@ const AddExercisesScreen = ({navigation, route}) => {
         <View style={trainingsStyles.inputContainer}>
           <FontAwesome5
             name={'search'}
-            size={20}
+            size={RFValue(20)}
             color={grey}
             style={trainingsStyles.searchIcon}
           />
@@ -251,7 +252,10 @@ const AddExercisesScreen = ({navigation, route}) => {
               {route.params.training.name} {route.params.training.difficulty}
             </Text>
             <View style={trainingsStyles.bolts}>
-              <Bolts difficulty={route.params.training.difficulty} size={25} />
+              <Bolts
+                difficulty={route.params.training.difficulty}
+                size={RFValue(25)}
+              />
             </View>
           </View>
           <Image

@@ -14,6 +14,7 @@ import {
   white3,
   yellow,
 } from '../../../styles/Colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const eRequestStyles = StyleSheet.create({
   goBack: {
@@ -23,19 +24,19 @@ const eRequestStyles = StyleSheet.create({
   requests: {
     marginTop: '2%',
     width: '100%',
-    padding: 10,
+    padding: RFValue(10),
   },
   selectedExercises: {
     marginTop: '2%',
     width: '100%',
-    padding: 10,
+    padding: RFValue(10),
   },
   card: {
     flex: 1,
     width: '100%',
     backgroundColor: grey5,
     padding: '5%',
-    borderRadius: 20,
+    borderRadius: RFValue(20),
   },
   titleContent: {
     flex: 1,
@@ -43,29 +44,29 @@ const eRequestStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: white,
-    borderRadius: 20,
+    borderRadius: RFValue(20),
     padding: '5%',
   },
   btnText: {
     color: white,
-    fontSize: 18,
+    fontSize: RFValue(18),
     fontWeight: 'bold',
   },
   bodyPart: {
     backgroundColor: white,
-    borderRadius: 20,
+    borderRadius: RFValue(20),
     padding: '5%',
     marginTop: '3%',
   },
   bodyPartText: {
-    fontSize: 16,
+    fontSize: RFValue(16),
   },
   description: {
     flex: 3,
-    height: 160,
+    height: RFValue(160),
     width: '100%',
     backgroundColor: white,
-    borderRadius: 20,
+    borderRadius: RFValue(20),
     padding: '5%',
     marginVertical: '3%',
   },
@@ -78,10 +79,10 @@ const eRequestStyles = StyleSheet.create({
   },
   btn: {
     width: '60%',
-    borderRadius: 30,
-    borderWidth: 3,
+    borderRadius: RFValue(30),
+    borderWidth: RFValue(3),
     borderColor: green,
-    height: 50,
+    height: RFValue(50),
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: green,
@@ -101,14 +102,14 @@ const eRequestStyles = StyleSheet.create({
   },
   position: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: RFValue(18),
     marginBottom: '3%',
     color: white,
   },
   exerciseName: {
     flex: 4,
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: RFValue(18),
     marginBottom: '3%',
   },
   positionDrag: {
@@ -129,7 +130,7 @@ const eRequestStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    borderRadius: 20,
+    borderRadius: RFValue(20),
     padding: '1%',
   },
   pickerExercise: {
@@ -137,7 +138,10 @@ const eRequestStyles = StyleSheet.create({
     color: white,
   },
   inputExercise: {
-    borderRadius: 15,
+    marginRight: '2%',
+    fontSize: RFValue(14),
+    borderRadius: RFValue(10),
+    paddingLeft: '2%',
     flex: 1,
     backgroundColor: grey6,
     color: black,
@@ -145,8 +149,8 @@ const eRequestStyles = StyleSheet.create({
   exercisesCard: {
     width: '100%',
     backgroundColor: white,
-    borderRadius: 20,
-    padding: 10,
+    borderRadius: RFValue(20),
+    padding: RFValue(10),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
@@ -154,8 +158,8 @@ const eRequestStyles = StyleSheet.create({
   selectedExercisesCard: {
     width: '100%',
     backgroundColor: white,
-    borderRadius: 20,
-    padding: 10,
+    borderRadius: RFValue(20),
+    padding: RFValue(10),
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

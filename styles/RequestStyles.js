@@ -18,6 +18,7 @@ const requestStyles = StyleSheet.create({
     marginBottom: RFValue(5),
   },
   label: {
+    fontSize: RFValue(16),
     color: white,
     alignSelf: 'flex-start',
   },

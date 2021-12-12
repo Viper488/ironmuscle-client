@@ -42,14 +42,14 @@ const styles = StyleSheet.create({
 
   btn: {
     width: '60%',
-    borderRadius: 5,
-    borderWidth: 3,
+    marginTop: RFValue(40),
+    borderRadius: RFValue(30),
+    borderWidth: RFValue(3),
     borderColor: green,
     height: RFValue(50),
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: RFValue(40),
-    backgroundColor: black,
+    backgroundColor: green,
   },
   btnText: {
     color: white,

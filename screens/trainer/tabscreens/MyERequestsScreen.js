@@ -23,6 +23,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Snackbar} from 'react-native-paper';
 import {getDate, getDateTime} from '../../functions/Functions';
 import eRequestStyles from '../styles/ERequestStyles';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const RequestsScreen = ({navigation, route}) => {
   const [requests, setRequests] = useState([]);
@@ -110,13 +111,13 @@ const RequestsScreen = ({navigation, route}) => {
             <Text style={requestStyles.bodyPart}>
               {item.bodyPart.toUpperCase()}
             </Text>
-            <Text>{item.description}</Text>
+            <Text style={requestStyles.description}>{item.description}</Text>
           </View>
           <View>
             {item.user !== null ? (
               <View style={requestStyles.trainer}>
-                <FontAwesome5 name={'user'} size={30} color={grey} />
-                <Text>{item.user.username}</Text>
+                <FontAwesome5 name={'user'} size={RFValue(30)} color={grey} />
+                <Text style={requestStyles.description}>{item.user.username}</Text>
               </View>
             ) : undefined}
           </View>
