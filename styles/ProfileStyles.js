@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {black, blue, green, grey2, white, yellow} from './Colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const profileStyles = StyleSheet.create({
   body: {
@@ -22,21 +23,24 @@ const profileStyles = StyleSheet.create({
     backgroundColor: green,
   },
   headerContent: {
-    padding: 30,
+    padding: RFValue(30),
     alignItems: 'center',
   },
   avatar: {
-    width: 130,
-    height: 130,
-    borderRadius: 63,
-    borderWidth: 4,
+    width: RFValue(130),
+    height: RFValue(130),
+    borderRadius: RFValue(63),
+    borderWidth: RFValue(4),
     borderColor: black,
-    marginBottom: 2,
+    marginBottom: RFValue(2),
   },
   name: {
-    fontSize: 22,
+    fontSize: RFValue(22),
     color: white,
     fontWeight: '600',
+  },
+  email: {
+    fontSize: RFValue(16),
   },
   profileBadges: {
     flex: 0.5,
@@ -51,19 +55,19 @@ const profileStyles = StyleSheet.create({
     backgroundColor: white,
   },
   detailContent: {
-    margin: 10,
+    margin: RFValue(10),
     alignItems: 'center',
   },
   title: {
-    fontSize: 20,
+    fontSize: RFValue(20),
     color: blue,
   },
   count: {
-    fontSize: 18,
+    fontSize: RFValue(18),
   },
   textInfo: {
-    fontSize: 18,
-    marginTop: 20,
+    fontSize: RFValue(18),
+    marginTop: RFValue(20),
     color: grey2,
   },
   buttonContainer: {
@@ -74,9 +78,9 @@ const profileStyles = StyleSheet.create({
     width: '100%',
   },
   description: {
-    fontSize: 20,
+    fontSize: RFValue(20),
     color: blue,
-    marginTop: 10,
+    marginTop: RFValue(10),
     textAlign: 'center',
   },
   btn: {
@@ -84,14 +88,25 @@ const profileStyles = StyleSheet.create({
     top: '13%',
     right: '30%',
     width: '13%',
-    borderRadius: 30,
+    borderRadius: RFValue(30),
     borderColor: green,
-    height: 50,
+    height: RFValue(50),
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    marginTop: 40,
+    marginTop: RFValue(40),
     backgroundColor: black,
+  },
+  changeText: {
+    color: white,
+    fontSize: RFValue(18),
+    marginBottom: RFValue(40),
+  },
+  changeDesc: {
+    color: white,
+    fontSize: RFValue(14),
+    marginTop: RFValue(-20),
+    marginBottom: RFValue(40),
   },
 });
 

@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
   },
   cogBtn: {
     backgroundColor: black,
-    padding: 5,
-    borderRadius: 20,
+    padding: RFValue(5),
+    borderRadius: RFValue(20),
     position: 'absolute',
     top: '70%',
     left: '75%',
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   inputView: {
     backgroundColor: black,
-    borderBottomWidth: 2,
+    borderBottomWidth: RFValue(2),
     borderBottomColor: grey,
     width: '80%',
     height: RFValue(45),

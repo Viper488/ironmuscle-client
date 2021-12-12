@@ -28,6 +28,7 @@ import {white} from '../styles/Colors';
 import {useFocusEffect} from '@react-navigation/native';
 import ImagePicker from 'react-native-document-picker';
 import {_removeData} from '../AsyncStorageManager';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const CustomDrawer = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -163,10 +164,10 @@ const CustomDrawer = ({navigation, route}) => {
             }}
           />
           <TouchableOpacity onPress={pickFile} style={styles.cogBtn}>
-            <FontAwesome5 name={'cog'} size={20} color={white} />
+            <FontAwesome5 name={'cog'} size={RFValue(20)} color={white} />
           </TouchableOpacity>
           <Text style={profileStyles.name}>{user.username}</Text>
-          <Text>{user.email}</Text>
+          <Text style={profileStyles.email}>{user.email}</Text>
         </View>
       </View>
       <Modal
@@ -179,12 +180,20 @@ const CustomDrawer = ({navigation, route}) => {
             style={exerciseStyles.exitModalBtn}
             onPress={() => setModalVisible(false)}>
             <View>
-              <FontAwesome5 name={'arrow-left'} size={50} color={white} />
+              <FontAwesome5
+                name={'arrow-left'}
+                size={RFValue(50)}
+                color={white}
+              />
             </View>
           </TouchableOpacity>
 
           <View style={profileStyles.modalBody}>
-            <Text style={styles.btnText}>Edit profile</Text>
+            <Text style={profileStyles.changeText}>Change email</Text>
+            <Text style={profileStyles.changeDesc}>
+              Before you change email. Note that you will have to confirm the
+              new one before you log in.
+            </Text>
             <View style={styles.inputView}>
               <TextInput
                 maxLength={255}
@@ -237,12 +246,16 @@ const CustomDrawer = ({navigation, route}) => {
             style={exerciseStyles.exitModalBtn}
             onPress={() => setPasswordModalVisible(false)}>
             <View>
-              <FontAwesome5 name={'arrow-left'} size={50} color={white} />
+              <FontAwesome5
+                name={'arrow-left'}
+                size={RFValue(50)}
+                color={white}
+              />
             </View>
           </TouchableOpacity>
 
           <View style={profileStyles.modalBody}>
-            <Text style={styles.btnText}>Change password</Text>
+            <Text style={profileStyles.changeText}>Change password</Text>
             <View style={styles.inputView}>
               <TextInput
                 maxLength={255}
