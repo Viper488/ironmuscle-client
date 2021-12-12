@@ -1,11 +1,5 @@
-import {
-  FlatList,
-  Image,
-  RefreshControl,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {FlatList, Image, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
 import rankingStyles from '../../styles/RankingStyles';
 import {useFocusEffect} from '@react-navigation/native';
 import {getBadges, getUserBadges, handleError} from '../../Networking';
@@ -14,16 +8,6 @@ import {RFValue} from 'react-native-responsive-fontsize';
 const Badges = ({navigation, toggle}) => {
   const [changed, setChanged] = useState(false);
   const [badges, setBadges] = useState([]);
-  const localBadge = new Map();
-  localBadge.set('Iron', require('../../images/badges/iron.png'));
-  localBadge.set('Bronze', require('../../images/badges/bronze.png'));
-  localBadge.set('Silver', require('../../images/badges/silver.png'));
-  localBadge.set('Gold', require('../../images/badges/gold.png'));
-  localBadge.set('Platinum', require('../../images/badges/platinum.png'));
-  localBadge.set('Diamond', require('../../images/badges/diamond.png'));
-  localBadge.set('Master', require('../../images/badges/master.png'));
-  localBadge.set('Grandmaster', require('../../images/badges/grandmaster.png'));
-  localBadge.set('Champion', require('../../images/badges/champion.png'));
 
   useFocusEffect(
     React.useCallback(() => {
@@ -32,14 +16,11 @@ const Badges = ({navigation, toggle}) => {
           response.data.forEach(b => {
             Object.assign(b, {
               key: b.id,
-              icon: localBadge.get(b.name),
               opacity: 0.3,
             });
           });
-          console.log(response.data);
           getUserBadges()
             .then(r => {
-              console.log(r.data);
               r.data.forEach(b => {
                 response.data.forEach(b2 => {
                   if (b2.name === b.name) {
@@ -49,7 +30,6 @@ const Badges = ({navigation, toggle}) => {
               });
               setChanged(!changed);
               setBadges(response.data);
-              console.log(badges);
             })
             .catch(error => {
               handleError({navigation, error});
@@ -85,7 +65,9 @@ const Badges = ({navigation, toggle}) => {
               toggle(item.name + ' ' + item.goal);
             }}>
             <Image
-              source={item.icon}
+              source={{
+                uri: 'data:image/png;base64,' + item.image,
+              }}
               resizeMode={'center'}
               style={{
                 height: RFValue(100),
