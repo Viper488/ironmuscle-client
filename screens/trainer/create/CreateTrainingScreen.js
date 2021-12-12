@@ -140,8 +140,16 @@ const CreateTrainingScreen = ({navigation, route}) => {
           selectedValue={type}
           style={requestStyles.picker}
           onValueChange={(itemValue, itemIndex) => setType(itemValue)}>
-          <Picker.Item style={styles.pickerItem} label="Standard" value="standard" />
-          <Picker.Item style={styles.pickerItem} label="Custom" value="custom" />
+          <Picker.Item
+            style={styles.pickerItem}
+            label="Standard"
+            value="standard"
+          />
+          <Picker.Item
+            style={styles.pickerItem}
+            label="Custom"
+            value="custom"
+          />
         </Picker>
       </View>
       <View style={requestStyles.labelContent}>
@@ -152,8 +160,16 @@ const CreateTrainingScreen = ({navigation, route}) => {
           selectedValue={difficulty}
           style={requestStyles.picker}
           onValueChange={(itemValue, itemIndex) => setDifficulty(itemValue)}>
-          <Picker.Item style={styles.pickerItem} label="Beginner" value="beginner" />
-          <Picker.Item style={styles.pickerItem} label="Mediocre" value="mediocre" />
+          <Picker.Item
+            style={styles.pickerItem}
+            label="Beginner"
+            value="beginner"
+          />
+          <Picker.Item
+            style={styles.pickerItem}
+            label="Mediocre"
+            value="mediocre"
+          />
           <Picker.Item style={styles.pickerItem} label="Pro" value="pro" />
         </Picker>
       </View>
@@ -165,7 +181,11 @@ const CreateTrainingScreen = ({navigation, route}) => {
           selectedValue={image}
           style={requestStyles.picker}
           onValueChange={(itemValue, itemIndex) => setImage(itemValue)}>
-          <Picker.Item style={styles.pickerItem} label="Abdominal" value="abdominal" />
+          <Picker.Item
+            style={styles.pickerItem}
+            label="Abdominal"
+            value="abdominal"
+          />
           <Picker.Item style={styles.pickerItem} label="Arms" value="arms" />
           <Picker.Item style={styles.pickerItem} label="Chest" value="chest" />
           <Picker.Item style={styles.pickerItem} label="Legs" value="legs" />
@@ -175,6 +195,8 @@ const CreateTrainingScreen = ({navigation, route}) => {
         <Text style={styles.btnText}>Next</Text>
       </TouchableOpacity>
       <Snackbar
+        style={styles.snackbar}
+        wrapperStyle={styles.snackbarWrapper}
         visible={visible}
         onDismiss={() => onDismissSnackBar()}
         action={{

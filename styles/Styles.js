@@ -3,6 +3,13 @@ import {black, green, grey, white} from './Colors';
 import {RFValue} from 'react-native-responsive-fontsize';
 
 const styles = StyleSheet.create({
+  snackbar: {
+    bottom: RFValue(40),
+    height: RFValue(70),
+  },
+  snackbarWrapper: {
+    height: '10%',
+  },
   container: {
     flex: 1,
     backgroundColor: black,

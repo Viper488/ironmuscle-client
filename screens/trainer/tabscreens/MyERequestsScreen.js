@@ -13,10 +13,7 @@ import {
 import styles from '../../../styles/Styles';
 import trainingsStyles from '../../../styles/TrainingsStyles';
 import {useFocusEffect} from '@react-navigation/native';
-import {
-  getUserRequests,
-  handleError,
-} from '../../../Networking';
+import {getUserRequests, handleError} from '../../../Networking';
 import requestStyles from '../../../styles/RequestStyles';
 import {black2, blue3, green, grey, red} from '../../../styles/Colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -117,7 +114,9 @@ const RequestsScreen = ({navigation, route}) => {
             {item.user !== null ? (
               <View style={requestStyles.trainer}>
                 <FontAwesome5 name={'user'} size={RFValue(30)} color={grey} />
-                <Text style={requestStyles.description}>{item.user.username}</Text>
+                <Text style={requestStyles.description}>
+                  {item.user.username}
+                </Text>
               </View>
             ) : undefined}
           </View>
@@ -210,6 +209,8 @@ const RequestsScreen = ({navigation, route}) => {
         renderItem={({item, index}) => renderRequest(item, index)}
       />
       <Snackbar
+        style={styles.snackbar}
+        wrapperStyle={styles.snackbarWrapper}
         visible={visible}
         onDismiss={() => onDismissSnackBar()}
         action={{

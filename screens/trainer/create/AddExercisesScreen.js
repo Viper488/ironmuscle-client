@@ -278,6 +278,8 @@ const AddExercisesScreen = ({navigation, route}) => {
         </TouchableOpacity>
       </View>
       <Snackbar
+        style={styles.snackbar}
+        wrapperStyle={styles.snackbarWrapper}
         visible={visible}
         onDismiss={() => onDismissSnackBar()}
         action={{

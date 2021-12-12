@@ -154,8 +154,16 @@ const EditExercisesScreen = ({navigation, route}) => {
                 item.type = itemValue;
                 setChanged(!changed);
               }}>
-              <Picker.Item style={styles.pickerItem} label="Time" value="Time" />
-              <Picker.Item style={styles.pickerItem} label="Repetitions" value="Repetitions" />
+              <Picker.Item
+                style={styles.pickerItem}
+                label="Time"
+                value="Time"
+              />
+              <Picker.Item
+                style={styles.pickerItem}
+                label="Repetitions"
+                value="Repetitions"
+              />
             </Picker>
             <TextInput
               placeholder={
@@ -292,14 +300,21 @@ const EditExercisesScreen = ({navigation, route}) => {
                 });
               }}>
               <View>
-                <FontAwesome5 name={'arrow-left'} size={RFValue(20)} color={white} />
+                <FontAwesome5
+                  name={'arrow-left'}
+                  size={RFValue(20)}
+                  color={white}
+                />
               </View>
             </TouchableOpacity>
             <Text style={trainingsStyles.name}>
               {route.params.training.name} {route.params.training.difficulty}
             </Text>
             <View style={trainingsStyles.bolts}>
-              <Bolts difficulty={route.params.training.difficulty} size={RFValue(25)} />
+              <Bolts
+                difficulty={route.params.training.difficulty}
+                size={RFValue(25)}
+              />
             </View>
             <TouchableOpacity
               style={eRequestStyles.goBack}
@@ -307,7 +322,11 @@ const EditExercisesScreen = ({navigation, route}) => {
                 navigation.navigate('TrainingsE');
               }}>
               <View>
-                <FontAwesome5 name={'times-circle'} size={RFValue(20)} color={white} />
+                <FontAwesome5
+                  name={'times-circle'}
+                  size={RFValue(20)}
+                  color={white}
+                />
               </View>
             </TouchableOpacity>
           </View>
@@ -343,6 +362,8 @@ const EditExercisesScreen = ({navigation, route}) => {
         </TouchableOpacity>
       </View>
       <Snackbar
+        style={styles.snackbar}
+        wrapperStyle={styles.snackbarWrapper}
         visible={visible}
         onDismiss={() => onDismissSnackBar()}
         action={{

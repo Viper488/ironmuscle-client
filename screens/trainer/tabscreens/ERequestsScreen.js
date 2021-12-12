@@ -172,7 +172,9 @@ const ERequestsScreen = ({navigation, route}) => {
             {item.user !== null ? (
               <View style={requestStyles.trainer}>
                 <FontAwesome5 name={'user'} size={RFValue(30)} color={grey} />
-                <Text style={requestStyles.description}>{item.user.username}</Text>
+                <Text style={requestStyles.description}>
+                  {item.user.username}
+                </Text>
               </View>
             ) : undefined}
           </View>

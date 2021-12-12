@@ -160,7 +160,11 @@ const RankingScreen = ({navigation, route}) => {
                 style={exerciseStyles.exitModalBtn}
                 onPress={() => setModalVisible(false)}>
                 <View>
-                  <FontAwesome5 name={'arrow-right'} size={RFValue(50)} color={white} />
+                  <FontAwesome5
+                    name={'arrow-right'}
+                    size={RFValue(50)}
+                    color={white}
+                  />
                 </View>
               </TouchableOpacity>
 
@@ -187,6 +191,8 @@ const RankingScreen = ({navigation, route}) => {
                 </View>
               </View>
               <Snackbar
+                style={styles.snackbar}
+                wrapperStyle={styles.snackbarWrapper}
                 visible={visible}
                 onDismiss={() => onDismissSnackBar()}
                 action={{
@@ -202,7 +208,11 @@ const RankingScreen = ({navigation, route}) => {
           <TouchableOpacity
             style={rankingStyles.openBadges}
             onPress={() => showBadges()}>
-            <FontAwesome5 name={'arrow-left'} color={white} size={RFValue(30)} />
+            <FontAwesome5
+              name={'arrow-left'}
+              color={white}
+              size={RFValue(30)}
+            />
           </TouchableOpacity>
         </View>
         <View style={rankingStyles.headerContent}>

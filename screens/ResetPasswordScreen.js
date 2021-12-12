@@ -73,6 +73,8 @@ class ResetPasswordScreen extends Component {
         </TouchableOpacity>
         {
           <Snackbar
+            style={styles.snackbar}
+            wrapperStyle={styles.snackbarWrapper}
             visible={this.state.visible}
             onDismiss={this.onDismissSnackBar}
             action={{

@@ -1,7 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {
-  grey5,
-} from '../../../styles/Colors';
+import {grey5} from '../../../styles/Colors';
 import {RFValue} from 'react-native-responsive-fontsize';
 
 const usersStyles = StyleSheet.create({

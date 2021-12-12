@@ -155,8 +155,14 @@ const RequestsScreen = ({navigation, route}) => {
           <View>
             {item.trainer !== null ? (
               <View style={requestStyles.trainer}>
-                <FontAwesome5 name={'user-tie'} size={RFValue(30)} color={grey} />
-                <Text style={requestStyles.description}>{item.trainer.username}</Text>
+                <FontAwesome5
+                  name={'user-tie'}
+                  size={RFValue(30)}
+                  color={grey}
+                />
+                <Text style={requestStyles.description}>
+                  {item.trainer.username}
+                </Text>
               </View>
             ) : undefined}
           </View>
@@ -192,7 +198,11 @@ const RequestsScreen = ({navigation, route}) => {
             style={exerciseStyles.exitModalBtn}
             onPress={() => setModalVisible(false)}>
             <View>
-              <FontAwesome5 name={'arrow-left'} size={RFValue(50)} color={white} />
+              <FontAwesome5
+                name={'arrow-left'}
+                size={RFValue(50)}
+                color={white}
+              />
             </View>
           </TouchableOpacity>
           <View style={profileStyles.modalBody}>
@@ -222,11 +232,31 @@ const RequestsScreen = ({navigation, route}) => {
                 onValueChange={(itemValue, itemIndex) =>
                   setBodyPart(itemValue)
                 }>
-                <Picker.Item style={styles.pickerItem} label="Abdominal" value="abdominal" />
-                <Picker.Item style={styles.pickerItem} label="Arms" value="arms" />
-                <Picker.Item style={styles.pickerItem} label="Back" value="back" />
-                <Picker.Item style={styles.pickerItem} label="Chest" value="chest" />
-                <Picker.Item style={styles.pickerItem} label="Legs" value="legs" />
+                <Picker.Item
+                  style={styles.pickerItem}
+                  label="Abdominal"
+                  value="abdominal"
+                />
+                <Picker.Item
+                  style={styles.pickerItem}
+                  label="Arms"
+                  value="arms"
+                />
+                <Picker.Item
+                  style={styles.pickerItem}
+                  label="Back"
+                  value="back"
+                />
+                <Picker.Item
+                  style={styles.pickerItem}
+                  label="Chest"
+                  value="chest"
+                />
+                <Picker.Item
+                  style={styles.pickerItem}
+                  label="Legs"
+                  value="legs"
+                />
               </Picker>
             </View>
             <View style={requestStyles.pickerContent}>
@@ -236,9 +266,21 @@ const RequestsScreen = ({navigation, route}) => {
                 onValueChange={(itemValue, itemIndex) =>
                   setDifficulty(itemValue)
                 }>
-                <Picker.Item style={styles.pickerItem} label="Beginner" value="beginner" />
-                <Picker.Item style={styles.pickerItem} label="Mediocre" value="mediocre" />
-                <Picker.Item style={styles.pickerItem} label="Pro" value="pro" />
+                <Picker.Item
+                  style={styles.pickerItem}
+                  label="Beginner"
+                  value="beginner"
+                />
+                <Picker.Item
+                  style={styles.pickerItem}
+                  label="Mediocre"
+                  value="mediocre"
+                />
+                <Picker.Item
+                  style={styles.pickerItem}
+                  label="Pro"
+                  value="pro"
+                />
               </Picker>
             </View>
             <TouchableOpacity style={styles.btn} onPress={() => saveRequest()}>
@@ -302,6 +344,8 @@ const RequestsScreen = ({navigation, route}) => {
         <FontAwesome5 name={'plus'} size={RFValue(30)} color={black2} />
       </TouchableOpacity>
       <Snackbar
+        style={styles.snackbar}
+        wrapperStyle={styles.snackbarWrapper}
         visible={visible}
         onDismiss={() => onDismissSnackBar()}
         action={{

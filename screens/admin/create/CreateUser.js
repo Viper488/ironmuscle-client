@@ -4,10 +4,7 @@ import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {Snackbar} from 'react-native-paper';
 import requestStyles from '../../../styles/RequestStyles';
 import {Picker} from '@react-native-picker/picker';
-import {
-  handleError,
-  initializeRegister,
-} from '../../../Networking';
+import {handleError, initializeRegister} from '../../../Networking';
 import styles from '../../../styles/Styles';
 
 const CreateUser = ({navigation, route}) => {
@@ -90,7 +87,11 @@ const CreateUser = ({navigation, route}) => {
           style={requestStyles.picker}
           onValueChange={(itemValue, itemIndex) => setRole(itemValue)}>
           <Picker.Item style={styles.pickerItem} label="User" value="USER" />
-          <Picker.Item style={styles.pickerItem} label="Trainer" value="TRAINER" />
+          <Picker.Item
+            style={styles.pickerItem}
+            label="Trainer"
+            value="TRAINER"
+          />
           <Picker.Item style={styles.pickerItem} label="Admin" value="ADMIN" />
         </Picker>
       </View>
@@ -100,6 +101,8 @@ const CreateUser = ({navigation, route}) => {
         <Text style={styles.btnText}>Create</Text>
       </TouchableOpacity>
       <Snackbar
+        style={styles.snackbar}
+        wrapperStyle={styles.snackbarWrapper}
         visible={visible}
         onDismiss={onDismissSnackBar}
         action={{

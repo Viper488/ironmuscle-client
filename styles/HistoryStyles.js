@@ -96,7 +96,7 @@ const historyStyles = StyleSheet.create({
   },
   dateText: {
     fontSize: RFValue(14),
-  }
+  },
 });
 
 export default historyStyles;

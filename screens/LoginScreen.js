@@ -108,19 +108,19 @@ const LoginScreen = ({navigation, route}) => {
           </Text>
         </TouchableOpacity>
       </View>
-      {
-        <Snackbar
-          visible={visible}
-          onDismiss={onDismissSnackBar}
-          action={{
-            label: 'Close',
-            onPress: () => {
-              setVisible(false);
-            },
-          }}>
-          {message}
-        </Snackbar>
-      }
+      <Snackbar
+        style={styles.snackbar}
+        wrapperStyle={styles.snackbarWrapper}
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: 'Close',
+          onPress: () => {
+            setVisible(false);
+          },
+        }}>
+        {message}
+      </Snackbar>
     </View>
   );
 };

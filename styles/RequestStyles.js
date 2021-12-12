@@ -142,7 +142,7 @@ const requestStyles = StyleSheet.create({
   },
   description: {
     fontSize: RFValue(16),
-  }
+  },
 });
 
 export default requestStyles;

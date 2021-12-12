@@ -128,6 +128,8 @@ const RegisterScreen = ({navigation, route}) => {
       </TouchableOpacity>
 
       <Snackbar
+        style={styles.snackbar}
+        wrapperStyle={styles.snackbarWrapper}
         visible={visible}
         onDismiss={onDismissSnackBar}
         action={{

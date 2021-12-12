@@ -222,6 +222,8 @@ const CustomDrawer = ({navigation, route}) => {
           </View>
         </View>
         <Snackbar
+          style={styles.snackbar}
+          wrapperStyle={styles.snackbarWrapper}
           visible={visible}
           onDismiss={() => onDismissSnackBar()}
           action={{
@@ -298,6 +300,8 @@ const CustomDrawer = ({navigation, route}) => {
           </View>
         </View>
         <Snackbar
+          style={styles.snackbar}
+          wrapperStyle={styles.snackbarWrapper}
           visible={visible}
           onDismiss={() => onDismissSnackBar()}
           action={{
@@ -333,6 +337,8 @@ const CustomDrawer = ({navigation, route}) => {
         </TouchableOpacity>
       </View>
       <Snackbar
+        style={styles.snackbar}
+        wrapperStyle={styles.snackbarWrapper}
         visible={visible}
         onDismiss={() => onDismissSnackBar()}
         action={{
