@@ -1,19 +1,21 @@
 import {StyleSheet} from 'react-native';
 import {
-  black,
-  blue,
-  green,
-  grey,
-  grey2,
-  grey3,
-  grey4,
   grey5,
-  grey6,
-  white,
-  white2,
-  white3,
-  yellow,
 } from '../../../styles/Colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
-const usersStyles = StyleSheet.create({});
+const usersStyles = StyleSheet.create({
+  card: {
+    flex: 6,
+    backgroundColor: grey5,
+    borderRadius: RFValue(30),
+    flexDirection: 'row',
+    paddingRight: '5%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatarContent: {
+    flex: 1,
+  },
+});
 export default usersStyles;

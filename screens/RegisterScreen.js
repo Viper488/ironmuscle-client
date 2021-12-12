@@ -52,6 +52,9 @@ const RegisterScreen = ({navigation, route}) => {
     if (username == null) {
       toggleSnackbar('Username is empty!');
       return false;
+    } else if (username.length < 3) {
+      toggleSnackbar('Username must be at least 3 characters long!');
+      return false;
     } else if (email == null) {
       toggleSnackbar('Email is empty!');
       return false;

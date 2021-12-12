@@ -7,7 +7,6 @@ import {Picker} from '@react-native-picker/picker';
 import {
   handleError,
   initializeRegister,
-  requestRegister,
 } from '../../../Networking';
 import styles from '../../../styles/Styles';
 
@@ -90,9 +89,9 @@ const CreateUser = ({navigation, route}) => {
           selectedValue={role}
           style={requestStyles.picker}
           onValueChange={(itemValue, itemIndex) => setRole(itemValue)}>
-          <Picker.Item label="User" value="USER" />
-          <Picker.Item label="Trainer" value="TRAINER" />
-          <Picker.Item label="Admin" value="ADMIN" />
+          <Picker.Item style={styles.pickerItem} label="User" value="USER" />
+          <Picker.Item style={styles.pickerItem} label="Trainer" value="TRAINER" />
+          <Picker.Item style={styles.pickerItem} label="Admin" value="ADMIN" />
         </Picker>
       </View>
       <TouchableOpacity

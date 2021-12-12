@@ -23,11 +23,13 @@ import {
 import {_removeData} from '../../../AsyncStorageManager';
 import trainingsStyles from '../../../styles/TrainingsStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {black2, grey} from '../../../styles/Colors';
+import {black2, grey, grey6} from '../../../styles/Colors';
 import eRequestStyles from '../../trainer/styles/ERequestStyles';
 import tdStyles from '../../../styles/TrainingDetailsStyles';
 import requestStyles from '../../../styles/RequestStyles';
 import rankingStyles from '../../../styles/RankingStyles';
+import {RFValue} from 'react-native-responsive-fontsize';
+import usersStyles from '../styles/UsersStyles';
 
 const UsersScreen = ({navigation, route}) => {
   const [changed, setChanged] = useState(false);
@@ -135,7 +137,7 @@ const UsersScreen = ({navigation, route}) => {
         <View style={trainingsStyles.inputContainer}>
           <FontAwesome5
             name={'search'}
-            size={20}
+            size={RFValue(20)}
             color={grey}
             style={trainingsStyles.searchIcon}
           />
@@ -162,8 +164,9 @@ const UsersScreen = ({navigation, route}) => {
         onEndReached={loadMoreUsers}
         renderItem={({item, index}) => {
           return (
-            <View style={[tdStyles.card, {marginTop: index === 0 ? 0 : '3%'}]}>
-              <View style={rankingStyles.avatarContent}>
+            <View
+              style={[usersStyles.card, {marginTop: index === 0 ? 0 : '3%'}]}>
+              <View style={usersStyles.avatarContent}>
                 <Image
                   style={rankingStyles.avatarItem}
                   source={{
@@ -171,7 +174,9 @@ const UsersScreen = ({navigation, route}) => {
                   }}
                 />
               </View>
-              <Text style={tdStyles.exerciseName}>{item.username}</Text>
+              <Text style={tdStyles.exerciseName}>
+                {item.username}: {item.roles.map(r => r.name)}
+              </Text>
               <TouchableOpacity
                 onPress={() => {
                   let lock = !item.locked;
@@ -187,8 +192,8 @@ const UsersScreen = ({navigation, route}) => {
                 }}>
                 <FontAwesome5
                   name={item.locked ? 'lock-open' : 'lock'}
-                  color={grey}
-                  size={20}
+                  color={black2}
+                  size={RFValue(20)}
                 />
               </TouchableOpacity>
             </View>
@@ -200,7 +205,7 @@ const UsersScreen = ({navigation, route}) => {
         onPress={() => {
           navigation.navigate('ACreateUser');
         }}>
-        <FontAwesome5 name={'plus'} size={30} color={black2} />
+        <FontAwesome5 name={'plus'} size={RFValue(30)} color={black2} />
       </TouchableOpacity>
     </View>
   );
