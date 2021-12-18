@@ -155,7 +155,7 @@ const ShowExercise = ({
                   if (index > 0) {
                     if (run) {
                       setRun(false);
-                      setStart('STOP');
+                      setStart('START');
                     }
                     navigation.navigate('Exercise', {
                       index: index - 1,
