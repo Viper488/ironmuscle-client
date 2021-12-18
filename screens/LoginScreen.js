@@ -160,7 +160,13 @@ const LoginScreen = ({navigation, route}) => {
                 _storeData(LOGIN, (!logged).toString()).then(() => {});
               }}
             />
-            <Text style={loginStyles.forgotText}>Stay logged in</Text>
+            <TouchableOpacity
+              onPress={() => {
+                setLogged(!logged);
+                _storeData(LOGIN, (!logged).toString()).then(() => {});
+              }}>
+              <Text style={loginStyles.forgotText}>Stay logged in</Text>
+            </TouchableOpacity>
           </View>
           <TouchableOpacity
             style={loginStyles.forgotBtn}
