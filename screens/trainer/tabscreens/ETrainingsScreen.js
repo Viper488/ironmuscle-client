@@ -21,7 +21,7 @@ import {
   JWToken,
   RefreshToken,
 } from '../../../Networking';
-import {_removeData} from '../../../AsyncStorageManager';
+import {_removeData, _storeData, LOGIN} from '../../../AsyncStorageManager';
 import eRequestStyles from '../styles/ERequestStyles';
 import trainingsStyles from '../../../styles/TrainingsStyles';
 import Bolts from '../../components/Bolts';
@@ -62,6 +62,7 @@ const ETrainingsScreen = ({navigation, route}) => {
             onPress: async () => {
               await _removeData(JWToken);
               await _removeData(RefreshToken);
+              await _storeData(LOGIN, 'false');
 
               navigation.navigate('Login');
               return true;

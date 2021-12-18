@@ -20,7 +20,7 @@ import {
   lockUser,
   RefreshToken,
 } from '../../../Networking';
-import {_removeData} from '../../../AsyncStorageManager';
+import {_removeData, _storeData, LOGIN} from '../../../AsyncStorageManager';
 import trainingsStyles from '../../../styles/TrainingsStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {black2, grey, grey6} from '../../../styles/Colors';
@@ -68,6 +68,7 @@ const UsersScreen = ({navigation, route}) => {
             onPress: async () => {
               await _removeData(JWToken);
               await _removeData(RefreshToken);
+              await _storeData(LOGIN, 'false');
 
               navigation.navigate('Login');
               return true;

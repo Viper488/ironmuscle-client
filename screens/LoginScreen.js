@@ -1,22 +1,70 @@
 import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react';
-import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  BackHandler,
+} from 'react-native';
 import styles from '../styles/Styles';
 import loginStyles from '../styles/LoginStyles';
-import {handleError, JWToken, RefreshToken, requestAuth} from '../Networking';
-import {_storeData} from '../AsyncStorageManager';
+import {
+  getExercises,
+  handleError,
+  JWToken,
+  RefreshToken,
+  requestAuth,
+} from '../Networking';
+import {
+  _removeData,
+  _retrieveData,
+  _storeData,
+  LOGIN,
+  PASSWORD,
+  USERNAME,
+} from '../AsyncStorageManager';
 import {Snackbar} from 'react-native-paper';
 import jwt_decode from 'jwt-decode';
+import CheckBox from '@react-native-community/checkbox';
+import {green} from '../styles/Colors';
+import {useFocusEffect} from '@react-navigation/native';
 
 const LoginScreen = ({navigation, route}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
+  const [logged, setLogged] = useState(false);
 
-  useEffect(() => {
-    setPassword('');
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      _retrieveData(LOGIN).then(l => {
+        if (l === 'true') {
+          setLogged(true);
+          _retrieveData(USERNAME).then(u => {
+            setUsername(u);
+            _retrieveData(PASSWORD).then(p => {
+              setPassword(p);
+              if (u !== undefined && p !== undefined) {
+                auth(u, p);
+              }
+            });
+          });
+        } else {
+          setLogged(false);
+          setUsername('');
+          setPassword('');
+        }
+      });
+      return () => {
+        setUsername('');
+        setPassword('');
+      };
+    }, []),
+  );
+
   const toggleSnackbar = message => {
     setMessage(message);
     setVisible(true);
@@ -26,7 +74,9 @@ const LoginScreen = ({navigation, route}) => {
     setVisible(false);
   };
 
-  const auth = () => {
+  const auth = (username, password) => {
+    console.log('Requesting with username: ' + username);
+    console.log('Requesting with password: ' + password);
     requestAuth(username, password)
       .then(response => {
         let jwtToken = response.data.access_token;
@@ -36,6 +86,20 @@ const LoginScreen = ({navigation, route}) => {
           console.log(decoded);
           _storeData(RefreshToken, rftToken).then(() => {
             _storeData(JWToken, jwtToken).then(() => {
+              if (logged) {
+                _storeData(LOGIN, logged.toString()).then(() => {
+                  _storeData(USERNAME, username).then(() => {
+                    _storeData(PASSWORD, password).then(() => {});
+                  });
+                });
+              } else {
+                _storeData(LOGIN, logged.toString()).then(() => {
+                  _removeData(USERNAME).then(() => {
+                    _removeData(PASSWORD).then(() => {});
+                  });
+                });
+              }
+
               if (decoded.authorities.includes('ADMIN')) {
                 navigation.navigate('AdminHome');
               } else if (decoded.authorities.includes('TRAINER')) {
@@ -83,17 +147,33 @@ const LoginScreen = ({navigation, route}) => {
             onChangeText={formPassword => setPassword(formPassword)}
           />
         </View>
-        <TouchableOpacity
-          style={loginStyles.forgotBtn}
-          onPress={() => {
-            navigation.navigate('Reset');
-          }}>
-          <Text style={loginStyles.forgotText}>Forgot Password?</Text>
-        </TouchableOpacity>
+        <View style={loginStyles.optionsContent}>
+          <View style={loginStyles.loggedContent}>
+            <CheckBox
+              tintColor={green}
+              onCheckColor={'white'}
+              onFillColor={green}
+              onTintColor={green}
+              value={logged}
+              onValueChange={() => {
+                setLogged(!logged);
+                _storeData(LOGIN, (!logged).toString()).then(() => {});
+              }}
+            />
+            <Text style={loginStyles.forgotText}>Stay logged in</Text>
+          </View>
+          <TouchableOpacity
+            style={loginStyles.forgotBtn}
+            onPress={() => {
+              navigation.navigate('Reset');
+            }}>
+            <Text style={loginStyles.forgotText}>Forgot Password?</Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
           style={styles.btn}
           onPress={() => {
-            auth();
+            auth(username, password);
           }}>
           <Text style={styles.btnText}>Login</Text>
         </TouchableOpacity>

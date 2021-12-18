@@ -19,7 +19,7 @@ import {
   JWToken,
   RefreshToken,
 } from '../../../Networking';
-import {_removeData} from '../../../AsyncStorageManager';
+import {_removeData, _storeData, LOGIN} from '../../../AsyncStorageManager';
 import {black, black2, green, grey} from '../../../styles/Colors';
 import trainingsStyles from '../../../styles/TrainingsStyles';
 import {useFocusEffect} from '@react-navigation/native';
@@ -61,6 +61,7 @@ const HomeScreen = ({navigation, route}) => {
             onPress: async () => {
               await _removeData(JWToken);
               await _removeData(RefreshToken);
+              await _storeData(LOGIN, 'false');
 
               navigation.navigate('Login');
               return true;

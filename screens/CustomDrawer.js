@@ -27,7 +27,7 @@ import exerciseStyles from '../styles/ExerciseStyles';
 import {white} from '../styles/Colors';
 import {useFocusEffect} from '@react-navigation/native';
 import ImagePicker from 'react-native-document-picker';
-import {_removeData} from '../AsyncStorageManager';
+import {_removeData, _storeData, LOGIN} from '../AsyncStorageManager';
 import {RFValue} from 'react-native-responsive-fontsize';
 
 const CustomDrawer = ({navigation, route}) => {
@@ -65,6 +65,7 @@ const CustomDrawer = ({navigation, route}) => {
         onPress: async () => {
           await _removeData(JWToken);
           await _removeData(RefreshToken);
+          await _storeData(LOGIN, 'false');
 
           navigation.navigate('Login');
         },
