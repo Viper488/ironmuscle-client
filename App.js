@@ -163,7 +163,13 @@ const TrainerHomeTab = () => {
 
 const UserHome = () => {
   return (
-    <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />}>
+    <Drawer.Navigator
+      screenOptions={{
+        drawerStyle: {
+          width: '80%',
+        },
+      }}
+      drawerContent={props => <CustomDrawer {...props} />}>
       <Drawer.Screen
         name="UHome"
         component={UserHomeTab}
@@ -185,7 +191,13 @@ const UserHome = () => {
 
 const TrainerHome = () => {
   return (
-    <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />}>
+    <Drawer.Navigator
+      screenOptions={{
+        drawerStyle: {
+          width: '80%',
+        },
+      }}
+      drawerContent={props => <CustomDrawer {...props} />}>
       <Drawer.Screen
         name="EHome"
         component={TrainerHomeTab}
