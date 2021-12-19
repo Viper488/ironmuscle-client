@@ -188,50 +188,73 @@ const HomeScreen = ({navigation, route}) => {
             </View>
           </TouchableOpacity>
         </View>
-        <FlatList
-          style={[trainingsStyles.notificationList, {backgroundColor: green}]}
-          data={trainings}
-          keyExtractor={item => {
-            return item.id;
-          }}
-          onEndReachedThreshold={0.4}
-          onEndReached={loadMoreTrainings}
-          renderItem={({item, index}) => {
-            return (
-              <View
-                style={[
-                  trainingsStyles.card,
-                  {marginTop: index === 0 ? 0 : '3%'},
-                ]}>
-                <View style={trainingsStyles.imageContent}>
-                  <View style={trainingsStyles.cardContent}>
-                    <Text style={trainingsStyles.name}>
-                      {item.name} {item.difficulty}
-                    </Text>
-                    <View style={trainingsStyles.bolts}>
-                      <Bolts difficulty={item.difficulty} size={RFValue(25)} />
+        {trainings.length > 0 ? (
+          <FlatList
+            style={[trainingsStyles.notificationList, {backgroundColor: green}]}
+            data={trainings}
+            keyExtractor={item => {
+              return item.id;
+            }}
+            onEndReachedThreshold={0.4}
+            onEndReached={loadMoreTrainings}
+            renderItem={({item, index}) => {
+              return (
+                <View
+                  style={[
+                    trainingsStyles.card,
+                    {marginTop: index === 0 ? 0 : '3%'},
+                  ]}>
+                  <View style={trainingsStyles.imageContent}>
+                    <View style={trainingsStyles.cardContent}>
+                      <Text style={trainingsStyles.name}>
+                        {item.name} {item.difficulty}
+                      </Text>
+                      <View style={trainingsStyles.bolts}>
+                        <Bolts
+                          difficulty={item.difficulty}
+                          size={RFValue(25)}
+                        />
+                      </View>
                     </View>
+                    <Image
+                      style={trainingsStyles.image}
+                      source={{uri: 'data:image/png;base64,' + item.image}}
+                    />
                   </View>
-                  <Image
-                    style={trainingsStyles.image}
-                    source={{uri: 'data:image/png;base64,' + item.image}}
-                  />
+                  <TouchableOpacity
+                    style={trainingsStyles.content}
+                    onPress={() => {
+                      cardClickEventListener(item);
+                    }}>
+                    <FontAwesome5
+                      name={'play'}
+                      size={RFValue(50)}
+                      color={black}
+                    />
+                  </TouchableOpacity>
                 </View>
-                <TouchableOpacity
-                  style={trainingsStyles.content}
-                  onPress={() => {
-                    cardClickEventListener(item);
-                  }}>
-                  <FontAwesome5
-                    name={'play'}
-                    size={RFValue(50)}
-                    color={black}
-                  />
-                </TouchableOpacity>
-              </View>
-            );
-          }}
-        />
+              );
+            }}
+          />
+        ) : (
+          <View style={trainingsStyles.emptyContainer}>
+            <Text style={trainingsStyles.emptyTitle}>
+              {query !== ''
+                ? 'No trainings found'
+                : type === 'custom'
+                ? 'No trainings, yet'
+                : ''}
+            </Text>
+            <Text style={trainingsStyles.emptyDesc}>
+              {query !== ''
+                ? ''
+                : type === 'custom'
+                ? 'Create a new request and one of our trainers will make a custom' +
+                  'training for you!'
+                : ''}
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );

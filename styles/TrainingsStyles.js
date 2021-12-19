@@ -99,6 +99,25 @@ const trainingsStyles = StyleSheet.create({
   bolts: {
     flexDirection: 'row',
   },
+  emptyContainer: {
+    flex: 1,
+    paddingTop: '2%',
+    width: '100%',
+    padding: RFValue(10),
+    backgroundColor: green,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyTitle: {
+    color: white,
+    fontSize: RFValue(24),
+    fontWeight: '800',
+    marginBottom: '2%',
+  },
+  emptyDesc: {
+    color: white,
+    fontSize: RFValue(18),
+  },
 });
 
 export default trainingsStyles;
