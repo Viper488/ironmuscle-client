@@ -143,6 +143,18 @@ const requestStyles = StyleSheet.create({
   description: {
     fontSize: RFValue(16),
   },
+  newRequest: {
+    color: white,
+    fontSize: RFValue(24),
+    marginBottom: '15%',
+  },
+  pickerLabel: {
+    alignSelf: 'flex-start',
+    color: white,
+    fontSize: RFValue(18),
+    marginVertical: '3%',
+    marginLeft: '10%',
+  },
 });
 
 export default requestStyles;

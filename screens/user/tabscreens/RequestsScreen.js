@@ -206,7 +206,7 @@ const RequestsScreen = ({navigation, route}) => {
             </View>
           </TouchableOpacity>
           <View style={profileStyles.modalBody}>
-            <Text style={styles.btnText}>New training request</Text>
+            <Text style={requestStyles.newRequest}>New training request</Text>
             <View style={styles.inputView}>
               <TextInput
                 maxLength={255}
@@ -225,6 +225,7 @@ const RequestsScreen = ({navigation, route}) => {
                 onChangeText={description => setDescription(description)}
               />
             </View>
+            <Text style={requestStyles.pickerLabel}>Pick body part:</Text>
             <View style={requestStyles.pickerContent}>
               <Picker
                 selectedValue={bodyPart}
@@ -259,6 +260,7 @@ const RequestsScreen = ({navigation, route}) => {
                 />
               </Picker>
             </View>
+            <Text style={requestStyles.pickerLabel}>Pick difficulty:</Text>
             <View style={requestStyles.pickerContent}>
               <Picker
                 selectedValue={difficulty}
