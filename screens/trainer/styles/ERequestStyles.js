@@ -26,6 +26,18 @@ const eRequestStyles = StyleSheet.create({
     width: '100%',
     padding: RFValue(10),
   },
+  requestsEmpty: {
+    flex: 1,
+    marginTop: '2%',
+    width: '100%',
+    padding: RFValue(10),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  requestsEmptyText: {
+    color: white,
+    fontSize: RFValue(24),
+  },
   selectedExercises: {
     marginTop: '2%',
     width: '100%',

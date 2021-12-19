@@ -155,6 +155,18 @@ const requestStyles = StyleSheet.create({
     marginVertical: '3%',
     marginLeft: '10%',
   },
+  requestsEmpty: {
+    flex: 1,
+    width: '100%',
+    padding: RFValue(10),
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: green,
+  },
+  requestsEmptyText: {
+    color: white,
+    fontSize: RFValue(24),
+  },
 });
 
 export default requestStyles;

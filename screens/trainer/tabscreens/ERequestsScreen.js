@@ -214,17 +214,23 @@ const ERequestsScreen = ({navigation, route}) => {
   return (
     <View style={styles.container}>
       {renderSearch()}
-      <FlatList
-        style={eRequestStyles.requests}
-        data={requests}
-        keyExtractor={(item, index) => index}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        onEndReachedThreshold={0.4}
-        onEndReached={loadMoreERequests}
-        renderItem={({item, index}) => renderRequest(item, index)}
-      />
+      {requests.length > 0 ? (
+        <FlatList
+          style={eRequestStyles.requests}
+          data={requests}
+          keyExtractor={(item, index) => index}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          onEndReachedThreshold={0.4}
+          onEndReached={loadMoreERequests}
+          renderItem={({item, index}) => renderRequest(item, index)}
+        />
+      ) : (
+        <View style={eRequestStyles.requestsEmpty}>
+          <Text style={eRequestStyles.requestsEmptyText}>No requests found</Text>
+        </View>
+      )}
     </View>
   );
 };

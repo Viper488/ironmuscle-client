@@ -198,16 +198,24 @@ const RequestsScreen = ({navigation, route}) => {
           );
         })}
       </View>
-      <FlatList
-        style={[requestStyles.requestsList, {backgroundColor: green}]}
-        data={requests}
-        keyExtractor={item => {
-          return item.id;
-        }}
-        onEndReachedThreshold={0.4}
-        onEndReached={loadMoreRequests}
-        renderItem={({item, index}) => renderRequest(item, index)}
-      />
+      {requests.length > 0 ? (
+        <FlatList
+          style={[requestStyles.requestsList, {backgroundColor: green}]}
+          data={requests}
+          keyExtractor={item => {
+            return item.id;
+          }}
+          onEndReachedThreshold={0.4}
+          onEndReached={loadMoreRequests}
+          renderItem={({item, index}) => renderRequest(item, index)}
+        />
+      ) : (
+        <View style={requestStyles.requestsEmpty}>
+          <Text style={requestStyles.requestsEmptyText}>
+            No requests found
+          </Text>
+        </View>
+      )}
       <Snackbar
         style={styles.snackbar}
         wrapperStyle={styles.snackbarWrapper}
