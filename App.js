@@ -119,7 +119,7 @@ const TrainerHomeTab = () => {
             size = focused ? focusedSize : unFocusedSize;
             color = focused ? white : grey3;
           } else if (route.name === 'MyRequests') {
-            iconName = 'award';
+            iconName = 'archive';
             size = focused ? focusedSize : unFocusedSize;
             color = focused ? white : grey3;
           } else if (route.name === 'TrainingsE') {
