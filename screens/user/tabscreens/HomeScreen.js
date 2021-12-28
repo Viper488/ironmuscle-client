@@ -249,7 +249,7 @@ const HomeScreen = ({navigation, route}) => {
               {query !== ''
                 ? ''
                 : type === 'custom'
-                ? 'Create a new request and one of our trainers will make a custom' +
+                ? 'Create a new request and one of our trainers will make a custom ' +
                   'training for you!'
                 : ''}
             </Text>

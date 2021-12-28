@@ -18,7 +18,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import trainingsStyles from '../../../styles/TrainingsStyles';
 import eRequestStyles from '../styles/ERequestStyles';
 import tdStyles from '../../../styles/TrainingDetailsStyles';
-import {grey} from '../../../styles/Colors';
+import {grey, white} from '../../../styles/Colors';
 import Bolts from '../../components/Bolts';
 import {Snackbar} from 'react-native-paper';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -248,6 +248,7 @@ const AddExercisesScreen = ({navigation, route}) => {
       <View style={trainingsStyles.card}>
         <View style={trainingsStyles.imageContent}>
           <View style={trainingsStyles.cardContent}>
+            <View style={eRequestStyles.goBack} />
             <Text style={trainingsStyles.name}>
               {route.params.training.name} {route.params.training.difficulty}
             </Text>
@@ -257,6 +258,19 @@ const AddExercisesScreen = ({navigation, route}) => {
                 size={RFValue(25)}
               />
             </View>
+            <TouchableOpacity
+              style={eRequestStyles.goBack}
+              onPress={() => {
+                navigation.navigate('TrainingsE');
+              }}>
+              <View>
+                <FontAwesome5
+                  name={'times-circle'}
+                  size={RFValue(20)}
+                  color={white}
+                />
+              </View>
+            </TouchableOpacity>
           </View>
           <Image
             style={trainingsStyles.image}
