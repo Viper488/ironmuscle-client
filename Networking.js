@@ -148,7 +148,7 @@ export const changeEmail = async request => {
 
 export const changePassword = async request => {
   return await instance
-    .post(baseUrl + '/password/change', request)
+    .put(baseUrl + '/password/change', request)
     .then(response => {
       return response;
     })
@@ -161,7 +161,7 @@ export const changePassword = async request => {
 
 export const changeIcon = data => {
   return instance
-    .post(baseUrl + '/user/icon', data, {
+    .put(baseUrl + '/user/icon', data, {
       Accept: 'application/json',
       'Content-Type': 'multipart/form-data',
     })

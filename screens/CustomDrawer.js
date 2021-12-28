@@ -74,22 +74,19 @@ const CustomDrawer = ({navigation, route}) => {
   };
 
   const changePasswordRequest = () => {
-    let password = password;
-    let newPassword = newPassword;
-    let confirmPassword = confirmPassword;
-
-    if (password === '') {
+    const pass = password;
+    const newPass = newPassword;
+    const confPass = confirmPassword;
+    if (pass === '') {
       toggleSnackbar('Password can not be empty');
-    } else if (newPassword === '') {
+    } else if (newPass === '') {
       toggleSnackbar('New password can not be empty');
-    } else if (confirmPassword === '') {
+    } else if (confPass === '') {
       toggleSnackbar('Confirm password');
-    } else if (newPassword === password) {
-      toggleSnackbar('New password can not be the same as old password');
-    } else if (newPassword !== confirmPassword) {
+    } else if (newPass !== confPass) {
       toggleSnackbar('Confirm password is different than new password');
     } else {
-      let request = {oldPassword: password, newPassword: newPassword};
+      let request = {oldPassword: pass, newPassword: newPass};
       changePassword(request)
         .then(response => {
           setPasswordModalVisible(!passwordModalVisible);
