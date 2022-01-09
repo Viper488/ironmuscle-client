@@ -44,7 +44,6 @@ const EditExercisesScreen = ({navigation, route}) => {
 
       const onBackPress = () => {
         console.log('BACK');
-        console.log(oSelectedExercises.length);
         navigation.navigate('AddExercises', {
           request: route.params.request !== null ? route.params.request : null,
           training: route.params.training,
@@ -290,7 +289,6 @@ const EditExercisesScreen = ({navigation, route}) => {
               style={eRequestStyles.goBack}
               onPress={() => {
                 console.log('BACK');
-                console.log(oSelectedExercises.length);
                 navigation.navigate('AddExercises', {
                   request:
                     route.params.request !== null ? route.params.request : null,
@@ -339,16 +337,26 @@ const EditExercisesScreen = ({navigation, route}) => {
         </View>
       </View>
       <View style={eRequestStyles.exercisesContent}>
-        <DraggableFlatList
-          style={eRequestStyles.selectedExercises}
-          data={selectedExercises}
-          keyExtractor={item => `draggable-item-${item.key}`}
-          extraData={changed}
-          onDragEnd={({data}) => setSelectedExercises(data)}
-          renderItem={({item, index, drag, isActive}) =>
-            renderSelectedItem(item, index, drag, isActive)
-          }
-        />
+        {selectedExercises !== null &&
+        selectedExercises.length !== null &&
+        selectedExercises.length > 0 ? (
+          <DraggableFlatList
+            style={eRequestStyles.selectedExercises}
+            data={selectedExercises}
+            keyExtractor={item => `draggable-item-${item.key}`}
+            extraData={changed}
+            onDragEnd={({data}) => setSelectedExercises(data)}
+            renderItem={({item, index, drag, isActive}) =>
+              renderSelectedItem(item, index, drag, isActive)
+            }
+          />
+        ) : (
+          <View style={eRequestStyles.requestsEmpty}>
+            <Text style={eRequestStyles.requestsEmptyText}>
+              No exercises picked!
+            </Text>
+          </View>
+        )}
       </View>
       <View style={tdStyles.btnContainer}>
         <TouchableOpacity

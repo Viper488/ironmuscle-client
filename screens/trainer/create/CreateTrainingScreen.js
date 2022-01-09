@@ -132,26 +132,32 @@ const CreateTrainingScreen = ({navigation, route}) => {
           onChangeText={name => setName(name)}
         />
       </View>
-      <View style={requestStyles.labelContent}>
-        <Text style={requestStyles.label}>Type:</Text>
-      </View>
-      <View style={requestStyles.pickerContent}>
-        <Picker
-          selectedValue={type}
-          style={requestStyles.picker}
-          onValueChange={(itemValue, itemIndex) => setType(itemValue)}>
-          <Picker.Item
-            style={styles.pickerItem}
-            label="Standard"
-            value="standard"
-          />
-          <Picker.Item
-            style={styles.pickerItem}
-            label="Custom"
-            value="custom"
-          />
-        </Picker>
-      </View>
+      {route.params.request !== null ? (
+        <View>
+          <View style={requestStyles.labelContent}>
+            <Text style={requestStyles.label}>Type:</Text>
+          </View>
+          <View style={requestStyles.pickerContent}>
+            <Picker
+              selectedValue={type}
+              style={requestStyles.picker}
+              onValueChange={(itemValue, itemIndex) => setType(itemValue)}>
+              <Picker.Item
+                style={styles.pickerItem}
+                label="Standard"
+                value="standard"
+              />
+              <Picker.Item
+                style={styles.pickerItem}
+                label="Custom"
+                value="custom"
+              />
+            </Picker>
+          </View>
+        </View>
+      ) : (
+        <View />
+      )}
       <View style={requestStyles.labelContent}>
         <Text style={requestStyles.label}>Difficulty:</Text>
       </View>
@@ -174,7 +180,7 @@ const CreateTrainingScreen = ({navigation, route}) => {
         </Picker>
       </View>
       <View style={requestStyles.labelContent}>
-        <Text style={requestStyles.label}>Image:</Text>
+        <Text style={requestStyles.label}>Body part:</Text>
       </View>
       <View style={requestStyles.pickerContent}>
         <Picker

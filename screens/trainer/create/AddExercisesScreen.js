@@ -48,7 +48,11 @@ const AddExercisesScreen = ({navigation, route}) => {
             }),
           );
 
-          if (route.params.selectedExercises.length > 0) {
+          if (
+            route.params.selectedExercises !== null &&
+            route.params.selectedExercises.length !== null &&
+            route.params.selectedExercises.length > 0
+          ) {
             console.log('FROM BACK');
             console.log(route.params.selectedExercises.length);
             route.params.selectedExercises.forEach(s => {
@@ -123,7 +127,11 @@ const AddExercisesScreen = ({navigation, route}) => {
           }),
         );
 
-        if (route.params.selectedExercises.length > 0) {
+        if (
+          route.params.selectedExercises !== null &&
+          route.params.selectedExercises.length !== null &&
+          route.params.selectedExercises.length > 0
+        ) {
           console.log('FROM BACK');
           console.log(route.params.selectedExercises.length);
           route.params.selectedExercises.forEach(s => {
