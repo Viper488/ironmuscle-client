@@ -1,9 +1,7 @@
 import 'react-native-gesture-handler';
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import {
-  Alert,
   FlatList,
-  Image,
   Modal,
   Text,
   TextInput,
@@ -15,7 +13,6 @@ import trainingsStyles from '../../../styles/TrainingsStyles';
 import {useFocusEffect} from '@react-navigation/native';
 import {
   createRequest,
-  deleteDoneRequests,
   getUserRequests,
   handleError,
 } from '../../../Networking';
@@ -37,7 +34,7 @@ const RequestsScreen = ({navigation, route}) => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [bodyPart, setBodyPart] = useState('Abdominal');
+  const [bodyPart, setBodyPart] = useState('abdominal');
   const [difficulty, setDifficulty] = useState('beginner');
 
   const [visible, setVisible] = useState(false);
@@ -108,8 +105,8 @@ const RequestsScreen = ({navigation, route}) => {
         console.log(response.data);
         setTitle('');
         setDescription('');
-        setBodyPart('');
-        setDifficulty('');
+        setBodyPart('abdominal');
+        setDifficulty('beginner');
         setModalVisible(false);
         setRequests([]);
         setPage(0);
