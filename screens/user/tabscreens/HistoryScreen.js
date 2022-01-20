@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, Text, FlatList, Image} from 'react-native';
 import styles from '../../../styles/Styles';
 import {getUserActivities, handleError} from '../../../Networking';
@@ -7,7 +7,6 @@ import historyStyles from '../../../styles/HistoryStyles';
 import {
   getDate,
   getDateTime,
-  getTime,
   toHHMMSS,
 } from '../../functions/Functions';
 import Bolts from '../../components/Bolts';

@@ -167,6 +167,19 @@ const requestStyles = StyleSheet.create({
     color: white,
     fontSize: RFValue(24),
   },
+  createUserBack: {
+    flex: 1,
+    width: '100%',
+    alignSelf: 'center',
+  },
+  createUserContent: {
+    flex: 5,
+    width: '100%',
+    alignSelf: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingTop: '10%',
+  },
 });
 
 export default requestStyles;

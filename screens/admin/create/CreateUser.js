@@ -6,6 +6,10 @@ import requestStyles from '../../../styles/RequestStyles';
 import {Picker} from '@react-native-picker/picker';
 import {handleError, initializeRegister} from '../../../Networking';
 import styles from '../../../styles/Styles';
+import exerciseStyles from '../../../styles/ExerciseStyles';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {white} from '../../../styles/Colors';
 
 const CreateUser = ({navigation, route}) => {
   const [username, setUsername] = useState(null);
@@ -62,44 +66,63 @@ const CreateUser = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputView}>
-        <TextInput
-          maxLength={255}
-          style={styles.textInput}
-          placeholder="Username."
-          placeholderTextColor="#8c8c8c"
-          onChangeText={username => setUsername(username)}
-        />
+      <View style={requestStyles.createUserBack}>
+        <TouchableOpacity
+          style={exerciseStyles.exitModalBtn}
+          onPress={() => navigation.navigate('AUsers')}>
+          <View>
+            <FontAwesome5
+              name={'arrow-left'}
+              size={RFValue(50)}
+              color={white}
+            />
+          </View>
+        </TouchableOpacity>
       </View>
-
-      <View style={styles.inputView}>
-        <TextInput
-          maxLength={255}
-          style={styles.textInput}
-          placeholder="Email."
-          placeholderTextColor="#8c8c8c"
-          onChangeText={email => setEmail(email)}
-        />
-      </View>
-      <View style={requestStyles.pickerContent}>
-        <Picker
-          selectedValue={role}
-          style={requestStyles.picker}
-          onValueChange={(itemValue, itemIndex) => setRole(itemValue)}>
-          <Picker.Item style={styles.pickerItem} label="User" value="USER" />
-          <Picker.Item
-            style={styles.pickerItem}
-            label="Trainer"
-            value="TRAINER"
+      <View style={requestStyles.createUserContent}>
+        <View style={styles.inputView}>
+          <TextInput
+            maxLength={255}
+            style={styles.textInput}
+            placeholder="Username."
+            placeholderTextColor="#8c8c8c"
+            onChangeText={username => setUsername(username)}
           />
-          <Picker.Item style={styles.pickerItem} label="Admin" value="ADMIN" />
-        </Picker>
+        </View>
+
+        <View style={styles.inputView}>
+          <TextInput
+            maxLength={255}
+            style={styles.textInput}
+            placeholder="Email."
+            placeholderTextColor="#8c8c8c"
+            onChangeText={email => setEmail(email)}
+          />
+        </View>
+        <View style={requestStyles.pickerContent}>
+          <Picker
+            selectedValue={role}
+            style={requestStyles.picker}
+            onValueChange={(itemValue, itemIndex) => setRole(itemValue)}>
+            <Picker.Item style={styles.pickerItem} label="User" value="USER" />
+            <Picker.Item
+              style={styles.pickerItem}
+              label="Trainer"
+              value="TRAINER"
+            />
+            <Picker.Item
+              style={styles.pickerItem}
+              label="Admin"
+              value="ADMIN"
+            />
+          </Picker>
+        </View>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => (validate() ? register() : undefined)}>
+          <Text style={styles.btnText}>Create</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={() => (validate() ? register() : undefined)}>
-        <Text style={styles.btnText}>Create</Text>
-      </TouchableOpacity>
       <Snackbar
         style={styles.snackbar}
         wrapperStyle={styles.snackbarWrapper}

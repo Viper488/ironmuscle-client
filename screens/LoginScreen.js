@@ -1,22 +1,9 @@
 import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  BackHandler,
-} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import styles from '../styles/Styles';
 import loginStyles from '../styles/LoginStyles';
-import {
-  getExercises,
-  handleError,
-  JWToken,
-  RefreshToken,
-  requestAuth,
-} from '../Networking';
+import {JWToken, RefreshToken, requestAuth} from '../Networking';
 import {
   _removeData,
   _retrieveData,
@@ -113,7 +100,11 @@ const LoginScreen = ({navigation, route}) => {
       })
       .catch(error => {
         console.log(error);
-        toggleSnackbar(error.response.data.message);
+        if (error.response.data.message === 'User is disabled') {
+          toggleSnackbar('Account is inactive');
+        } else {
+          toggleSnackbar(error.response.data.message);
+        }
       });
   };
 
